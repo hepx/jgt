@@ -1,0 +1,47 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.hepx.jgt</groupId>
+    <artifactId>jgt</artifactId>
+    <version>1.0</version>
+    <packaging>pom</packaging>
+    <name>jgt</name>
+    <url>http://maven.apache.org</url>
+
+    <developers>
+        <developer>
+            <id>hepx</id>
+            <name>hepx</name>
+            <email>hepanxi@163.com</email>
+        </developer>
+    </developers>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <jvm.version>1.7</jvm.version>
+        <junit.version>4.11</junit.version>
+        <servlet.version>3.0.1</servlet.version>
+        <fastjson.version>1.1.41</fastjson.version>
+    </properties>
+
+    <!-- 所有子模块 -->
+    <modules>
+
+        <module>jgt-common</module>
+    </modules>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>${jvm.version}</source>
+                    <target>${jvm.version}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
