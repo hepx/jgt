@@ -1,6 +1,8 @@
 package org.hepx.jgt.common.json;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import org.hepx.jgt.common.date.DateFormatType;
 import org.hepx.jgt.common.exception.JgtException;
 
 /**
@@ -12,6 +14,11 @@ import org.hepx.jgt.common.exception.JgtException;
  */
 public class JsonUtil {
 
+    /**
+     * 序列化对象
+     * @param o
+     * @return
+     */
     public static String objectToJson(Object o) {
         try {
             return JSON.toJSONString(o);
@@ -21,8 +28,32 @@ public class JsonUtil {
     }
 
     /**
+     * 序列化对象
+     * @param o
+     * @param type 日期格式化
+     * @return
+     */
+    public static String objectToJson(Object o,DateFormatType type) {
+        return objectToJson (o,type, SerializerFeature.DisableCircularReferenceDetect);
+    }
+
+    /**
+     * 序列化对象
+     * @param o
+     * @param type
+     * @param s
+     * @return
+     */
+    public static String objectToJson(Object o,DateFormatType type,SerializerFeature s) {
+        try {
+            return  JSON.toJSONStringWithDateFormat(o,type.getValue(), s);
+        } catch (Exception e) {
+            throw new RuntimeException("不能序列化对象为Json", e);
+        }
+    }
+
+    /**
      * 将 json 字段串转换为 对象.
-     *
      * @param json  字符串
      * @param clazz 需要转换为的类
      * @return
