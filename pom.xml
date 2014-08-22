@@ -26,8 +26,8 @@
 
     <!-- 所有子模块 -->
     <modules>
-
         <module>jgt-common</module>
+        <module>jgt-soe</module>
     </modules>
 
     <build>
