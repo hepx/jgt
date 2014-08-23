@@ -2,6 +2,8 @@ package org.hepx.jgt.common.random;
 
 import org.apache.commons.lang.RandomStringUtils;
 
+import java.util.UUID;
+
 /**
  * 随机数生成器
  *
@@ -51,5 +53,23 @@ public class RandomGenerater {
     public static String generate(int count, char[] c) {
         return RandomStringUtils.random(count, c);
     }
+
+
+    /**
+     * 获取去掉"-" UUID
+     * @return
+     */
+    public static String generate32UUID() {
+        return UUID.randomUUID().toString().replace("-", "");
+    }
+
+    /**
+     * 获取不去掉"-" UUID
+     * @return
+     */
+    public static String generate32_UUID(){
+        return UUID.randomUUID().toString();
+    }
+
 
 }
