@@ -1,4 +1,4 @@
-package org.hepx.jgt.soe;
+package org.hepx.jgt.common.sys;
 
 import org.junit.Test;
 
@@ -6,7 +6,7 @@ import java.util.Properties;
 
 /**
  * @author: Koala
- * @Date: 14-8-22 上午11:25
+ * @Date: 14-8-28 下午10:50
  * @Version: 1.0
  */
 public class SystemInfoTest {

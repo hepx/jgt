@@ -1,4 +1,4 @@
-package org.hepx.jgt.soe;
+package org.hepx.jgt.common.sys;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

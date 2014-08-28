@@ -1,4 +1,4 @@
-package org.hepx.jgt.soe;
+package org.hepx.jgt.common.sys;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.InetAddress;
