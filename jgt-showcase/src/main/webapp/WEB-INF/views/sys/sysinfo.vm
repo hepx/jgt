@@ -1,0 +1,174 @@
+#set($page_title="系统信息")
+<div class="main-content">
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try {
+                ace.settings.check('breadcrumbs', 'fixed')
+            } catch (e) {
+            }
+        </script>
+        <ul class="breadcrumb">
+            <li>
+                <i class="icon-home home-icon"></i>
+                <a href="${rc.contextPath}/">首页</a>
+            </li>
+            <li class="active">$page_title</li>
+        </ul>
+        <div class="nav-search">
+            <a class="btn btn-xs btn-grey arrowed" href="${request.getHeader("Referer")}" title="返回">
+                <i class="icon-reply icon-only"></i> 返回
+            </a>
+        </div>
+    </div>
+    <div class="page-content">
+        <div class="row">
+            <div class="col-xs-12">
+                <h4 class="header smaller lighter blue"> 系统信息</h4>
+                <div class="col-lg-6 col-lg-offset-2 col-sm-9">
+                    <div class="profile-user-info">
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> 操作系统</div>
+                            <div class="profile-info-value">
+                                <span>&nbsp;$!{systemInfo.os_name}</span>
+                            </div>
+                        </div>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> 系统架构</div>
+                            <div class="profile-info-value">
+                                <span>&nbsp;$!{systemInfo.os_arch}</span>
+                            </div>
+                        </div>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> 系统版本</div>
+                            <div class="profile-info-value">
+                                <span>&nbsp;$!{systemInfo.os_version}</span>
+                            </div>
+                        </div>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> CPU个数</div>
+                            <div class="profile-info-value">
+                                <span>&nbsp;$!{systemInfo.os_cpus}</span>
+                            </div>
+                        </div>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> 系统时间</div>
+                            <div class="profile-info-value">
+                                <span>&nbsp;$!dateTool.format("yyyy-MM-dd HH:mm:ss",$!{systemInfo.os_date})</span>
+                            </div>
+                        </div>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> 系统用户名</div>
+                            <div class="profile-info-value">
+                                <span>&nbsp;$!{systemInfo.os_user_name}</span>
+                            </div>
+                        </div>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> 工作目录</div>
+                            <div class="profile-info-value">
+                                <span>&nbsp;$!{systemInfo.os_user_dir}</span>
+                            </div>
+                        </div>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> 主目录</div>
+                            <div class="profile-info-value">
+                                <span>&nbsp;$!{systemInfo.os_user_home}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <h4 class="header smaller lighter blue"> 运行环镜</h4>
+                <div class="col-lg-6 col-lg-offset-2 col-sm-9">
+                    <div class="profile-user-info">
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> Java版本</div>
+                            <div class="profile-info-value">
+                                <span>&nbsp;$!{systemInfo.java_version}</span>
+                            </div>
+                        </div>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> 临时文件路径</div>
+                            <div class="profile-info-value">
+                                <span>&nbsp;$!{systemInfo.java_io_tmpdir}</span>
+                            </div>
+                        </div>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> java平台</div>
+                            <div class="profile-info-value">
+                                <span>&nbsp;$!{systemInfo.sun_desktop}</span>
+                            </div>
+                        </div>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> 总内存</div>
+                            <div class="profile-info-value">
+                                <span>&nbsp;$!{systemInfo.jvm_totalMemory}</span>
+                            </div>
+                        </div>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> 空闲内存</div>
+                            <div class="profile-info-value">
+                                <span>&nbsp;$!{systemInfo.jvm_freeMemory}</span>
+                            </div>
+                        </div>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> 最大使用内存</div>
+                            <div class="profile-info-value">
+                                <span>&nbsp;$!{systemInfo.jvm_maxMemory}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <h4 class="header smaller lighter blue"> WEB服务器</h4>
+                <div class="col-lg-6 col-lg-offset-2 col-sm-9">
+                    <div class="profile-user-info">
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> 服务类型</div>
+                            <div class="profile-info-value">
+                                <span>&nbsp;$!{serverId}</span>
+                            </div>
+                        </div>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> 上下文路径</div>
+                            <div class="profile-info-value">
+                                <span>&nbsp;$!{systemInfo.server_context}</span>
+                            </div>
+                        </div>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> 服务器名</div>
+                            <div class="profile-info-value">
+                                <span>&nbsp;$!{systemInfo.server_name}</span>
+                            </div>
+                        </div>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> 服务器端口</div>
+                            <div class="profile-info-value">
+                                <span>&nbsp;$!{systemInfo.server_port}</span>
+                            </div>
+                        </div>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> 服务器地址</div>
+                            <div class="profile-info-value">
+                                <span>&nbsp;$!{systemInfo.server_addr}</span>
+                            </div>
+                        </div>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> 主机名</div>
+                            <div class="profile-info-value">
+                                <span>&nbsp;$!{systemInfo.server_host}</span>
+                            </div>
+                        </div>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> 服务协议</div>
+                            <div class="profile-info-value">
+                                <span>&nbsp;$!{systemInfo.server_protocol}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,125 @@
+<div class="sidebar" id="sidebar">
+    <ul class="nav nav-list">
+        <li>
+            <a href="${rc.contextPath}/">
+                <i class="icon-dashboard"></i>
+                <span class="menu-text"> 控制台 </span>
+            </a>
+        </li>
+        <li>
+            <a href="#" class="dropdown-toggle">
+                <i class="icon-list"></i>
+                <span class="menu-text"> 会员管理 </span>
+                <b class="arrow icon-angle-down"></b>
+            </a>
+            <ul class="submenu">
+                <li>
+                    <a href="${rc.contextPath}/account/list?status=0">
+                        <i class="icon-double-angle-right"></i>
+                        待审核
+                    </a>
+                </li>
+                <li>
+                    <a href="${rc.contextPath}/account/list">
+                        <i class="icon-double-angle-right"></i>
+                        用户列表
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="#" class="dropdown-toggle">
+                <i class="icon-desktop"></i>
+                <span class="menu-text"> 推广管理 </span>
+                <b class="arrow icon-angle-down"></b>
+            </a>
+            <ul class="submenu">
+                <li>
+                    <a href="${rc.contextPath}/product/list">
+                        <i class="icon-double-angle-right"></i>
+                        商品中心
+                    </a>
+                </li>
+                <li>
+                    <a href="${rc.contextPath}/extend/list">
+                        <i class="icon-double-angle-right"></i>
+                        推广列表
+                    </a>
+                </li>
+                <li>
+                    <a href="buttons.html">
+                        <i class="icon-double-angle-right"></i>
+                        类目编辑
+                    </a>
+                </li>
+                <li>
+                    <a href="treeview.html">
+                        <i class="icon-double-angle-right"></i>
+                        活动管理
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="${rc.contextPath}/site/list">
+                <i class="icon-sitemap"></i>
+                <span class="menu-text"> 站点管理 </span>
+            </a>
+        </li>
+        <li>
+            <a href="${rc.contextPath}/rate/list">
+                <i class="icon-text-width"></i>
+                <span class="menu-text"> 佣金设置 </span>
+            </a>
+        </li>
+        <li>
+            <a href="#" class="dropdown-toggle">
+                <i class="icon-tag"></i>
+                <span class="menu-text"> 系统设置 </span>
+                <b class="arrow icon-angle-down"></b>
+            </a>
+            <ul class="submenu">
+                <li>
+                    <a href="${rc.contextPath}/sys/info">
+                        <i class="icon-double-angle-right"></i>
+                        系统信息
+                    </a>
+                </li>
+                <li>
+                    <a href="${rc.contextPath}/user/list">
+                        <i class="icon-double-angle-right"></i>
+                        用户管理
+                    </a>
+                </li>
+                <li>
+                    <a href="${rc.contextPath}/access/roles">
+                        <i class="icon-double-angle-right"></i>
+                        角色管理
+                    </a>
+                </li>
+                <li>
+                    <a href="${rc.contextPath}/access/permissions">
+                        <i class="icon-double-angle-right"></i>
+                        权限管理
+                    </a>
+                </li>
+                <li>
+                    <a href="${rc.contextPath}/dic/list">
+                        <i class="icon-double-angle-right"></i>
+                        字典管理
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <!-- /.nav-list -->
+    <div class="sidebar-collapse" id="sidebar-collapse">
+        <i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+    </div>
+    <script type="text/javascript">
+        try {
+            ace.settings.check('sidebar', 'collapsed')
+        } catch (e) {
+        }
+    </script>
+</div>

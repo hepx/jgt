@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.hepx.jgt</groupId>
     <artifactId>jgt</artifactId>
-    <version>1.0</version>
+    <version>${version}</version>
     <packaging>pom</packaging>
     <name>jgt</name>
     <url>http://maven.apache.org</url>
@@ -17,14 +17,14 @@
     </developers>
 
     <properties>
+        <version>1.0</version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <jvm.version>1.7</jvm.version>
         <!-- spring formwork -->
-        <spring.version>4.0.5.RELEASE</spring.version>
+        <spring-framework.version>4.0.5.RELEASE</spring-framework.version>
         <spring-data-commons>1.8.1.RELEASE</spring-data-commons>
         <spring-data-jpa.version>1.6.1.RELEASE</spring-data-jpa.version>
-        <druid.version></druid.version>
         <!-- Java EE / Java SE dependencies -->
         <jsp.version>2.2</jsp.version>
         <jstl.version>1.2</jstl.version>
@@ -54,14 +54,32 @@
         <velocity-tools.version>2.0</velocity-tools.version>
         <!-- Test -->
         <junit.version>4.11</junit.version>
+        <!-- commons-lang -->
+        <commons-lang.version>2.6</commons-lang.version>
     </properties>
 
     <!-- 所有子模块 -->
     <modules>
         <module>jgt-common</module>
         <module>jgt-showcase</module>
-        <module>jgt-showcase</module>
     </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>commons-lang</groupId>
+                <artifactId>commons-lang</artifactId>
+                <version>${commons-lang.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-framework-bom</artifactId>
+                <version>${spring-framework.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <plugins>

@@ -1,0 +1,81 @@
+#set($page_title="佣金列表")
+#set($jsUrls= ["${rc.contextPath}/static/rate/rate.js"])
+
+<div class="main-content">
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try {
+                ace.settings.check('breadcrumbs', 'fixed')
+            } catch (e) {
+            }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="icon-home home-icon"></i>
+                <a href="${rc.contextPath}">首页</a>
+            </li>
+            <li class="active">$page_title</li>
+        </ul>
+        <!-- .breadcrumb -->
+    </div>
+
+    <div class="page-content">
+        <div class="row">
+            <div class="col-xs-12">
+                <h3 class="header smaller lighter blue">$page_title</h3>
+                <p>
+                    <a class="btn btn-primary" href="${rc.contextPath}/rate/add">
+                        <i class="icon-edit align-top bigger-125"></i>
+                        添加
+                    </a>
+                </p>
+                <div class="table-responsive">
+                    <table id="ratelist" class="table table-striped table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th class="center col-lg-1">
+                                <label>
+                                    <input type="checkbox" class="ace"/>
+                                    <span class="lbl"></span>
+                                </label>
+                            </th>
+                            <th class="col-lg-2">分类</th>
+                            <th class="col-lg-1">比例</th>
+                            <th >描述</th>
+                            <th class="col-lg-2
+                            ">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        #foreach($rate in $rates)
+                        <tr>
+                            <td class="center">
+                                <label>
+                                    <input type="checkbox" class="ace"/>
+                                    <span class="lbl"></span>
+                                </label>
+                            </td>
+
+                            <td>$!rate.category</td>
+                            <td>$!numberTool.format("#0.0%",$!rate.rate)</td>
+                            <td class="hidden-480">$!rate.description</td>
+                            <td>
+                                <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
+                                    <a class="green" href="${rc.contextPath}/rate/update/${rate.id}" title="编辑">
+                                        <i class="icon-pencil bigger-130"></i>
+                                    </a>
+                                    <a class="red" href="${rc.contextPath}/rate/delete/${rate.id}" title="删除">
+                                        <i class="icon-trash bigger-130"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        #end
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

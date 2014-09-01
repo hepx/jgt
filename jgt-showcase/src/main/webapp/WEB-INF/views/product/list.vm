@@ -1,0 +1,151 @@
+#set($page_title="商品中心")
+#set($jsUrls=["${rc.contextPath}/static/product/product.js"])
+<div class="main-content">
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try {
+                ace.settings.check('breadcrumbs', 'fixed')
+            } catch (e) {
+            }
+        </script>
+        <ul class="breadcrumb">
+            <li>
+                <i class="icon-home home-icon"></i>
+                <a href="${rc.contextPath}/">首页</a>
+            </li>
+            <li class="active">$page_title</li>
+        </ul>
+        <div class="nav-search">
+            <a class="btn btn-xs btn-grey arrowed" href="${request.getHeader("Referer")}" title="返回">
+                <i class="icon-reply icon-only"></i> 返回
+            </a>
+        </div>
+    </div>
+    <div class="page-content">
+        <div class="row">
+            <div class="col-xs-12">
+                <h3 class="header smaller lighter blue">$page_title</h3>
+                <!-- PAGE CONTENT BEGINS -->
+                <form class="form-search">
+                    <div class="row">
+                        <div class="col-xs-lg col-lg-offset-3 col-sm-5">
+                            <div class="input-group">
+                                <input type="text" class="form-control search-query" placeholder="输入商品名"/>
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-purple btn-sm">
+                                        查询
+                                        <i class="icon-search icon-on-right bigger-110"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="space-6"></div>
+                <div class="table-responsive">
+                    <table id="productlist" class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th class="center col-lg-1">
+                                <label>
+                                    <input type="checkbox" class="ace"/>
+                                    <span class="lbl"></span>
+                                </label>
+                            </th>
+                            <th class="col-lg-1">图片</th>
+                            <th class="col-lg-1">分类</th>
+                            <th class="col-lg-2">名称</th>
+                            <th class="col-lg-1">价格</th>
+                            <th>描述</th>
+                            <th class="col-lg-1">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="center align-middle">
+                                    <label>
+                                        <input type="checkbox" class="ace"/>
+                                        <span class="lbl"></span>
+                                    </label>
+                                </td>
+                                <td class="align-middle"><img src="http://boss.ejushang.com/productPictures/89/1389_main_1_10.jpg" width="80" height="80"
+                                                   alt=""></td>
+                                <td class="align-middle">垃圾桶</td>
+                                <td class="align-middle"><a href="http://www.ejushang.com/product/1389" target="_blank">EKO创意时尚脚踏式不锈钢垃圾桶 红色 5L</a></td>
+                                <td class="align-middle">126</td>
+                                <td class="align-middle">1.经典款式，质量上乘； 2.内胆配置，使用方便； 3.脚踏设计，便捷实用； 4.液压缓冲，环保静音</td>
+                                <td class="align-middle">
+                                    <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
+                                        <a class="green" href="${rc.contextPath}/extend/add?ids=1">加入推广
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="center align-middle">
+                                    <label>
+                                        <input type="checkbox" class="ace"/>
+                                        <span class="lbl"></span>
+                                    </label>
+                                </td>
+                                <td class="align-middle"><img src="http://img01.ejushang.com/948_main_9_10.jpg" width="80" height="80"
+                                                              alt=""></td>
+                                <td class="align-middle">凳子</td>
+                                <td class="align-middle"><a href="http://www.ejushang.com/product/948" target="_blank">爱东爱西时尚创意凳子</a></td>
+                                <td class="align-middle">49</td>
+                                <td class="align-middle">1.高档pp胶材质，承重力更强 2.双色无缝衔接先进技术，时尚美观 3.安装方便，节省空间</td>
+                                <td class="align-middle">
+                                    <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
+                                        <a class="green" href="${rc.contextPath}/extend/add?ids=2">加入推广
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="center align-middle">
+                                    <label>
+                                        <input type="checkbox" class="ace"/>
+                                        <span class="lbl"></span>
+                                    </label>
+                                </td>
+                                <td class="align-middle"><img src="http://img01.ejushang.com/1601_main_1_10.jpg" width="80" height="80"
+                                                              alt=""></td>
+                                <td class="align-middle">锅</td>
+                                <td class="align-middle"><a href="http://www.ejushang.com/product/1601" target="_blank">法兰西宫廷系列双耳珐琅瓷蒸锅</a></td>
+                                <td class="align-middle">498</td>
+                                <td class="align-middle">1、珐琅瓷抗酸抗碱，保证食物健康 2、欧式厨房时尚典范</td>
+                                <td class="align-middle">
+                                    <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
+                                        <a class="green" href="${rc.contextPath}/extend/add?ids=3">加入推广
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="center align-middle">
+                                    <label>
+                                        <input type="checkbox" class="ace"/>
+                                        <span class="lbl"></span>
+                                    </label>
+                                </td>
+                                <td class="align-middle"><img src="http://boss.ejushang.com/productPictures/58/1258_main_3_10.jpg" width="80" height="80"
+                                                              alt=""></td>
+                                <td class="align-middle">锅</td>
+                                <td class="align-middle"><a href="http://www.ejushang.com/product/1258" target="_blank">英国恩腾黑金系列可拆卸手柄不粘无油烟铝合金炒锅</a></td>
+                                <td class="align-middle">298</td>
+                                <td class="align-middle">不粘锅 少油烟</td>
+                                <td class="align-middle">
+                                    <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
+                                        <a class="green" href="${rc.contextPath}/extend/add?ids=4">加入推广
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- PAGE CONTENT ENDS -->
+            </div>
+        </div>
+    </div>
+</div>

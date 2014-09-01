@@ -3,7 +3,7 @@
     <parent>
         <artifactId>jgt</artifactId>
         <groupId>org.hepx.jgt</groupId>
-        <version>1.0</version>
+        <version>${version}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -21,7 +21,6 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
-            <version>${spring.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.data</groupId>
@@ -31,7 +30,6 @@
         <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
-            <version>2.6</version>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>

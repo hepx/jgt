@@ -1,0 +1,146 @@
+#set($page_title="用户详细信息")
+#set($bankUrl="${request.getHeader('Referer')}")
+#set($jsUrls=["${rc.contextPath}/static/account/edit.js"])
+<div class="main-content">
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try {
+                ace.settings.check('breadcrumbs', 'fixed')
+            } catch (e) {
+            }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="icon-home home-icon"></i>
+                <a href="${rc.contextPath}/">首页</a>
+            </li>
+            <li class="active">$page_title</li>
+
+        </ul>
+        <!-- .breadcrumb -->
+        <div class="nav-search" id="nav-search">
+            <a class="btn btn-xs btn-grey arrowed" href="${bankUrl}" title="返回">
+                <i class="icon-reply icon-only"></i> 返回
+            </a>
+        </div>
+    </div>
+
+    <div class="page-content">
+        <div class="row">
+            <div class="col-xs-12">
+                <h4 class="header smaller lighter blue"> $page_title </h4>
+                <div class="col-lg-6 col-lg-offset-2 col-sm-9">
+                    <div class="profile-user-info">
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> 真实姓名</div>
+                            <div class="profile-info-value">
+                                <span>&nbsp;$!{account.realName}</span>
+                            </div>
+                        </div>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> 身份证号</div>
+                            <div class="profile-info-value">
+                                <span>&nbsp;$!{account.idCard}</span>
+                            </div>
+                        </div>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> 手机</div>
+                            <div class="profile-info-value">
+                                <span>&nbsp;$!{account.mobilePhone}</span>
+                            </div>
+                        </div>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> 邮箱</div>
+                            <div class="profile-info-value">
+                                <span>&nbsp;$!{account.email}</span>
+                            </div>
+                        </div>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> 创建时间</div>
+                            <div class="profile-info-value">
+                                <span>$!{account.createTime}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <h4 class="header smaller lighter blue"> 纳税信息 </h4>
+
+                <div class="col-lg-6 col-lg-offset-2 col-sm-9">
+                    <div class="profile-user-info">
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> 纳税类型</div>
+                            <div class="profile-info-value">
+                                <span>&nbsp;$!{account.taxType}</span>
+                            </div>
+                        </div>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> 税号</div>
+                            <div class="profile-info-value">
+                                <span>&nbsp;$!{account.taxNo}</span>
+                            </div>
+                        </div>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> 税率</div>
+                            <div class="profile-info-value">
+                                <span>&nbsp;$!{account.taxRate}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <h4 class="header smaller lighter blue"> 银行信息 </h4>
+
+                <div class="col-lg-6 col-lg-offset-2 col-sm-9">
+                    <div class="profile-user-info">
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> 银行</div>
+                            <div class="profile-info-value">
+                                <span>&nbsp;$!{bank.cardName}</span>
+                            </div>
+                        </div>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> 卡号</div>
+                            <div class="profile-info-value">
+                                <span>&nbsp;$!{bank.cardNo}</span>
+                            </div>
+                        </div>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> 开户行</div>
+                            <div class="profile-info-value">
+                                <span>&nbsp;$!{bank.openBankProvince}$!{bank.openBankCity}$!{bank.openBankDistrict}$!{openBankName}</span>
+                            </div>
+                        </div>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> 银联号</div>
+                            <div class="profile-info-value">
+                                <span>&nbsp;$!{bank.unionPayNo}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <div class="col-xs-12 form-actions">
+                    <div class="col-md-offset-3 col-md-9">
+                        <a class="btn btn-info sp" href="${rc.contextPath}/account/update/${account.id}/1">
+                            <i class="icon-ok bigger-110"></i>
+                            审批
+                        </a>
+                        &nbsp; &nbsp; &nbsp;
+                        <a class="btn btn-warning bh" href="${rc.contextPath}/account/update/${account.id}/2">
+                            <i class="icon-undo bigger-110"></i>
+                            驳回
+                        </a>
+                        &nbsp; &nbsp; &nbsp;
+                        <a class="btn red dj" href="${rc.contextPath}/account/update/${account.id}/3">
+                            <i class="icon-trash bigger-110"></i>
+                            冻结
+                        </a>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>

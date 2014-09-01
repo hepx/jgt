@@ -1,0 +1,87 @@
+#set($page_title="推广商品")
+#set($jsUrls=["${rc.contextPath}/static/extend/extend.js","${rc.contextPath}/assets/js/jquery.validate.min.js"])
+<div class="main-content">
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try {
+                ace.settings.check('breadcrumbs', 'fixed')
+            } catch (e) {
+            }
+        </script>
+        <ul class="breadcrumb">
+            <li>
+                <i class="icon-home home-icon"></i>
+                <a href="${rc.contextPath}/">首页</a>
+            </li>
+            <li class="active">$page_title</li>
+        </ul>
+        <div class="nav-search">
+            <a class="btn btn-xs btn-grey arrowed" href="${request.getHeader("Referer")}" title="返回">
+                <i class="icon-reply icon-only"></i> 返回
+            </a>
+        </div>
+    </div>
+    <div class="page-content">
+        <div class="row">
+            <div class="col-xs-12">
+                <h3 class="header smaller lighter blue">$page_title</h3>
+                <!-- PAGE CONTENT BEGINS -->
+                    <div class="row">
+                        <div class="col-xs-lg col-lg-offset-3 col-sm-5">
+                            <div class="input-group">
+                                <input type="text" class="form-control search-query" placeholder="输入商品名"/>
+                                <span class="input-group-btn">
+                                    <button type="button" id="extendSearch" class="btn btn-purple btn-sm">
+                                        查询
+                                        <i class="icon-search icon-on-right bigger-110"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                <div class="space-6"></div>
+                <div class="table-responsive">
+                    <table id="extendlist" class="table table-hover">
+                    </table>
+                </div>
+                <div id="extendModal" class="hide">
+                    <form action="${rc.contextPath}/extend/update" class="form-horizontal" id="extend-form" method="post">
+                        <input type="hidden" name="id" id="id">
+                        <div class="space-4"></div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">佣金比率</label>
+
+                            <div class="col-xs-12 col-sm-9">
+                                <div class="clearfix">
+                                    <input type="text" id="rate" name="rate"/>
+                                </div>
+                            </div>
+                        </div>
+                        <fieldset>
+                            <legend style="font-size: 14px;">&nbsp;推广时间</legend>
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">从</label>
+
+                                <div class="col-xs-12 col-sm-9">
+                                    <div class="clearfix">
+                                        <input type="text" id="startTime" name="startTime" data-date-format="yyyy-mm-dd"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">到</label>
+
+                                <div class="col-xs-12 col-sm-9">
+                                    <div class="clearfix">
+                                        <input type="text" id="endTime" name="endTime" data-date-format="yyyy-mm-dd"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+                <!-- PAGE CONTENT ENDS -->
+            </div>
+        </div>
+    </div>
+</div>
