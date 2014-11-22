@@ -1,11 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.hepx.jgt</groupId>
         <artifactId>jgt</artifactId>
-        <version>${version}</version>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
     <artifactId>jgt-showcase</artifactId>
     <packaging>war</packaging>
     <name>jgt-showcase</name>
@@ -15,14 +15,13 @@
         <dependency>
             <groupId>org.hepx.jgt</groupId>
             <artifactId>jgt-common</artifactId>
-            <version>${version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
 
         <!-- SPRING, SPRING, SPRINGITY SPRING -->
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-jpa</artifactId>
-            <version>${spring-data-jpa.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>aspectjrt</artifactId>
@@ -30,7 +29,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
@@ -53,29 +51,11 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
         </dependency>
-        <!--   <dependency>
-               <groupId>org.springframework</groupId>
-               <artifactId>spring-oxm</artifactId>
-               <version>${spring-framework.version}</version>
-               <exclusions>
-                   <exclusion>
-                       <groupId>commons-lang</groupId>
-                       <artifactId>commons-lang</artifactId>
-                   </exclusion>
-               </exclusions>
-           </dependency>
-           <dependency>
-               <groupId>org.springframework</groupId>
-               <artifactId>spring-jms</artifactId>
-               <version>${spring-framework.version}</version>
-           </dependency>-->
-
 
         <!-- Database connection pool -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
-            <version>${druid.version}</version>
         </dependency>
 
         <!-- Logging with SLF4J & LogBack -->
@@ -88,7 +68,6 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>${logback.version}</version>
             <scope>runtime</scope>
             <exclusions>
                 <exclusion>
@@ -102,19 +81,16 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>${mysql.version}</version>
         </dependency>
 
         <!-- HIBERNATE -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
-            <version>${hibernate.version}</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
-            <version>${hibernate-validator.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>jboss-logging</artifactId>
@@ -123,45 +99,23 @@
             </exclusions>
         </dependency>
 
-        <!-- cache -->
-        <!--        <dependency>
-                    <groupId>org.hibernate</groupId>
-                    <artifactId>hibernate-ehcache</artifactId>
-                    <version>${hibernate.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>net.sf.ehcache</groupId>
-                    <artifactId>ehcache-core</artifactId>
-                    <version>${ehcache.version}</version>
-                    <exclusions>
-                        <exclusion>
-                            <groupId>commons-logging</groupId>
-                            <artifactId>commons-logging</artifactId>
-                        </exclusion>
-                    </exclusions>
-                </dependency>-->
-
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjrt</artifactId>
-            <version>${aspectj.version}</version>
         </dependency>
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
-            <version>${aspectj.version}</version>
             <scope>runtime</scope>
         </dependency>
         <!-- JSON begin -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>${fastjson.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.velocity</groupId>
             <artifactId>velocity</artifactId>
-            <version>${velocity.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>commons-lang</artifactId>
@@ -172,7 +126,6 @@
         <dependency>
             <groupId>org.apache.velocity</groupId>
             <artifactId>velocity-tools</artifactId>
-            <version>${velocity-tools.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>commons-logging</artifactId>
@@ -222,8 +175,4 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
-    <build>
-        <finalName>jgt-showcase</finalName>
-    </build>
 </project>
