@@ -24,6 +24,8 @@
         <module>jgt-cache</module>
         <!--WEB实例-->
         <module>jgt-showcase</module>
+        <!--mybatis代码生成工具-->
+        <module>jgt-mybatis-generator</module>
     </modules>
 
     <properties>

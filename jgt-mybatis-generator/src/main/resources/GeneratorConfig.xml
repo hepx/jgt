@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!--官方配置举例-->
+   <!-- <classPathEntry location="/Program Files/IBM/SQLLIB/java/db2java.zip"/>
+
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+        <jdbcConnection driverClass="COM.ibm.db2.jdbc.app.DB2Driver"
+                        connectionURL="jdbc:db2:TEST"
+                        userId="db2admin"
+                        password="db2admin">
+        </jdbcConnection>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <javaModelGenerator targetPackage="test.model" targetProject="\MBGTestProject\src">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="test.xml" targetProject="\MBGTestProject\src">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <javaClientGenerator type="XMLMAPPER" targetPackage="test.dao" targetProject="\MBGTestProject\src">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <table schema="DB2ADMIN" tableName="ALLTYPES" domainObjectName="Customer">
+            <property name="useActualColumnNames" value="true"/>
+            <generatedKey column="ID" sqlStatement="DB2" identity="true"/>
+            <columnOverride column="DATE_FIELD" property="startDate"/>
+            <ignoreColumn column="FRED"/>
+            <columnOverride column="LONG_VARCHAR_FIELD" jdbcType="VARCHAR"/>
+        </table>
+    </context>-->
+
+    <context id="mysqlTables" targetRuntime="MyBatis3">
+        <!--数据库连接-->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/demo"
+                        userId="root" password=""/>
+
+        <!-- 指定生成的类型为java类型，避免数据库中number等类型字段 -->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!-- 生成Entity模型，对应的包，存放位置可以指定具体的路径,如/ProjectName/src，也可以使用MAVEN来自动生成 -->
+        <javaModelGenerator targetPackage="org.hepx.jgt.mybatis.generator.entity" targetProject="MAVEN">
+            <property name="enableSubPackages" value="true"/>
+        </javaModelGenerator>
+
+        <!--对应的xml mapper文件  -->
+        <sqlMapGenerator targetPackage="org.hepx.jgt.mybatis.generator.mapper" targetProject="MAVEN">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <!-- 对应的dao接口 -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="org.hepx.jgt.mybatis.generator.repository" targetProject="MAVEN">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <table tableName="user" domainObjectName="User"/>
+    </context>
+</generatorConfiguration>
