@@ -16,7 +16,9 @@
     <properties>
         <mybatis.version>3.2.8</mybatis.version>
         <mybatis-generator.version>1.3.2</mybatis-generator.version>
+        <!-- 生成目录  根据自己的项目情况做更改-->
         <target.dir>E:\github\jgt\jgt-mybatis-generator\src\main\java</target.dir>
+        <!--生成包名  根据自己的项目情况做更改-->
         <package.dir>org.hepx.jgt.mybatis.generator</package.dir>
         <entity.package.dir>${package.dir}.entity</entity.package.dir>
         <mapper.package.dir>${package.dir}.mapper</mapper.package.dir>
