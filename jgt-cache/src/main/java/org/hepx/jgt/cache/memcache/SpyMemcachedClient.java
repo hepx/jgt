@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.DisposableBean;
 
+import java.net.InetSocketAddress;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.Future;
@@ -270,4 +271,20 @@ public class SpyMemcachedClient implements DisposableBean {
     public long getShutdownTimeout() {
         return shutdownTimeout;
     }
+
+/*    public static void main(String[] args) {
+        try {
+            MemcachedClient c = new MemcachedClient(new InetSocketAddress("192.168.1.174", 11211));
+            c.set("someKey", 60, "aaaa");
+            String myObject = (String) c.get("someKey");
+            Thread.sleep(30 * 1000);
+            System.out.println(myObject);
+            Thread.sleep(31 * 1000);
+            String myObject2 = (String) c.get("someKey");
+            c.shutdown();
+            System.out.println(myObject2);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }*/
 }
