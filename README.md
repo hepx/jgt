@@ -1,4 +1,4 @@
-jgt java 通用技术
+jgt java通用技术
 ================
 
 1：jgt-common 包含加密解密、文件操作、验证码、json转换、http、随机数等通用工具类
