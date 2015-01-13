@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="org.hepx.jgt.ssm.repository.UserDao">
+    <sql id="base_columns">
+        id, name, login_name as loginName,password,register_date as registerDate,salt,roles
+    </sql>
+    <!--
+        获取用户: 输出直接映射到对象, login_name列要"as loginName"以方便映射 ,team_id as "team.id"创建team对象并赋值
+    -->
+    <select id="get" parameterType="long" resultType="org.hepx.jgt.ssm.entity.User">
+        select <include refid="base_columns"/>
+        from tb_user
+        where id=#{id}
+    </select>
+
+    <select id="getAll" resultType="org.hepx.jgt.ssm.entity.User">
+        select <include refid="base_columns"/>
+        from tb_user
+    </select>
+
+    <!-- 查询用户,演示: 1.输入用map传入多个参数 2.<where>语句, 智能添加where和and关键字 3.输出直接映射对象 -->
+    <select id="search" parameterType="map" resultType="org.hepx.jgt.ssm.entity.User">
+        select <include refid="base_columns"/>
+        from tb_user
+        <where>
+            <if test="loginName != null">
+                login_name=#{loginName}
+            </if>
+            <if test="name != null">
+                and name=#{name}
+            </if>
+        </where>
+    </select>
+
+    <select id="findByLoginName" parameterType="string" resultType="org.hepx.jgt.ssm.entity.User">
+        select <include refid="base_columns"/>
+        from tb_user where login_name=#{loginName}
+    </select>
+
+    <!-- 插入用户： 1.由数据库生成id并赋值到user对象 2.输入用对象, 嵌套属性表达式#{team.id} -->
+    <insert id="save" parameterType="org.hepx.jgt.ssm.entity.User" useGeneratedKeys="true" keyProperty="id">
+        insert into tb_user (login_name, name, password,register_date,salt,roles)
+        values (#{loginName}, #{name}, #{password},#{registerDate},#{salt},#{roles})
+    </insert>
+
+    <!-- 删除用户 -->
+    <delete id="delete" parameterType="long">
+        delete from tb_user where id=#{id}
+    </delete>
+</mapper> 

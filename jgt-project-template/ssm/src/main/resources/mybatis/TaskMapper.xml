@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="org.hepx.jgt.ssm.repository.TaskDao">
+    <sql id="base_columns">
+        id, title, description
+    </sql>
+    <!--
+        获取用户: 输出直接映射到对象, login_name列要"as loginName"以方便映射 ,team_id as "team.id"创建team对象并赋值
+    -->
+    <select id="get" parameterType="long" resultType="org.hepx.jgt.ssm.entity.Task">
+        select
+        <include refid="base_columns"/>
+        from tb_task
+        where id=#{id}
+    </select>
+
+    <select id="getAll" resultType="org.hepx.jgt.ssm.entity.Task">
+        select
+        <include refid="base_columns"/>
+        from tb_task
+    </select>
+
+    <!-- 插入用户： 1.由数据库生成id并赋值到user对象 2.输入用对象, 嵌套属性表达式#{team.id} -->
+    <insert id="save" parameterType="org.hepx.jgt.ssm.entity.Task" useGeneratedKeys="true" keyProperty="id">
+        insert into tb_task (
+        title, description, user_id)
+        values (
+        #{title}, #{description}, #{user.id})
+    </insert>
+
+    <!-- 删除用户 -->
+    <delete id="delete" parameterType="long">
+        delete from tb_task where id=#{id}
+    </delete>
+
+    <delete id="deleteByUserId" parameterType="long">
+        delete from tb_task where user_id=#{userId}
+    </delete>
+
+    <select id="findAll" resultType="org.hepx.jgt.ssm.entity.Task"
+            parameterType="org.hepx.jgt.ssm.common.mybatis.pagehelper.Page">
+        select
+        <include refid="base_columns"/>
+        from tb_task
+        <where>
+            <if test="params.title != null and params.title != ''">
+                title like concat('%',#{params.title},'%')
+            </if>
+        </where>
+    </select>
+</mapper> 
