@@ -26,6 +26,7 @@
         <module>jgt-showcase</module>
         <!--mybatis代码生成工具-->
         <module>jgt-mybatis-generator</module>
+        <module>jgt-project-template</module>
     </modules>
 
     <properties>
