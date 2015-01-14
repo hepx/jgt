@@ -12,7 +12,13 @@
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 		<context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
 	</context:component-scan>
-	
+
+    <!--拦截器-->
+    <mvc:interceptors>
+        <!--token验证拦截器-->
+        <bean class="org.hepx.jgt.ssj.web.interceptor.TokenVerifyInterceptor"/>
+    </mvc:interceptors>
+
 	<mvc:annotation-driven>
 		<mvc:message-converters register-defaults="true">
 			<!-- 将StringHttpMessageConverter的默认编码设为UTF-8 -->

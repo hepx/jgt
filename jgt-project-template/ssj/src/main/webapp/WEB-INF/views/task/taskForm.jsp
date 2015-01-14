@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="t" uri="http://www.jgt.org/tag/token" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
@@ -8,6 +9,7 @@
 
 <body>
 	<form id="inputForm" action="${ctx}/task/${action}" method="post" class="form-horizontal">
+        <t:token />
 		<input type="hidden" name="id" value="${task.id}"/>
 		<fieldset>
 			<legend><small>管理任务</small></legend>

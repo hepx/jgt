@@ -26,6 +26,7 @@
         <module>jgt-showcase</module>
         <!--mybatis代码生成工具-->
         <module>jgt-mybatis-generator</module>
+        <!-- 项目模板 -->
         <module>jgt-project-template</module>
     </modules>
 
@@ -38,7 +39,7 @@
         <spring-data-commons>1.8.1.RELEASE</spring-data-commons>
         <spring-data-jpa.version>1.6.1.RELEASE</spring-data-jpa.version>
         <!-- Java EE / Java SE dependencies -->
-        <jsp.version>2.2</jsp.version>
+        <jsp.version>2.1</jsp.version>
         <jstl.version>1.2</jstl.version>
         <servlet.version>3.0.1</servlet.version>
         <!-- Hibernate / JPA -->
@@ -108,6 +109,16 @@
                 <groupId>javax.servlet</groupId>
                 <artifactId>javax.servlet-api</artifactId>
                 <version>${servlet.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.servlet.jsp</groupId>
+                <artifactId>jsp-api</artifactId>
+                <version>${jsp.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>jstl</artifactId>
+                <version>${jstl.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.alibaba</groupId>
