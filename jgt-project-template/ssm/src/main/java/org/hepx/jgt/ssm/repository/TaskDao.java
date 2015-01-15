@@ -17,6 +17,8 @@ public interface TaskDao {
 
     void save(Task task);
 
+    void update(Task task);
+
     void delete(Long id);
 
     void deleteByUserId(@Param("userId")Long userId);

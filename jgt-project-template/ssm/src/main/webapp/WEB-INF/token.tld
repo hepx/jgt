@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--将token.tld复制到 Web 应用的WEB-INF/路径，或WEB-INF的任意子路径下-->
+<taglib xmlns="http://java.sun.com/xml/ns/javaee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+        version="2.1">
+    <tlib-version>1.0</tlib-version>
+    <short-name>token</short-name>
+    <uri>http://www.jgt.org/tag/token</uri>
+    <tag>
+        <!-- 定义标签名 -->
+        <name>token</name>
+        <!-- 定义标签处理类 -->
+        <tag-class>org.hepx.jgt.common.token.TokenTag</tag-class>
+        <!-- 定义标签体为空 -->
+        <body-content>empty</body-content>
+    </tag>
+</taglib>

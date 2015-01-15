@@ -27,6 +27,11 @@
             <artifactId>springside-core</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.hepx.jgt</groupId>
+            <artifactId>jgt-common</artifactId>
+        </dependency>
+
         <!-- mybatis -->
         <dependency>
             <groupId>org.mybatis</groupId>
