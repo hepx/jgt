@@ -67,7 +67,7 @@ public class TokenHelper {
         String o_token = (String)session.getAttribute(INPUT_TOKEN_NAME);
         if(o_token != null && o_token.equals(token)){
             //token只能保证使用一次。验证过的token将失效
-            removeToken(request,token);
+            //removeToken(request,token);
             return true; //验证成功
         }else{
             return false;//验证失败
