@@ -27,6 +27,10 @@ public class TaskService {
 		taskDao.save(entity);
 	}
 
+    public void updateTask(Task entity){
+        taskDao.update(entity);
+    }
+
 	public void deleteTask(Long id) {
 		taskDao.delete(id);
 	}

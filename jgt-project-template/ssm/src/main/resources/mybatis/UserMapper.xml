@@ -45,6 +45,20 @@
         values (#{loginName}, #{name}, #{password},#{registerDate},#{salt},#{roles})
     </insert>
 
+    <!--更新用户-->
+    <update id="update" parameterType="org.hepx.jgt.ssm.entity.User">
+        update tb_user
+        <trim prefix="set" suffixOverrides=",">
+            <if test="name != null and name !=''">
+                name=#{name},
+            </if>
+            <if test="password != null and password != ''">
+                password=#{password}
+            </if>
+        </trim>
+        where id=#{id}
+    </update>
+
     <!-- 删除用户 -->
     <delete id="delete" parameterType="long">
         delete from tb_user where id=#{id}

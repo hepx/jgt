@@ -63,7 +63,7 @@ public class AccountService {
 		if (StringUtils.isNotBlank(user.getPlainPassword())) {
 			entryptPassword(user);
 		}
-		userDao.save(user);
+		userDao.update(user);
 	}
 
 	public void deleteUser(Long id) {

@@ -3,13 +3,22 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- namespace必须指向Dao接口 -->
 <mapper namespace="org.hepx.jgt.ssm.repository.TaskDao">
+
+    <resultMap id="TaskMap" type="org.hepx.jgt.ssm.entity.Task">
+        <result column="id" property="id" jdbcType="BIGINT" />
+        <result column="title" property="title" jdbcType="VARCHAR" />
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <association property="user" javaType="org.hepx.jgt.ssm.entity.User">
+            <result column="user_id" property="id" />
+        </association>
+    </resultMap>
     <sql id="base_columns">
-        id, title, description
+        id, title, description,user_id
     </sql>
     <!--
         获取用户: 输出直接映射到对象, login_name列要"as loginName"以方便映射 ,team_id as "team.id"创建team对象并赋值
     -->
-    <select id="get" parameterType="long" resultType="org.hepx.jgt.ssm.entity.Task">
+    <select id="get" parameterType="long" resultMap="TaskMap">
         select
         <include refid="base_columns"/>
         from tb_task
@@ -29,6 +38,12 @@
         values (
         #{title}, #{description}, #{user.id})
     </insert>
+
+    <!-- 更新用户-->
+    <update id="update" parameterType="org.hepx.jgt.ssm.entity.Task">
+        update tb_task set title=#{title},description=#{description}
+        where id=#{id}
+    </update>
 
     <!-- 删除用户 -->
     <delete id="delete" parameterType="long">
