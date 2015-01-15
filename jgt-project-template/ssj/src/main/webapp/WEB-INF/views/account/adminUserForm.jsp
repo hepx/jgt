@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="t" uri="http://www.jgt.org/tag/token" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 
 <html>
@@ -10,6 +11,7 @@
 
 <body>
 	<form id="inputForm" action="${ctx}/admin/user/update" method="post" class="form-horizontal">
+        <t:token />
 		<input type="hidden" name="id" value="${user.id}"/>
 		<fieldset>
 			<legend><small>用户管理</small></legend>

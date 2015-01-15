@@ -1,6 +1,8 @@
 package org.hepx.jgt.ssj.web.interceptor;
 
 import org.hepx.jgt.common.token.TokenHelper;
+import org.springframework.http.HttpMethod;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,16 +17,16 @@ import java.util.Enumeration;
  */
 public class TokenVerifyInterceptor extends HandlerInterceptorAdapter {
 
-
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
-        if(isTokenPage(request)){
-            String token = request.getParameter(TokenHelper.INPUT_TOKEN_NAME);
+        //处理所有POST请求
+        if(request.getMethod().equalsIgnoreCase(HttpMethod.POST.toString())){
+            String token = TokenHelper.getTokenForRequest(request);
             if(TokenHelper.verifyToken(request,token)){
                 return true;
             }else{
-                //验证不通过回到首页
-                response.sendRedirect(request.getContextPath()+"/");
+                //验证不通过返回403
+                response.sendError(HttpServletResponse.SC_FORBIDDEN,"Bad or missing Token value");
                 return false;
             }
         }
