@@ -1,8 +1,8 @@
 package org.hepx.jgt.ssj.web.interceptor;
 
+import org.hepx.jgt.common.ajax.AjaxUtil;
 import org.hepx.jgt.common.token.TokenHelper;
 import org.springframework.http.HttpMethod;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +11,9 @@ import java.util.Enumeration;
 
 /**
  * Token 验证拦截器
+ * 说明：Token拦截器拦截所有POST请求。
+ * 1:form提交的请求，token做为一个hidden隐藏域参数同其它参数一起传递到后台，后台通过request.getParameter()来取token
+ * 2:ajax提交的请求，token需要放置在header中做为头信息的一参数传递后台，后台通过request.getHeader()来取token
  * User: hepanxi
  * Date: 15-1-14
  * Time: 下午5:42
@@ -25,8 +28,13 @@ public class TokenVerifyInterceptor extends HandlerInterceptorAdapter {
             if(TokenHelper.verifyToken(request,token)){
                 return true;
             }else{
-                //验证不通过返回403
-                response.sendError(HttpServletResponse.SC_FORBIDDEN,"Bad or missing Token value");
+                //验证不通过,返回403
+                if(AjaxUtil.isAjaxRequest(request)){
+                    response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                    response.getWriter().println("Bad or missing Token value");
+                }else{
+                    response.sendError(HttpServletResponse.SC_FORBIDDEN,"Bad or missing Token value");
+                }
                 return false;
             }
         }

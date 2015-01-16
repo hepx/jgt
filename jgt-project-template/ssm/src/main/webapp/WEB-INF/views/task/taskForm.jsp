@@ -37,6 +37,23 @@
 			$("#task_title").focus();
 			//为inputForm注册validate函数
 			$("#inputForm").validate();
+
+            //测试AJAX token
+/*            $("#inputForm").submit(function(event){
+                event.preventDefault();
+                $.ajax({
+                    type: 'POST',
+                    headers:{'jgt_token':$(":hidden[name=jgt_token]").val()},  //ajax提交时在header中加入token
+                    url: '${ctx}/task/update',
+                    data: $("#inputForm").serialize(),
+                    success:function(data){
+                        window.location.href="${ctx}/";
+                    },
+                    error:function(jqXHR,status){
+                        alert(jqXHR.responseText);
+                    }
+                });
+            });*/
 		});
 	</script>
 </body>

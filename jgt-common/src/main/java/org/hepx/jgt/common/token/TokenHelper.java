@@ -1,5 +1,6 @@
 package org.hepx.jgt.common.token;
 
+import org.hepx.jgt.common.ajax.AjaxUtil;
 import org.hepx.jgt.common.random.RandomGenerater;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,7 +32,6 @@ public class TokenHelper {
             }
         }
         return token;
-
     }
 
     /**
@@ -66,8 +66,6 @@ public class TokenHelper {
         //原始TOKEN
         String o_token = (String)session.getAttribute(INPUT_TOKEN_NAME);
         if(o_token != null && o_token.equals(token)){
-            //token只能保证使用一次。验证过的token将失效
-            //removeToken(request,token);
             return true; //验证成功
         }else{
             return false;//验证失败
@@ -80,6 +78,10 @@ public class TokenHelper {
      * @return
      */
     public static String getTokenForRequest(HttpServletRequest request){
-        return request.getParameter(INPUT_TOKEN_NAME);
+        if(AjaxUtil.isAjaxRequest(request)){
+            return request.getHeader(INPUT_TOKEN_NAME);
+        }else{
+            return request.getParameter(INPUT_TOKEN_NAME);
+        }
     }
 }
