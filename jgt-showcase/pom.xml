@@ -175,4 +175,19 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+    <build>
+        <finalName>jgt-showcase</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>8.1.8.v20121106</version>
+                <configuration>
+                    <webApp>
+                        <contextPath>/jgt-showcase</contextPath>
+                    </webApp>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
