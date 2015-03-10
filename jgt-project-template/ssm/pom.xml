@@ -210,7 +210,16 @@
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <configuration>
                     <uriEncoding>UTF-8</uriEncoding>
-                    <path>/${artifactId}</path>
+                    <path>/${project.build.finalName}</path>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <configuration>
+                    <webAppConfig>
+                        <contextPath>/${project.build.finalName}</contextPath>
+                    </webAppConfig>
                 </configuration>
             </plugin>
         </plugins>
