@@ -9,6 +9,6 @@ jgt java通用技术
 
 4：jgt-showcase 一个基于SpringMVC+JPA+Bootstrap的小项目
 
-5：jgt-project-template 包含SSM(Spring+SpringMVC+Mbatis)和SSJ(Spring+SpringMVC+JPA)两个模板项目,可以通过Maven Archetype定制项目
+5：jgt-project-template 包含SSM(Spring+SpringMVC+Mybatis)和SSJ(Spring+SpringMVC+JPA)两个模板项目,可以通过Maven Archetype定制项目
 
 
