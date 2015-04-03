@@ -27,10 +27,10 @@ import com.google.common.collect.Maps;
 /**
  * Task管理的Controller, 使用Restful风格的Urls:
  * 
- * List page : GET /task/
- * Create page : GET /task/create
+ * List pagehelper : GET /task/
+ * Create pagehelper : GET /task/create
  * Create action : POST /task/create
- * Update page : GET /task/update/{id}
+ * Update pagehelper : GET /task/update/{id}
  * Update action : POST /task/update
  * Delete action : GET /task/delete/{id}
  * 
@@ -52,8 +52,8 @@ public class TaskController {
 	private TaskService taskService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String list(@RequestParam(value = "page", defaultValue = "1") int pageNumber,
-			@RequestParam(value = "page.size", defaultValue = PAGE_SIZE) int pageSize,
+	public String list(@RequestParam(value = "pagehelper", defaultValue = "1") int pageNumber,
+			@RequestParam(value = "pagehelper.size", defaultValue = PAGE_SIZE) int pageSize,
 			@RequestParam(value = "sortType", defaultValue = "auto") String sortType, Model model,
 			ServletRequest request) {
 		Map<String, Object> searchParams = Servlets.getParametersStartingWith(request, "search_");
