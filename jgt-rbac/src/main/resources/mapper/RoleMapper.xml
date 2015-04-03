@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="org.hepx.rbac.mapper.RoleMapper">
+    <cache/>
+
+    <sql id="base_columns">
+        id, role, description, resource_ids as resourceIdsStr, available
+    </sql>
+
+    <!--创建用户-->
+    <insert id="createRole" parameterType="role" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_role (role, description, resource_ids, available)
+        values (#{role}, #{description}, #{resourceIdsStr}, #{available})
+    </insert>
+
+    <!--更新用户-->
+    <update id="updateRole" parameterType="role">
+        update sys_role
+        <trim prefix="set" suffixOverrides=",">
+            <if test="role != null and role !=''">
+                role=#{role},
+            </if>
+            <if test="description != null and description != ''">
+                description=#{description},
+            </if>
+            <if test="resourceIdsStr != null and resourceIdsStr != ''">
+                resource_ids=#{resourceIdsStr},
+            </if>
+            <if test="available != null">
+                available=#{available},
+            </if>
+        </trim>
+        where id=#{id}
+    </update>
+
+    <!-- 删除用户 -->
+    <delete id="deleteRole" parameterType="long">
+        delete from sys_role where id=#{roleId}
+    </delete>
+
+    <!--查询用户-->
+    <select id="findOne" parameterType="long" resultType="role">
+        select
+        <include refid="base_columns"/>
+        from sys_role
+        where id=#{roleId}
+    </select>
+
+    <select id="findAll" resultType="role">
+        select
+        <include refid="base_columns"/>
+        from sys_role
+    </select>
+
+</mapper>

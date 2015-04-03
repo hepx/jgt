@@ -1,0 +1,90 @@
+#set($page_title="编辑角色信息")
+#set($bankUrl="${request.getHeader('Referer')}")
+#set($cssUrls=["${rc.contextPath}/assets/css/zTreeStyle/zTreeStyle.css"])
+#set($jsUrls= ["${rc.contextPath}/static/role/edit.js","${rc.contextPath}/assets/js/zTree/jquery.ztree.all-3.5.min.js"])
+
+<div class="main-content">
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try {
+                ace.settings.check('breadcrumbs', 'fixed')
+                var resourceIds;
+                #if(${role.resourceIds})
+                    resourceIds=$role.resourceIds;
+                #end;
+            } catch (e) {
+            }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="fa fa-home home-icon"></i>
+                <a href="${rc.contextPath}/">首页</a>
+            </li>
+            <li class="active">$page_title</li>
+        </ul>
+        <div class="nav-search">
+            <a class="btn btn-xs btn-grey arrowed" href="${bankUrl}" title="返回">
+                <i class="fa fa-reply"></i> 返回
+            </a>
+        </div>
+    </div>
+
+    <div class="page-content">
+        <div class="row">
+            <div class="col-xs-12">
+                <h3 class="header smaller lighter blue">$page_title</h3>
+                <div class="step-content row-fluid position-relative" id="step-container">
+                    <form action="" class="form-horizontal" id="validation-form" method="post">
+                        <input type="hidden" name="id" value="$!{role.id}">
+                        <input type="hidden" name="available" value="$!{role.available}">
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="email">角色名:</label>
+                            <div class="col-xs-12 col-sm-9">
+                                <div class="clearfix">
+                                    <input type="text" name="role" id="role" value="$!{role.role}"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-2"></div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">角色描述:</label>
+                            <div class="col-xs-12 col-sm-9">
+                                <div class="clearfix">
+                                    <input type="text" id="description" name="description" value="$!{role.description}"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-2"></div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="comment">拥有的资源列表:</label>
+                            <div class="col-xs-12 col-sm-9">
+                                <div class="clearfix">
+                                    <input type="hidden" id="resourceIds" name="resourceIds">
+                                    <textarea rows="4" id="resourceName" name="resourceName">$fun.resourceNames(${role.resourceIds})</textarea>
+                                    <a id="menuBtn" href="#">选择</a>
+                                </div>
+                                <div id="menuContent" class="menuContent" style="display:none;">
+                                    <ul id="tree" class="ztree" style="margin-top:0; width:160px;"></ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix form-actions">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button class="btn btn-info" type="submit">
+                                    <i class="fa fa-check bigger-110"></i>
+                                    ${op}
+                                </button>
+                                &nbsp; &nbsp; &nbsp;
+                                <button class="btn" type="reset">
+                                    <i class="fa fa-undo bigger-110"></i>
+                                    重置
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

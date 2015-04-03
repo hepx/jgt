@@ -1,0 +1,112 @@
+#set($page_title="编辑用户信息")
+#set($bankUrl="${request.getHeader('Referer')}")
+#set($cssUrls=["${rc.contextPath}/assets/css/chosen.css"])
+#set($jsUrls= ["${rc.contextPath}/assets/js/chosen.jquery.min.js","${rc.contextPath}/static/user/edit.js"])
+
+<div class="main-content">
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try {
+                ace.settings.check('breadcrumbs', 'fixed')
+            } catch (e) {
+            }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="fa fa-home home-icon"></i>
+                <a href="${rc.contextPath}/">首页</a>
+            </li>
+            <li class="active">$!{page_title}</li>
+        </ul>
+        <div class="nav-search">
+            <a class="btn btn-xs btn-grey arrowed" href="$!{bankUrl}" title="返回">
+                <i class="fa fa-reply"></i> 返回
+            </a>
+        </div>
+    </div>
+
+    <div class="page-content">
+        <div class="row">
+            <div class="col-xs-12">
+                <h3 class="header smaller lighter blue">$!{page_title}</h3>
+                <!-- PAGE CONTENT BEGINS -->
+                <div class="step-content row-fluid position-relative" id="step-container">
+                    <form action="" class="form-horizontal" id="validation-form" method="post">
+                        <input type="hidden" name="id" value="$!{user.id}">
+                        <input type="hidden" name="locked" value="$!{user.locked}">
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-3 no-padding-right">用户名:</label>
+                            <div class="col-xs-12 col-sm-9">
+                                <div class="clearfix">
+                                    <input type="text" name="username" id="username" value="$!{user.username}"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-2"></div>
+                        #if(${op}=="新增")
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-3 no-padding-right">密码:</label>
+                            <div class="col-xs-12 col-sm-9">
+                                <div class="clearfix">
+                                    <input type="password" id="password" name="password"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-2"></div>
+                        #end
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-3 no-padding-right">手机号码:</label>
+                            <div class="col-xs-12 col-sm-9">
+                                <div class="clearfix">
+                                    <input type="text" id="mobile" name="mobile" value="$!{user.mobile}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-2"></div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-3 no-padding-right">邮箱地址:</label>
+                            <div class="col-xs-12 col-sm-9">
+                                <div class="clearfix">
+                                    <input type="text" id="email" name="email" value="$!{user.email}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-2"></div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-3 no-padding-right">所属组织:</label>
+                            <div class="col-xs-12 col-sm-9">
+                                <div class="clearfix">
+                                    $fun.organizationSelect("organizationId",$!{user.organizationId},"")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-2"></div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-3 no-padding-right">角色列表:</label>
+                            <div class="col-xs-12 col-sm-9">
+                                <div class="clearfix">
+                                    $fun.roleMultipleSelect("roleIds",$!{user.roleIds},"width-20 chosen-select tag-input-style")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-2"></div>
+                        <div class="clearfix form-actions">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button class="btn btn-info" type="submit">
+                                    <i class="fa fa-check bigger-110"></i>
+                                    ${op}
+                                </button>
+                                &nbsp; &nbsp; &nbsp;
+                                <button class="btn" type="reset">
+                                    <i class="fa fa-undo bigger-110"></i>
+                                    重置
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,65 @@
+#set($page_title="公司列表")
+#set($cssUrls=["${rc.contextPath}/assets/css/jquery.treetable.css"])
+#set($jsUrls=["${rc.contextPath}/assets/js/jquery.treetable.js","${rc.contextPath}/static/organization/list.js"])
+<div class="main-content">
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try {
+                ace.settings.check('breadcrumbs', 'fixed');
+            } catch (e) {
+            }
+        </script>
+        <ul class="breadcrumb">
+            <li>
+                <i class="fa fa-home home-icon"></i>
+                <a href="${rc.contextPath}/">首页</a>
+            </li>
+            <li class="active">$page_title</li>
+        </ul>
+    </div>
+    <div class="page-content">
+        <div class="row">
+            <div class="col-xs-12">
+                <h3 class="header smaller lighter blue">$page_title</h3>
+                <div class="table-responsive">
+                    <div class="text-info">$!{msg}</div>
+                    <table id="organizationList" class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th class="center col-lg-3">名称</th>
+                            <th class="center col-lg-1">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            #foreach($organization in $organizationList)
+                            <tr data-tt-id="$!{organization.id}" #if($!{organization.parentId}!=0) data-tt-parent-id="$!{organization.parentId}"
+                            #end >
+                                <td>$!{organization.name}</td>
+                                <td>
+                                    <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
+                                        #if($shiro.hasPermission("organization:create"))
+                                            <a class="green" href="${rc.contextPath}/organization/$!{organization.id}/appendChild">
+                                                添加子节点
+                                            </a>
+                                        #end
+                                        #if($shiro.hasPermission("organization:update"))
+                                            <a class="blue" href="${rc.contextPath}/organization/$!{organization.id}/update">
+                                                编辑
+                                            </a>
+                                        #end
+                                        #if($shiro.hasPermission("organization:delete"))
+                                            <a class="grey del" href="${rc.contextPath}/organization/$!{organization.id}/delete">
+                                                删除
+                                            </a>
+                                        #end
+                                    </div>
+                                </td>
+                            </tr>
+                            #end
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
