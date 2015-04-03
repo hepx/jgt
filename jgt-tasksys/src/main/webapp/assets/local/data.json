@@ -1,0 +1,71 @@
+{"data": [
+    {
+        "commodityId": 4,
+        "createTime": 1407746589000,
+        "description": "不粘锅 少油烟",
+        "endTime": "2014-08-31",
+        "id": 74,
+        "name": "英国恩腾黑金系列可拆卸手柄不粘无油烟铝合金炒锅",
+        "pictureUrl": "http://boss.ejushang.com/productPictures/58/1258_main_3_10.jpg",
+        "price": 298.00,
+        "rate": 0.100,
+        "startTime": "2014-08-01",
+        "status": true,
+        "url": "http://www.ejushang.com/product/1258"
+    },
+    {
+        "commodityId": 3,
+        "createTime": 1407746588000,
+        "description": "1、珐琅瓷抗酸抗碱，保证食物健康 2、欧式厨房时尚典范",
+        "endTime": "2014-08-31",
+        "id": 73,
+        "name": "法兰西宫廷系列双耳珐琅瓷蒸锅",
+        "pictureUrl": "http://img01.ejushang.com/1601_main_1_10.jpg",
+        "price": 498.00,
+        "rate": 0.100,
+        "startTime": "2014-08-01",
+        "status": false,
+        "url": "http://www.ejushang.com/product/1601"
+    },
+    {
+        "commodityId": 2,
+        "createTime": 1407746587000,
+        "description": "1.高档pp胶材质，承重力更强 2.双色无缝衔接先进技术，时尚美观 3.安装方便，节省空间",
+        "endTime": "2014-08-29",
+        "id": 72,
+        "name": "爱东爱西时尚创意凳子",
+        "pictureUrl": "http://img01.ejushang.com/948_main_1_10.jpg",
+        "price": 49.00,
+        "rate": 0.080,
+        "startTime": "2014-07-30",
+        "status": true,
+        "url": "http://www.ejushang.com/product/948"
+    },
+    {
+        "commodityId": 1,
+        "createTime": 1407746561000,
+        "description": "1.经典款式，质量上乘； 2.内胆配置，使用方便； 3.脚踏设计，便捷实用； 4.液压缓冲，环保静音",
+        "endTime": "2014-08-15",
+        "id": 71,
+        "name": "EKO创意时尚脚踏式不锈钢垃圾桶",
+        "pictureUrl": "http://boss.ejushang.com/productPictures/89/1389_main_1_10.jpg",
+        "price": 126.00,
+        "rate": 0.075,
+        "startTime": "2014-08-10",
+        "status": false,
+        "updateTime": 1407746770000,
+        "url": "http://www.ejushang.com/product/1389"
+    }
+], "first": true,
+    "firstPage": true,
+    "last": true,
+    "lastPage": true,
+    "number": 0,
+    "numberOfElements": 4,
+    "size": 10, "sort": {},
+    "totalElements": 4,
+    "totalPages": 1,
+    "recordsTotal": 4,
+    "recordsFiltered": 4
+
+}

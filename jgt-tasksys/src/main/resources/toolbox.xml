@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<toolbox>
+    <!--权限标签-->
+    <tool>
+        <key>shiro</key>
+        <scope>application</scope>
+        <class>org.hepx.tasksys.velocity.Permission</class>
+    </tool>
+    <!--通用方法标签-->
+    <tool>
+        <key>fun</key>
+        <scope>application</scope>
+        <class>org.hepx.tasksys.velocity.Functions</class>
+    </tool>
+</toolbox>

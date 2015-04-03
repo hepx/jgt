@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+	<!-- 自动扫描且只扫描@Controller -->
+	<context:component-scan base-package="org.hepx.tasksys" use-default-filters="false">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+		<context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+	</context:component-scan>
+
+    <!--拦截器-->
+<!--    <mvc:interceptors>
+        &lt;!&ndash;token验证拦截器&ndash;&gt;
+        <bean class="org.hepx.tasksyssys.web.interceptor.TokenVerifyInterceptor"/>
+    </mvc:interceptors>-->
+
+	<mvc:annotation-driven>
+		<mvc:message-converters register-defaults="true">
+			<!-- 将StringHttpMessageConverter的默认编码设为UTF-8 -->
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+		    	<constructor-arg value="UTF-8" />
+			</bean>
+			<!-- JSON -->
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="prettyPrint" value="true"/>
+            </bean>
+  		</mvc:message-converters>
+	</mvc:annotation-driven>
+
+    <!-- 资源文件，请求此目录下的内容，不会被controller处理 -->
+    <mvc:resources mapping="/assets/**" location="/assets/"/>
+    <mvc:resources mapping="/static/**" location="/static/"/>
+
+    <!-- URL映射-->
+    <mvc:view-controller path="/" view-name="index"/>
+
+    <!--velocity 模板配置-->
+    <bean id="velocityConfigurer" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+        <property name="resourceLoaderPath" value="WEB-INF/views"/>
+        <property name="velocityProperties">
+            <props>
+                <prop key="input.encoding">utf-8</prop>
+                <prop key="output.encoding">utf-8</prop>
+            </props>
+        </property>
+    </bean>
+    <bean id="velocityViewResolver" class="org.springframework.web.servlet.view.velocity.VelocityLayoutViewResolver">
+        <property name="prefix" value=""/>
+        <property name="suffix" value=".vm"/>
+        <property name="cache" value="false" />
+        <property name="contentType" value="text/html;charset=utf-8"/>
+        <property name="dateToolAttribute" value="dateTool"/>
+        <property name="numberToolAttribute" value="numberTool" />
+        <property name="layoutUrl" value="layout/layout.vm" />
+        <property name="allowSessionOverride" value="true"/>
+        <property name="allowRequestOverride" value="true"/>
+        <property name="exposeSessionAttributes" value="true"/>
+        <property name="requestContextAttribute" value="rc"/>
+        <property name="exposeRequestAttributes" value="true"/>
+        <property name="toolboxConfigLocation" value="WEB-INF/classes/toolbox.xml"/>
+        <!--<property name="exposeSpringMacroHelpers" value="true" />-->
+    </bean>
+
+<!--	 将Controller抛出的异常转到特定View, 保持SiteMesh的装饰效果
+	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props>
+				<prop key="java.lang.Throwable">error/500</prop>
+            </props>
+		</property>
+    </bean>-->
+
+    <!-- 控制器异常处理 -->
+    <bean id="exceptionHandlerExceptionResolver" class="org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver">
+    </bean>
+
+    <bean class="org.hepx.tasksys.web.exception.DefaultExceptionHandler"/>
+
+    <import resource="spring-mvc-shiro.xml"/>
+</beans>

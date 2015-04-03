@@ -1,0 +1,82 @@
+#set($page_title="编辑任务信息")
+#set($bankUrl="${request.getHeader('Referer')}")
+#set($jsUrls= ["${rc.contextPath}/static/task/edit.js"])
+<div class="main-content">
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try {
+                ace.settings.check('breadcrumbs', 'fixed')
+            } catch (e) {
+            }
+        </script>
+        <ul class="breadcrumb">
+            <li>
+                <i class="icon-home home-icon"></i>
+                <a href="${rc.contextPath}/">首页</a>
+            </li>
+            <li class="active">$page_title</li>
+        </ul>
+        <div class="nav-search">
+            <a class="btn btn-xs btn-grey arrowed" href="${bankUrl}" title="返回">
+                <i class="icon-reply icon-only"></i> 返回
+            </a>
+        </div>
+    </div>
+    <div class="page-content">
+        <div class="row">
+            <div class="col-xs-12">
+                <h3 class="header smaller lighter blue">$page_title</h3>
+                <div class="step-content row-fluid position-relative" id="step-container">
+                    <form action="" class="form-horizontal" id="validation-form" method="post">
+                        <input type="hidden" name="id" value="$!{task.id}">
+                        #if($!{type} == "1")
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-3 no-padding-right">任务内容</label>
+
+                                <div class="col-xs-12 col-sm-9">
+                                    <div class="clearfix">
+                                        <textarea rows="4" id="content" name="content">$!{task.content}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="space-2"></div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="name">执行人:</label>
+                                <div class="col-xs-12 col-sm-9">
+                                    <div class="clearfix">
+                                        $fun.userSelect("userId",$!{task.userId},"")
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="space-2"></div>
+                        #end
+                        #if($!{type}=="2")
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-3 no-padding-right">回复</label>
+                                <div class="col-xs-12 col-sm-9">
+                                    <div class="clearfix">
+                                        <textarea rows="4" id="feedback" name="feedback">$!{task.feedback}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="space-2"></div>
+                        #end
+                        <div class="clearfix form-actions">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button class="btn btn-info" type="submit">
+                                    <i class="icon-ok bigger-110"></i>
+                                    ${op}
+                                </button>
+                                &nbsp; &nbsp; &nbsp;
+                                <button class="btn" type="reset">
+                                    <i class="icon-undo bigger-110"></i>
+                                    重置
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

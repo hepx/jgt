@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>oTask任务系统-$!page_title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- basic styles -->
+    <link href="${rc.contextPath}/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="${rc.contextPath}/assets/css/font-awesome.min.css" />
+    <!--[if IE 7]>
+    <link rel="stylesheet" href="${rc.contextPath}/assets/css/font-awesome-ie7.min.css" />
+    <![endif]-->
+    <!-- pagehelper specific plugin styles -->
+    <link rel="stylesheet" href="${rc.contextPath}/assets/css/jquery.gritter.css" />
+    <link rel="stylesheet" href="${rc.contextPath}/assets/css/jquery.dataTables.bootstrap.css" />
+    <link rel="stylesheet" href="${rc.contextPath}/assets/css/datatables.responsive.css" />
+    <!-- fonts -->
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,300" />
+    <!-- ace styles -->
+    <link rel="stylesheet" href="${rc.contextPath}/assets/css/ace.min.css" />
+    <link rel="stylesheet" href="${rc.contextPath}/assets/css/ace-rtl.min.css" />
+    <link rel="stylesheet" href="${rc.contextPath}/assets/css/ace-skins.min.css" />
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" href="${rc.contextPath}/assets/css/ace-ie.min.css" />
+    <![endif]-->
+    <!-- inline styles related to this pagehelper -->
+    <!-- ace settings handler -->
+    <script src="${rc.contextPath}/assets/js/ace-extra.min.js"></script>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="${rc.contextPath}/assets/js/html5shiv.js"></script>
+    <script src="${rc.contextPath}/assets/js/respond.min.js"></script>
+    <![endif]-->
+    <!--内容 css, 针对单个页面 -->
+    #foreach($cssUrl in $!cssUrls)
+        <link rel="stylesheet" href="$!cssUrl"/>
+    #end
+</head>
+<body>
+    #parse("layout/header.vm")
+    <div class="main-container" id="main-container">
+        <script type="text/javascript">
+            try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+        </script>
+        <div class="main-container-inner">
+            #parse("layout/menu.vm")
+
+            $screen_content
+
+            #parse("layout/setting.vm")
+        </div>
+        <!-- 回到顶部 -->
+        <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+            <i class="icon-double-angle-up icon-only bigger-110"></i>
+        </a>
+    </div>
+
+#*    <!--[if !IE]> -->
+    <script src="${rc.contextPath}/assets/js/jquery-2.0.3.min.js"></script>
+    <!-- <![endif]-->
+
+    <!--[if IE]>
+    <script src="${rc.contextPath}/assets/js/jquery-1.10.2.min.js"></script>
+    <![endif]-->*#
+
+    <!--[if !IE]> -->
+    <script type="text/javascript">
+        window.jQuery || document.write("<script src='${rc.contextPath}/assets/js/jquery-2.0.3.min.js'>"+"<"+"script>");
+    </script>
+    <!-- <![endif]-->
+
+    <!--[if IE]>
+    <script type="text/javascript">
+        window.jQuery || document.write("<script src='${rc.contextPath}/assets/js/jquery-1.10.2.min.js'>"+"<"+"script>");
+    </script>
+    <![endif]-->
+
+    <script type="text/javascript">
+        if("ontouchend" in document) document.write("<script src='${rc.contextPath}/assets/js/jquery.mobile.custom.min.js'>"+"<"+"script>");
+    </script>
+    <script src="${rc.contextPath}/assets/js/bootstrap.min.js"></script>
+    <script src="${rc.contextPath}/assets/js/typeahead-bs2.min.js"></script>
+
+    <!-- pagehelper specific plugin scripts -->
+    <!--[if lte IE 8]>
+    <script src="${rc.contextPath}/assets/js/excanvas.min.js"></script>
+    <![endif]-->
+
+    <script src="${rc.contextPath}/assets/js/jquery.slimscroll.min.js"></script>
+    <script src="${rc.contextPath}/assets/js/jquery.gritter.min.js"></script>
+    <script src="${rc.contextPath}/assets/js/datatables.responsive.js"></script>
+    <script src="${rc.contextPath}/assets/js/bootbox.min.js"></script>
+    <script src="${rc.contextPath}/assets/js/jquery.validate.min.js"></script>
+    <script src="${rc.contextPath}/assets/local/message_zh.js"></script>
+
+     #*内容 js, 针对单个页面! 若包含有完整的 js 片段则整个显示,
+    并用 "(双引号) 替换 '(单引号) 避免显示时的引号问题*#
+    #foreach($jsUrl in $!jsUrls)
+        #if($!jsUrl.startsWith("<script") && $!jsUrl.endsWith("</script>"))
+            $!jsUrl.replaceAll("'", '"')
+        #else
+        <script type="text/javascript" src="$!jsUrl"></script>
+        #end
+    #end
+
+    <script src="${rc.contextPath}/assets/js/ace-elements.min.js"></script>
+    <script src="${rc.contextPath}/assets/js/ace.min.js"></script>
+
+    <!-- inline scripts related to this pagehelper -->
+    <script type="text/javascript">
+        //在JS里定义根路径
+        var RS_PATH="${rc.contextPath}/";
+/*        var responsiveHelper;
+        var breakpointDefinition = {
+            tablet: 1024,
+            phone : 480
+        };*/
+        jQuery(function($) {
+            //动态选中左边菜单
+            var pgurl="$!{bankUrl}"
+            if(!pgurl){
+                pgurl = "$!{request.requestURI}";
+                var qs="$!{request.queryString}";
+                if(qs){
+                    pgurl+="?"+qs;
+                }
+            }else{
+                pgurl=pgurl.substr(pgurl.search(location.host)+location.host.length);
+            }
+
+            $(".sidebar li a").each(function(){
+                if($(this).attr("href") === pgurl){
+                    $(this).closest('li').parent().closest('li').addClass("active open");
+                    $(this).closest('li').addClass("active");
+                }
+            });
+
+            /**
+             * 序列化JSON对象
+             * @returns {{}}
+             */
+            $.fn.serializeObject = function()
+            {
+                var o = {};
+                var a = this.serializeArray();
+                $.each(a, function() {
+                    if (o[this.name]) {
+                        if (!o[this.name].push) {
+                            o[this.name] = [o[this.name]];
+                        }
+                        o[this.name].push(this.value || '');
+                    } else {
+                        o[this.name] = this.value || '';
+                    }
+                });
+                return o;
+            };
+        })
+    </script>
+</body>
+</html>

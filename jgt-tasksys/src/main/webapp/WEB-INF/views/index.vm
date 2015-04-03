@@ -1,0 +1,98 @@
+#set($page_title="控制台")
+###set($jsUrls= ["${rc.contextPath}/static/index.js"])
+<div class="main-content">
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try {
+                ace.settings.check('breadcrumbs', 'fixed')
+            } catch (e) {
+            }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="icon-home home-icon"></i>
+                <a href="#">首页</a>
+            </li>
+            <li class="active">控制台</li>
+        </ul>
+        <!-- .breadcrumb -->
+    </div>
+
+    <div class="page-content">
+        <div class="page-header">
+            <h1>
+                控制台
+                <small>
+                    <i class="icon-double-angle-right"></i>
+                    查看
+                </small>
+            </h1>
+        </div>
+        <!-- /.pagehelper-header -->
+
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- PAGE CONTENT BEGINS -->
+
+                <div class="alert alert-block alert-success">
+                    <button type="button" class="close" data-dismiss="alert">
+                        <i class="icon-remove"></i>
+                    </button>
+
+                    <i class="icon-ok green"></i>
+
+                    欢迎使用
+                    <strong class="green">
+                        oTask任务系统
+                        <small>(v1.0)</small>
+                    </strong>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-7 col-lg-offset-2 infobox-container">
+                        <div class="infobox infobox-green  ">
+                            <div class="infobox-icon">
+                                <i class="icon-comments"></i>
+                            </div>
+
+                            <div class="infobox-data">
+                                <span class="infobox-data-number">$!{totalTask}</span>
+
+                                <div class="infobox-content">任务</div>
+                            </div>
+
+                        </div>
+
+                        <div class="infobox infobox-blue  ">
+                            <div class="infobox-icon">
+                                <i class="icon-twitter"></i>
+                            </div>
+
+                            <div class="infobox-data">
+                                <span class="infobox-data-number">$!{inline}</span>
+
+                                <div class="infobox-content">在线人数</div>
+                            </div>
+                        </div>
+
+                        <div class="infobox infobox-orange2  ">
+                            <div class="infobox-chart">
+                                <span class="sparkline" data-values="196,128,202,177,154,94,100,170,224"></span>
+                            </div>
+
+                            <div class="infobox-data">
+                                <span class="infobox-data-number">251</span>
+
+                                <div class="infobox-content">页面查看次数</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- PAGE CONTENT ENDS -->
+            </div>
+        </div>
+    </div>
+</div>

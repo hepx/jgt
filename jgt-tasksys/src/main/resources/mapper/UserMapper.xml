@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="org.hepx.tasksys.mapper.UserMapper">
+    <cache />
+    <resultMap id="userMap" type="org.hepx.tasksys.entity.User">
+        <result column="id" property="id"/>
+        <result column="organization_id" property="organizationId"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="salt" property="salt"/>
+        <result column="locked" property="locked"/>
+        <result column="role_ids" property="roleIdsStr"/>
+    </resultMap>
+    <sql id="base_columns">
+        id, organization_id, username, password, salt, role_ids, locked
+    </sql>
+
+    <!--创建用户-->
+    <insert id="createUser" parameterType="o_user" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_user (organization_id, username, password, salt, role_ids, locked)
+        values (#{organizationId}, #{username}, #{password}, #{salt}, #{roleIdsStr}, #{locked})
+    </insert>
+
+    <!--更新用户-->
+    <update id="updateUser" parameterType="o_user">
+        update sys_user
+        <trim prefix="set" suffixOverrides=",">
+            <if test="organizationId != null">
+                organization_id=#{organizationId},
+            </if>
+            <if test="username != null and username !=''">
+                username=#{username},
+            </if>
+            <if test="password != null and password != ''">
+                password=#{password},
+            </if>
+            <if test="salt != null and salt !=''">
+                salt=#{salt},
+            </if>
+            <if test="roleIdsStr != null and roleIdsStr !=''">
+                role_ids=#{roleIdsStr},
+            </if>
+            <if test="locked != null">
+                locked=#{locked},
+            </if>
+        </trim>
+        where id=#{id}
+    </update>
+
+    <!-- 删除用户 -->
+    <delete id="deleteUser" parameterType="long">
+        delete from sys_user where id=#{userId}
+    </delete>
+
+    <!--查询用户-->
+    <select id="findOne" parameterType="long" resultMap="userMap">
+        select <include refid="base_columns"/>
+        from sys_user
+        where id=#{userId}
+    </select>
+
+    <select id="findAll" resultMap="userMap">
+        select <include refid="base_columns"/>
+        from sys_user
+    </select>
+
+    <select id="findByUsername" parameterType="string" resultMap="userMap">
+        select <include refid="base_columns"/>
+        from sys_user where username=#{username}
+    </select>
+
+</mapper> 
