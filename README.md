@@ -11,4 +11,7 @@ jgt java通用技术
 
 5：jgt-project-template 包含SSM(Spring+SpringMVC+Mybatis)和SSJ(Spring+SpringMVC+JPA)两个模板项目,可以通过Maven Archetype定制项目
 
+6：jgt-rbac 一个基于Apache Shiro做的权限认证基础项目
+
+7：jgt-tasksys 基于jgt-rbac的的实例
 
