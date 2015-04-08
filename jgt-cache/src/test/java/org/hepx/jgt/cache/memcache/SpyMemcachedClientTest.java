@@ -17,11 +17,11 @@ import java.util.concurrent.TimeUnit;
  * Time: 下午4:48
  */
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:applicationContext-memcached.xml")
+/*@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("classpath:applicationContext-memcached.xml")*/
 public class SpyMemcachedClientTest {
 
-    @Autowired
+  /*  @Autowired
     private SpyMemcachedClient client;
 
     @Test
@@ -69,6 +69,6 @@ public class SpyMemcachedClientTest {
 
         Assert.assertEquals(client.decr(key, 2, 1), 0);
         Assert.assertEquals(client.get(key), "0");
-    }
+    }*/
 
 }
