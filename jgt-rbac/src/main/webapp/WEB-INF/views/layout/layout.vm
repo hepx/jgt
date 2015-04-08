@@ -108,15 +108,10 @@
     <script type="text/javascript">
         //在JS里定义根路径
         var RS_PATH="${rc.contextPath}/";
-/*        var responsiveHelper;
-        var breakpointDefinition = {
-            tablet: 1024,
-            phone : 480
-        };*/
 
-        jQuery(function($) {
+        $(function($) {
             //动态选中左边菜单
-            var pgurl="$!{bankUrl}"
+            var pgurl="$!{bankUrl}";
             if(!pgurl){
                 pgurl = "$!{request.requestURI}";
                 var qs="$!{request.queryString}";
@@ -134,10 +129,19 @@
                 }
             });
 
-            /**
+            $(".sidebar li a").on("click",function(){
+                //当前激活的页面
+                var active_a=$(".sidebar li[class='active'] a").get(0);
+                //如果点击左侧栏菜单还是当前页的话，就不做任何操作
+                if($(active_a).attr("href") === $(this).attr("href")){
+                    return false;
+                }
+            });
+
+/*            *//**
              * 序列化JSON对象
              * @returns {{}}
-             */
+             *//*
             $.fn.serializeObject = function()
             {
                 var o = {};
@@ -153,7 +157,7 @@
                     }
                 });
                 return o;
-            };
+            };*/
         })
     </script>
 </body>

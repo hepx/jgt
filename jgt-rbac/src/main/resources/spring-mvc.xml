@@ -10,14 +10,7 @@
 	<!-- 自动扫描且只扫描@Controller -->
 	<context:component-scan base-package="org.hepx.rbac" use-default-filters="false">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
-		<context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
 	</context:component-scan>
-
-    <!--拦截器-->
-<!--    <mvc:interceptors>
-        &lt;!&ndash;token验证拦截器&ndash;&gt;
-        <bean class="org.hepx.rbac.web.interceptor.TokenVerifyInterceptor"/>
-    </mvc:interceptors>-->
 
 	<mvc:annotation-driven>
 		<mvc:message-converters register-defaults="true">
@@ -66,20 +59,18 @@
         <!--<property name="exposeSpringMacroHelpers" value="true" />-->
     </bean>
 
-<!--	 将Controller抛出的异常转到特定View, 保持SiteMesh的装饰效果
-	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
-		<property name="exceptionMappings">
-			<props>
-				<prop key="java.lang.Throwable">error/500</prop>
+    <!-- 全局异常配置 -->
+    <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="exceptionMappings">
+            <props>
+                <prop key="java.lang.Throwable">error/500</prop>
+                <prop key="org.apache.shiro.authz.UnauthorizedException">error/unauthorized</prop>
             </props>
-		</property>
-    </bean>-->
-
-    <!-- 控制器异常处理 -->
-    <bean id="exceptionHandlerExceptionResolver" class="org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver">
+        </property>
+        <property name="defaultErrorView" value="error/500" />
+        <property name="defaultStatusCode" value="500" />
+        <property name="exceptionAttribute" value="ex" />
     </bean>
-
-    <bean class="org.hepx.rbac.web.exception.DefaultExceptionHandler"/>
 
     <import resource="spring-mvc-shiro.xml"/>
 </beans>
