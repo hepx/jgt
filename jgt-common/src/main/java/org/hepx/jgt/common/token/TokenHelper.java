@@ -5,6 +5,7 @@ import org.hepx.jgt.common.random.RandomGenerater;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Enumeration;
 
 /**
  * Token辅助类
@@ -83,5 +84,21 @@ public class TokenHelper {
         }else{
             return request.getParameter(INPUT_TOKEN_NAME);
         }
+    }
+
+    /**
+     * 检查请求参数中是否包含token验证字段
+     * @param request
+     * @return
+     */
+    public static boolean isTokenPage(HttpServletRequest request){
+        Enumeration<String> fields = request.getParameterNames();
+        while (fields!=null && fields.hasMoreElements()){
+            String name = fields.nextElement();
+            if(TokenHelper.INPUT_TOKEN_NAME.equals(name)){
+                return true;
+            }
+        }
+        return false;
     }
 }
