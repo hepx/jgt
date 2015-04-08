@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>org.hepx.jgt</groupId>
-        <artifactId>jgt-rbac-parent</artifactId>
+        <artifactId>jgt-rbac-case</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -10,7 +10,7 @@
 	<artifactId>jgt-rbac</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>war</packaging>
-    <description>基于角色权限的访问授权</description>
+    <description>Apache Shiro-RBAC(基于角色的访问控制)</description>
 
     <properties>
         <!-- Plugin的属性定义 -->

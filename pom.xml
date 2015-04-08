@@ -28,11 +28,9 @@
         <module>jgt-mybatis-generator</module>
         <!-- 项目模板 -->
         <module>jgt-project-template</module>
-        <!-- 权限模块 -->
-        <module>jgt-rbac</module>
-            <module>jgt-rbac-parent</module>
-            <module>jgt-tasksys</module>
-        </modules>
+        <!-- RBAC权限模块 -->
+        <module>jgt-rbac-case</module>
+    </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

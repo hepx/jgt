@@ -2,13 +2,20 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.hepx.jgt</groupId>
-    <artifactId>jgt-rbac-parent</artifactId>
+    <artifactId>jgt-rbac-case</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <description>基于apache-shiro实现的用户角色权限的访问授权</description>
+    <description>Apache Shiro案例</description>
 
-    <name>jgt-rbac-parent</name>
+    <name>jgt-rbac-case</name>
     <url>http://maven.apache.org</url>
+
+    <modules>
+        <!--基于角色的访问控制-->
+        <module>jgt-rbac</module>
+        <!--基于jgt-rbac的一个任务系统案例-->
+        <module>jgt-tasksys</module>
+    </modules>
 
     <properties>
         <!-- 主要依赖库的版本定义 -->

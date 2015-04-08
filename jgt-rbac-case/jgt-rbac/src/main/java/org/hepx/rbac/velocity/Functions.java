@@ -12,7 +12,6 @@ import org.hepx.rbac.service.RoleService;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 /**
