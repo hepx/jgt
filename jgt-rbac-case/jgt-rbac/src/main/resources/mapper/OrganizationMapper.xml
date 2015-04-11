@@ -9,13 +9,11 @@
         id, name, parent_id as parentId, parent_ids as parentIds, available
     </sql>
 
-    <!--创建用户-->
     <insert id="createOrganization" parameterType="organization" useGeneratedKeys="true" keyProperty="id">
         insert into sys_organization (name, parent_id, parent_ids, available)
         values (#{name}, #{parentId}, #{parentIds}, #{available})
     </insert>
 
-    <!--更新用户-->
     <update id="updateOrganization" parameterType="organization">
         update sys_organization
         <trim prefix="set" suffixOverrides=",">
@@ -35,12 +33,10 @@
         where id=#{id}
     </update>
 
-    <!-- 删除用户 -->
     <delete id="deleteOrganization" parameterType="long">
         delete from sys_organization where id=#{organizationId} or parent_id=#{organizationId}
     </delete>
 
-    <!--查询用户-->
     <select id="findOne" parameterType="long" resultType="organization">
         select <include refid="base_columns"/>
         from sys_organization

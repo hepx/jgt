@@ -9,13 +9,11 @@
         id, name, type, url, permission, parent_id as parentId, parent_ids as parentIds, available,style
     </sql>
 
-    <!--创建用户-->
     <insert id="createResource" parameterType="resource" useGeneratedKeys="true" keyProperty="id">
         insert into sys_resource (name, type, url, permission, parent_id, parent_ids, available,style)
         values (#{name}, #{type}, #{url}, #{permission}, #{parentId}, #{parentIds}, #{available},#{style})
     </insert>
 
-    <!--更新用户-->
     <update id="updateResource" parameterType="resource">
         update sys_resource
         <trim prefix="set" suffixOverrides=",">
@@ -47,12 +45,10 @@
         where id=#{id}
     </update>
 
-    <!-- 删除用户 -->
     <delete id="deleteResource" parameterType="long">
         delete from sys_resource where id=#{resourceId} or parent_id=#{resourceId}
     </delete>
 
-    <!--查询用户-->
     <select id="findOne" parameterType="long" resultType="resource">
         select
         <include refid="base_columns"/>
