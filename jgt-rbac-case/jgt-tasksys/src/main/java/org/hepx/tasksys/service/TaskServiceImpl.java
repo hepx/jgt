@@ -24,6 +24,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public Task createTask(Task task) {
         task.setCreateTime(new Date());//新任务默认当前时间
+        task.setStatus(Task.TaskStaus.CREATED);//新任务默认为创建完成
         taskMapper.createTask(task);
         return task;
     }

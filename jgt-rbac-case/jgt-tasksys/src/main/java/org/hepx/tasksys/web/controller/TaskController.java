@@ -7,6 +7,7 @@ import org.hepx.tasksys.entity.Task;
 import org.hepx.tasksys.entity.User;
 import org.hepx.tasksys.service.TaskService;
 import org.hepx.tasksys.service.UserService;
+import org.hepx.tasksys.velocity.Functions;
 import org.hepx.tasksys.web.ResponseResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +38,7 @@ public class TaskController {
         return "task/list";
     }
 
-    @RequiresPermissions("task:create")
+    @RequiresPermissions(value = {"task:create","mytask:create"},logical = Logical.OR)
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String showCreateForm(@RequestParam(defaultValue = "1")String type,Model model) {
         model.addAttribute("op", "新增");
@@ -45,12 +46,20 @@ public class TaskController {
         return "task/edit";
     }
 
-    @RequiresPermissions("task:create")
+    @RequiresPermissions(value = {"task:create","mytask:create"},logical = Logical.OR)
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public String create(Task task, RedirectAttributes redirectAttributes) {
+    public String create(Task task, @RequestParam("type")String type, RedirectAttributes redirectAttributes) {
+        if("2".equals(type)){
+            task.setUserId(Functions.getCurrentUserId());
+        }
         taskService.createTask(task);
         redirectAttributes.addFlashAttribute("msg", "新增成功");
-        return "redirect:/task";
+        if("2".equals(type)){
+            return "redirect:/task/my";
+
+        }else{
+            return "redirect:/task";
+        }
     }
 
     @RequiresPermissions(value = {"task:update","mytask:update"},logical = Logical.OR)
@@ -77,9 +86,23 @@ public class TaskController {
     @RequiresPermissions("task:delete")
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.GET)
     @ResponseBody
-    public Map showDeleteForm(@PathVariable("id") Long id) {
+    public Map delete(@PathVariable("id") Long id) {
         try {
             taskService.deleteTask(id);
+            return ResponseResult.buildSuccessResult().toMap();
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            return ResponseResult.buildFailResult().toMap();
+        }
+    }
+    @RequiresPermissions("task:update")
+    @RequestMapping(value = "/{id}/finish", method = RequestMethod.GET)
+    @ResponseBody
+    public Map finish(@PathVariable("id") Long id) {
+        try {
+            Task task=taskService.findOne(id);
+            task.setStatus(Task.TaskStaus.FINISH);
+            taskService.updateTask(task);
             return ResponseResult.buildSuccessResult().toMap();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
@@ -90,24 +113,12 @@ public class TaskController {
     @RequiresPermissions("mytask:view")
     @RequestMapping(value = "/my", method = RequestMethod.GET)
     public String myList(Model model) {
-        if (getCurrentUserId() != null) {
-            model.addAttribute("taskList", taskService.findByUserId(getCurrentUserId()));
+        Long userId = Functions.getCurrentUserId();
+        if (userId != null) {
+            model.addAttribute("taskList", taskService.findByUserId(userId));
         }
         return "task/mylist";
     }
 
-    /**
-     * 获得当前登录用户
-     *
-     * @return
-     */
-    public Long getCurrentUserId() {
-        String userName = (String) SecurityUtils.getSubject().getPrincipal();
-        User user = userService.findByUsername(userName);
-        if (user != null) {
-            return user.getId();
-        } else {
-            return null;
-        }
-    }
+
 }

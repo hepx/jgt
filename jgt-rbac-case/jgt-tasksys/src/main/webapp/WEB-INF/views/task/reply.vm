@@ -1,0 +1,109 @@
+#set($page_title="任务")
+#set($bankUrl="${request.getHeader('Referer')}")
+#set($jsUrls= ["${rc.contextPath}/static/task/reply.js"])
+<div class="main-content">
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try {
+                ace.settings.check('breadcrumbs', 'fixed')
+            } catch (e) {
+            }
+        </script>
+        <ul class="breadcrumb">
+            <li>
+                <i class="icon-home home-icon"></i>
+                <a href="${rc.contextPath}/">首页</a>
+            </li>
+            <li class="active">$page_title</li>
+        </ul>
+        <div class="nav-search">
+            <a class="btn btn-xs btn-grey arrowed" href="${bankUrl}" title="返回">
+                <i class="icon-reply icon-only"></i> 返回
+            </a>
+        </div>
+    </div>
+    <div class="page-content">
+        <div class="row">
+            <div class="col-xs-12">
+                <h3 class="header smaller lighter blue">$page_title</h3>
+
+                <div class="step-content row-fluid position-relative" id="step-container">
+                    <div class="text-info">$!{msg}</div>
+                    <div class="widget-box">
+                        <div class="widget-header">
+                            <h4 class="lighter smaller">
+                                <i class="icon-tasks"></i>
+                                任务详情
+                            </h4>
+                            <div class="widget-toolbar">
+                                时间：$!dateTool.format("yyyy-MM-dd HH:mm:ss",$!{task.createTime})
+                            </div>
+                        </div>
+                        <div class="widget-body">
+                            <div class="widget-main bigger-120 text-info padding-20">
+                                $!{task.content}
+                            </div>
+                            <div class="widget-box no-border">
+                                <div class="widget-header">
+                                    <span class="lighter smaller">
+                                        <i class="icon-comment blue"></i>
+                                        回复
+                                    </span>
+                                </div>
+                                <div class="widget-body">
+                                    <div class="widget-main no-padding">
+                                        <div class="dialogs">
+                                            #foreach($reply in $!{replys})
+                                                <div class="itemdiv dialogdiv">
+                                                    <div class="user">
+                                                        <img src="${rc.contextPath}/assets/avatars/avatar.png" />
+                                                    </div>
+
+                                                    <div class="body">
+                                                        <div class="time">
+                                                            <i class="icon-time"></i>
+                                                            <span class="orange">$!dateTool.format("yyyy-MM-dd HH:mm:ss",$!{reply.createTime})</span>
+                                                        </div>
+
+                                                        <div class="name">
+                                                            <a href="#">$fun.userName($!{reply.userId})</a>
+                                                        </div>
+                                                        <div class="text">$!{reply.content}</div>
+
+                                                        <div class="tools">
+                                                            <a href="#" class="btn btn-minier btn-info">
+                                                                <i class="icon-only icon-share-alt"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            #end
+                                        </div>
+                                        #if(${task.status}!="FINISH")
+                                        <form method="POST" action="${rc.contextPath}/reply/create" id="validation-reply">
+                                            <input type="hidden" name="taskId" value="${task.id}">
+                                            <input type="hidden" name="status" value="${task.status}">
+                                            <div class="form-actions">
+                                                <div class="input-group">
+                                                    <textarea name="content" class="form-control" placeholder="输入内容回复"></textarea>
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-sm btn-info no-radius" type="submit">
+                                                            <i class="icon-share-alt"></i>
+                                                            回复
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        #end
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

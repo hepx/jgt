@@ -22,9 +22,26 @@ public class Task extends IdEntity implements Serializable {
 
     private Date updateTime;    //回复时间
 
-    private Integer status; //任务状态
+    private TaskStaus status; //任务状态
 
     private Long userId;    //谁的任务
+
+    //任务状态
+    public static enum TaskStaus{
+        CREATED("已创建"),
+        DOING("进行中"),
+        FINISH("已完成");
+
+        private String value;
+
+        private TaskStaus(String value){
+            this.value = value;
+        }
+
+        public String getValue() {
+            return value;
+        }
+    }
 
     public String getContent() {
         return content;
@@ -58,11 +75,11 @@ public class Task extends IdEntity implements Serializable {
         this.updateTime = updateTime;
     }
 
-    public Integer getStatus() {
+    public TaskStaus getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(TaskStaus status) {
         this.status = status;
     }
 

@@ -48,7 +48,6 @@
                         <small>(v1.0)</small>
                     </strong>
                 </div>
-
                 <div class="row">
                     <div class="col-lg-7 col-lg-offset-2 infobox-container">
                         <div class="infobox infobox-green  ">
@@ -89,9 +88,6 @@
                         </div>
                     </div>
                 </div>
-
-
-                <!-- PAGE CONTENT ENDS -->
             </div>
         </div>
     </div>

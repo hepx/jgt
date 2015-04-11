@@ -9,13 +9,11 @@
         id, content, createTime, feedback, updateTime,status,userId
     </sql>
 
-    <!--创建用户-->
     <insert id="createTask" parameterType="o_task" useGeneratedKeys="true" keyProperty="id">
         insert into tb_task (content, createTime,status,userId)
         values (#{content}, #{createTime},#{status},#{userId})
     </insert>
 
-    <!--更新用户-->
     <update id="updateTask" parameterType="o_task">
         update tb_task
         <trim prefix="set" suffixOverrides=",">
@@ -38,12 +36,10 @@
         where id=#{id}
     </update>
 
-    <!-- 删除用户 -->
     <delete id="deleteTask" parameterType="long">
         delete from tb_task where id=#{taskId}
     </delete>
 
-    <!--查询用户-->
     <select id="findOne" parameterType="long" resultType="o_task">
         select
         <include refid="base_columns"/>

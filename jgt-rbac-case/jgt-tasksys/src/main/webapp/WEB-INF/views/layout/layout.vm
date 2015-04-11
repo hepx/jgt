@@ -5,7 +5,7 @@
     <title>oTask任务系统-$!page_title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- basic styles -->
-    <link href="${rc.contextPath}/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="${rc.contextPath}/assets/css/bootstrap.min.css" />
     <link rel="stylesheet" href="${rc.contextPath}/assets/css/font-awesome.min.css" />
     <!--[if IE 7]>
     <link rel="stylesheet" href="${rc.contextPath}/assets/css/font-awesome-ie7.min.css" />
@@ -23,6 +23,10 @@
     <!--[if lte IE 8]>
     <link rel="stylesheet" href="${rc.contextPath}/assets/css/ace-ie.min.css" />
     <![endif]-->
+    <!--内容 css, 针对单个页面 -->
+    #foreach($cssUrl in $!cssUrls)
+        <link rel="stylesheet" href="$!cssUrl"/>
+    #end
     <!-- inline styles related to this pagehelper -->
     <!-- ace settings handler -->
     <script src="${rc.contextPath}/assets/js/ace-extra.min.js"></script>
@@ -31,10 +35,6 @@
     <script src="${rc.contextPath}/assets/js/html5shiv.js"></script>
     <script src="${rc.contextPath}/assets/js/respond.min.js"></script>
     <![endif]-->
-    <!--内容 css, 针对单个页面 -->
-    #foreach($cssUrl in $!cssUrls)
-        <link rel="stylesheet" href="$!cssUrl"/>
-    #end
 </head>
 <body>
     #parse("layout/header.vm")
@@ -55,33 +55,29 @@
         </a>
     </div>
 
-#*    <!--[if !IE]> -->
-    <script src="${rc.contextPath}/assets/js/jquery-2.0.3.min.js"></script>
-    <!-- <![endif]-->
+    <!--[if !IE]>-->
+    <script src="http://apps.bdimg.com/libs/jquery/2.0.3/jquery.min.js"></script>
+    <!--<![endif]-->
 
     <!--[if IE]>
-    <script src="${rc.contextPath}/assets/js/jquery-1.10.2.min.js"></script>
-    <![endif]-->*#
+    <script src="http://apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
+    <![endif]-->
 
-    <!--[if !IE]> -->
+    <!--[if !IE]>-->
     <script type="text/javascript">
-        window.jQuery || document.write("<script src='${rc.contextPath}/assets/js/jquery-2.0.3.min.js'>"+"<"+"script>");
+        window.jQuery || document.write("<script src='${rc.contextPath}/assets/js/jquery-2.0.3.min.js'>"+"<"+"/script>");
     </script>
-    <!-- <![endif]-->
+    <!--<![endif]-->
 
     <!--[if IE]>
     <script type="text/javascript">
-        window.jQuery || document.write("<script src='${rc.contextPath}/assets/js/jquery-1.10.2.min.js'>"+"<"+"script>");
+        window.jQuery || document.write("<script src='${rc.contextPath}/assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
     </script>
     <![endif]-->
 
-    <script type="text/javascript">
-        if("ontouchend" in document) document.write("<script src='${rc.contextPath}/assets/js/jquery.mobile.custom.min.js'>"+"<"+"script>");
-    </script>
     <script src="${rc.contextPath}/assets/js/bootstrap.min.js"></script>
     <script src="${rc.contextPath}/assets/js/typeahead-bs2.min.js"></script>
 
-    <!-- pagehelper specific plugin scripts -->
     <!--[if lte IE 8]>
     <script src="${rc.contextPath}/assets/js/excanvas.min.js"></script>
     <![endif]-->
@@ -110,14 +106,9 @@
     <script type="text/javascript">
         //在JS里定义根路径
         var RS_PATH="${rc.contextPath}/";
-/*        var responsiveHelper;
-        var breakpointDefinition = {
-            tablet: 1024,
-            phone : 480
-        };*/
         jQuery(function($) {
             //动态选中左边菜单
-            var pgurl="$!{bankUrl}"
+            var pgurl="$!{bankUrl}";
             if(!pgurl){
                 pgurl = "$!{request.requestURI}";
                 var qs="$!{request.queryString}";
@@ -135,26 +126,14 @@
                 }
             });
 
-            /**
-             * 序列化JSON对象
-             * @returns {{}}
-             */
-            $.fn.serializeObject = function()
-            {
-                var o = {};
-                var a = this.serializeArray();
-                $.each(a, function() {
-                    if (o[this.name]) {
-                        if (!o[this.name].push) {
-                            o[this.name] = [o[this.name]];
-                        }
-                        o[this.name].push(this.value || '');
-                    } else {
-                        o[this.name] = this.value || '';
-                    }
-                });
-                return o;
-            };
+/*            $(".sidebar li a").on("click",function(){
+                //当前激活的页面
+                var active_a=$(".sidebar li[class='active'] a").get(0);
+                //如果点击左侧栏菜单还是当前页的话，就不做任何操作
+                if($(active_a).attr("href") === $(this).attr("href")){
+                    return false;
+                }
+            });*/
         })
     </script>
 </body>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="org.hepx.tasksys.mapper.ReplyMapper">
+    <cache/>
+
+    <sql id="base_columns">
+        id, content, createTime,userId,taskId
+    </sql>
+
+    <insert id="createReply" parameterType="o_reply" useGeneratedKeys="true" keyProperty="id">
+        insert into tb_reply (content, createTime,userId,taskId)
+        values (#{content}, #{createTime},#{userId},#{taskId})
+    </insert>
+
+    <update id="updateReply" parameterType="o_reply">
+        update tb_reply
+        <trim prefix="set" suffixOverrides=",">
+            <if test="content != null and content !=''">
+                content=#{content},
+            </if>
+        </trim>
+        where id=#{id}
+    </update>
+
+    <delete id="deleteReply" parameterType="long">
+        delete from tb_reply where id=#{replyId}
+    </delete>
+
+    <select id="findOne" parameterType="long" resultType="o_reply">
+        select
+        <include refid="base_columns"/>
+        from tb_reply
+        where id=#{replyId}
+    </select>
+
+    <select id="findAll" resultType="o_reply">
+        select
+        <include refid="base_columns"/>
+        from tb_reply
+        order by id desc
+    </select>
+
+    <select id="findByTaskId" resultType="o_reply">
+        select
+        <include refid="base_columns"/>
+        from tb_reply
+        where taskId=#{taskId}
+        order by id desc
+    </select>
+
+</mapper>

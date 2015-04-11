@@ -25,28 +25,40 @@
                 <div class="table-responsive">
                     <div class="text-info">$!{msg}</div>
                     #if($shiro.hasPermission("task:create"))
-                        <a href="${rc.contextPath}/task/create?type=$!{type}" class="btn btn-primary btn-sm">新增任务</a>
+                        <a href="${rc.contextPath}/task/create?type=$!{type}" class="btn btn-primary btn-sm">创建任务</a>
                     #end
                     <table id="tasklist" class="table table-striped table-bordered table-hover">
                         <thead>
                         <tr>
+                            <th class="center col-lg-1">序号</th>
                             <th class="center col-lg-1">执行者</th>
                             <th class="center col-lg-2">任务内容</th>
-                            <th class="center col-lg-1">发布时间</th>
-                            <th class="center col-lg-2">回复</th>
-                            <th class="center col-lg-1">回复时间</th>
+                            <th class="center col-lg-2">发布时间</th>
+                       #*     <th class="center col-lg-2">回复</th>
+                            <th class="center col-lg-1">回复时间</th>*#
+                            <th class="center col-lg-1">状态</th>
                             <th class="center col-lg-2">操作</th>
                         </tr>
                         </thead>
                         <tbody>
                             #foreach($task in $taskList)
                             <tr>
+                                <td class="center">$!{velocityCount}</td>
                                 <td>$fun.userName($!{task.userId})</td>
-                                <td>$!{task.content}</td>
+                                <td><a href="${rc.contextPath}/reply/$!{task.id}">$!{task.content}</a></td>
                                 <td>$!dateTool.format("yyyy-MM-dd HH:mm:ss",$!{task.createTime})</td>
-                                <td>$!{task.feedback}</td>
-                                <td>$!dateTool.format("yyyy-MM-dd HH:mm:ss",$!{task.updateTime})</td>
+                       #*         <td>$!{task.feedback}</td>
+                                <td>$!dateTool.format("yyyy-MM-dd HH:mm:ss",$!{task.updateTime})</td>*#
                                 <td>
+                                    #if(${task.status} == "CREATED")
+                                        <span class="label label-info">$!{task.status.value}</span></td>
+                                    #elseif(${task.status} == "DOING")
+                                        <span class="label label-warning">$!{task.status.value}</span></td>
+                                    #elseif(${task.status} == "FINISH")
+                                        <span class="label label-success">$!{task.status.value}</span></td>
+                                    #end
+                                <td>
+                                    #if(${task.status} != "FINISH")
                                     <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
                                         #if($shiro.hasPermission("task:update"))
                                             <a class="blue" href="${rc.contextPath}/task/$!{task.id}/$!{type}/update">
@@ -54,11 +66,22 @@
                                             </a>
                                         #end
                                         #if($shiro.hasPermission("task:delete"))
-                                            <a class="grey del" href="${rc.contextPath}/task/$!{task.id}/delete">
+                                            <a class="orange del" href="${rc.contextPath}/task/$!{task.id}/delete">
                                                 删除
                                             </a>
                                         #end
+                                        #if($shiro.hasPermission("task:update"))
+                                            <a class="green" href="${rc.contextPath}/reply/$!{task.id}">
+                                                回复
+                                            </a>
+                                        #end
+                                        #if($shiro.hasPermission("task:update"))
+                                            <a class="grey finish" href="${rc.contextPath}/task/$!{task.id}/finish">
+                                                完成
+                                            </a>
+                                        #end
                                     </div>
+                                    #end
                                 </td>
                             </tr>
                             #end

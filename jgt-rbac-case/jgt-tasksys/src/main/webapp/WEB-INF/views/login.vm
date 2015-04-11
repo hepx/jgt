@@ -78,8 +78,6 @@
                                             </fieldset>
                                         </form>
                                     </div>
-                                    <!-- /widget-main -->
-
                                 </div>
                             </div>
                         </div>
@@ -88,35 +86,5 @@
             </div>
         </div>
     </div>
-
-    <!--[if !IE]> -->
-    <script src="${rc.contextPath}/assets/js/jquery-2.0.3.min.js"></script>
-    <!-- <![endif]-->
-    <!--[if IE]>
-    <script src="${rc.contextPath}/assets/js/jquery-1.10.2.min.js"></script>
-    <![endif]-->
-    <!--[if !IE]> -->
-    <script type="text/javascript">
-        window.jQuery || document.write("<script src='${rc.contextPath}/assets/js/jquery-2.0.3.min.js'>" + "<" + "script>");
-    </script>
-    <!-- <![endif]-->
-
-    <!--[if IE]>
-    <script type="text/javascript">
-        window.jQuery || document.write("<script src='${rc.contextPath}/assets/js/jquery-1.10.2.min.js'>" + "<" + "script>");
-    </script>
-    <![endif]-->
-
-    <script type="text/javascript">
-        if ("ontouchend" in document) document.write("<script src='${rc.contextPath}/assets/js/jquery.mobile.custom.min.js'>" + "<" + "script>");
-    </script>
-
-    <!-- inline scripts related to this page -->
-    <script type="text/javascript">
-        function show_box(id) {
-            jQuery('.widget-box.visible').removeClass('visible');
-            jQuery('#' + id).addClass('visible');
-        }
-    </script>
 </body>
 </html>

@@ -1,5 +1,5 @@
-###set($layout="")
-#set($page_title="500")
+#set($page_title="500错误")
+#set($bankUrl="${request.getHeader('Referer')}")
 <div class="main-content">
     <div class="breadcrumbs" id="breadcrumbs">
         <script type="text/javascript">
@@ -8,63 +8,46 @@
             } catch (e) {
             }
         </script>
-
         <ul class="breadcrumb">
             <li>
                 <i class="icon-home home-icon"></i>
-                <a href="#">首页</a>
+                <a href="${rc.contextPath}/">首页</a>
             </li>
-            <li class="active">Error 500</li>
+            <li class="active">$!{page_title}</li>
         </ul>
-        <!-- .breadcrumb -->
-
-        <div class="nav-search" id="nav-search">
-            <form class="form-search">
-								<span class="input-icon">
-									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off"/>
-									<i class="icon-search nav-search-icon"></i>
-								</span>
-            </form>
-        </div>
-        <!-- #nav-search -->
     </div>
 
     <div class="page-content">
         <div class="row">
             <div class="col-xs-12">
-                <!-- PAGE CONTENT BEGINS -->
-
                 <div class="error-container">
                     <div class="well">
                         <h1 class="grey lighter smaller">
-											<span class="blue bigger-125">
-												<i class="icon-random"></i>
-												500
-											</span>
-                            Something Went Wrong
+                            <span class="red bigger-125">
+                                <i class="icon-random"></i>
+                                500
+                            </span>
+                            服务器出错了
                         </h1>
 
                         <hr/>
                         <h3 class="lighter smaller">
-                            But we are working
-                            <i class="icon-wrench icon-animated-wrench bigger-125"></i>
-                            on it!
+                            但是我们的程序员正在努力解决
+                            <i class="fa fa-wrench bigger-125"></i>
+                            它！<br>
+                            $!{ex.message}
                         </h3>
-
                         <div class="space"></div>
-
                         <div>
-                            <h4 class="lighter smaller">Meanwhile, try one of the following:</h4>
-
-                            <ul class="list-unstyled spaced inline bigger-110 margin-15">
+                            <h4 class="lighter smaller">同时, 可以尝试以下见意:</h4>
+                            <ul class="list-unstyled spaced margin-15">
                                 <li>
-                                    <i class="icon-hand-right blue"></i>
-                                    Read the faq
+                                    <i class="icon-angle-right blue"></i>
+                                    <a href="#">阅读常见问题</a>
                                 </li>
-
                                 <li>
-                                    <i class="icon-hand-right blue"></i>
-                                    Give us more info on how this specific error occurred!
+                                    <i class="icon-angle-right blue"></i>
+                                    <a href="#">给我们更多的信息关于这个特定的错误发生!</a>
                                 </li>
                             </ul>
                         </div>
@@ -73,24 +56,19 @@
                         <div class="space"></div>
 
                         <div class="center">
-                            <a href="#" class="btn btn-grey">
+                            <a href="$!{bankUrl}" class="btn btn-grey">
                                 <i class="icon-arrow-left"></i>
-                                Go Back
+                                返回
                             </a>
 
-                            <a href="#" class="btn btn-primary">
-                                <i class="icon-dashboard"></i>
-                                Dashboard
+                            <a href="${rc.contextPath}/" class="btn btn-primary">
+                                <i class="icon-home"></i>
+                                首页
                             </a>
                         </div>
                     </div>
                 </div>
-
-                <!-- PAGE CONTENT ENDS -->
             </div>
-            <!-- /.col -->
         </div>
-        <!-- /.row -->
     </div>
-    <!-- /.pagehelper-content -->
-</div><!-- /.main-content -->
+</div>

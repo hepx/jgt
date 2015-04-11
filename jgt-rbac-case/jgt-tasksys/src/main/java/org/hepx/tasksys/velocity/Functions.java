@@ -1,5 +1,6 @@
 package org.hepx.tasksys.velocity;
 
+import org.apache.shiro.SecurityUtils;
 import org.hepx.tasksys.entity.Organization;
 import org.hepx.tasksys.entity.Resource;
 import org.hepx.tasksys.entity.Role;
@@ -247,6 +248,8 @@ public class Functions {
         }
     }
 
+
+
     /**
      * 用户下拉菜单
      * @param name 组件名
@@ -260,9 +263,13 @@ public class Functions {
         }
         if(style==null){
             style="";
+        }else if("disabled".equals(style)){
+            style="disabled=\"disabled\"";
+        }else{
+            style="class=\""+style+"\"";
         }
         List<User> userList = getUserService().findAll();
-        StringBuffer sb = new StringBuffer("<select id=\""+name+"\" name=\""+name+"\" class=\""+style+"\">");
+        StringBuffer sb = new StringBuffer("<select id=\""+name+"\" name=\""+name+"\" "+style+">");
         if(CollectionUtils.isEmpty(userList)){
             return sb.append("</select>").toString();
         }
@@ -275,6 +282,31 @@ public class Functions {
             }
         }
         return sb.append("<select>").toString();
+    }
+
+    /**
+     * 获得当前登录用户
+     *
+     * @return
+     */
+    public static User getCurrentUser() {
+        String userName = (String) SecurityUtils.getSubject().getPrincipal();
+        User user = getUserService().findByUsername(userName);
+        return user;
+    }
+
+    /**
+     * 获得当前登录用户ID
+     *
+     * @return
+     */
+    public static Long getCurrentUserId() {
+        User user = getCurrentUser();
+        if (user != null) {
+            return user.getId();
+        } else {
+            return null;
+        }
     }
 
     private static OrganizationService organizationService;

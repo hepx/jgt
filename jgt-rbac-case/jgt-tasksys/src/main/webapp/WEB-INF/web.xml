@@ -63,15 +63,7 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
-    <!--500和404页面处理-->
-    <error-page>
-        <exception-type>java.lang.Throwable</exception-type>
-        <location>/500</location>
-    </error-page>
-    <error-page>
-        <error-code>500</error-code>
-        <location>/500</location>
-    </error-page>
+    <!--404页面处理-->
     <error-page>
         <error-code>404</error-code>
         <location>/404</location>
