@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="org.hepx.ticket.mapper.ResourceMapper">
+    <cache/>
+
+    <sql id="base_columns">
+        id, name, type, url, permission, parent_id as parentId, parent_ids as parentIds, available,style
+    </sql>
+
+    <insert id="createResource" parameterType="t_resource" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_resource (name, type, url, permission, parent_id, parent_ids, available,style)
+        values (#{name}, #{type}, #{url}, #{permission}, #{parentId}, #{parentIds}, #{available},#{style})
+    </insert>
+
+    <update id="updateResource" parameterType="t_resource">
+        update sys_resource
+        <trim prefix="set" suffixOverrides=",">
+            <if test="name != null and name !=''">
+                name=#{name},
+            </if>
+            <if test="type != null and type != ''">
+                type=#{type},
+            </if>
+            <if test="url != null">
+                url=#{url},
+            </if>
+            <if test="permission != null and permission != ''">
+                permission=#{permission},
+            </if>
+            <if test="parentId != null">
+                parent_id=#{parentId},
+            </if>
+            <if test="parentIds != null and parentIds !=''">
+                parent_ids=#{parentIds},
+            </if>
+            <if test="available != null">
+                available=#{available},
+            </if>
+            <if test="style != null">
+                style=#{style}
+            </if>
+        </trim>
+        where id=#{id}
+    </update>
+
+    <delete id="deleteResource" parameterType="long">
+        delete from sys_resource where id=#{resourceId} or parent_id=#{resourceId}
+    </delete>
+
+    <select id="findOne" parameterType="long" resultType="t_resource">
+        select
+        <include refid="base_columns"/>
+        from sys_resource
+        where id=#{resourceId}
+    </select>
+
+    <select id="findAll" resultType="t_resource">
+        select
+        <include refid="base_columns"/>
+        from sys_resource
+    </select>
+
+</mapper> 

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="org.hepx.ticket.mapper.OrganizationMapper">
+    <cache />
+
+    <sql id="base_columns">
+        id, name, parent_id as parentId, parent_ids as parentIds, available
+    </sql>
+
+    <insert id="createOrganization" parameterType="t_organization" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_organization (name, parent_id, parent_ids, available)
+        values (#{name}, #{parentId}, #{parentIds}, #{available})
+    </insert>
+
+    <update id="updateOrganization" parameterType="t_organization">
+        update sys_organization
+        <trim prefix="set" suffixOverrides=",">
+            <if test="name != null and name !=''">
+                name=#{name},
+            </if>
+            <if test="parentId != null">
+                parent_id=#{parentId},
+            </if>
+            <if test="parentIds != null and parentIds != ''">
+                parent_ids=#{parentIds},
+            </if>
+            <if test="available != null">
+                available=#{available},
+            </if>
+        </trim>
+        where id=#{id}
+    </update>
+
+    <delete id="deleteOrganization" parameterType="long">
+        delete from sys_organization where id=#{organizationId} or parent_id=#{organizationId}
+    </delete>
+
+    <select id="findOne" parameterType="long" resultType="t_organization">
+        select <include refid="base_columns"/>
+        from sys_organization
+        where id=#{organizationId}
+    </select>
+
+    <select id="findAll" resultType="t_organization">
+        select <include refid="base_columns"/>
+        from sys_organization
+    </select>
+
+    <select id="findAllWithExclude" resultType="t_organization" parameterType="t_organization">
+        select <include refid="base_columns"/>
+        from sys_organization
+        where id!=#{id} and parent_ids not like concat(concat(#{parentIds},#{id},'/'),'%')
+    </select>
+
+    <update id="move" parameterType="t_organization">
+        update sys_organization set parent_ids=concat(#{t_ids}, substring(parent_ids, length(#{s_ids}))) where parent_ids like concat(#{s_ids},'%')
+    </update>
+</mapper> 

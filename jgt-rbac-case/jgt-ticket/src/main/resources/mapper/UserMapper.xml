@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="org.hepx.ticket.mapper.UserMapper">
+    <cache/>
+
+    <sql id="base_columns">
+        id, organization_id as organizationId, username, email, mobile, password, salt, role_ids as roleIdsStr, locked
+    </sql>
+
+    <!--创建用户-->
+    <insert id="createUser" parameterType="t_user" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_user (organization_id, username, email, mobile, password, salt, role_ids, locked)
+        values (#{organizationId}, #{username}, #{email}, #{mobile}, #{password}, #{salt}, #{roleIdsStr}, #{locked})
+    </insert>
+
+    <!--更新用户-->
+    <update id="updateUser" parameterType="t_user">
+        update sys_user
+        <trim prefix="set" suffixOverrides=",">
+            <if test="organizationId != null">
+                organization_id=#{organizationId},
+            </if>
+            <if test="username != null and username !=''">
+                username=#{username},
+            </if>
+            <if test="password != null and password != ''">
+                password=#{password},
+            </if>
+            <if test="salt != null and salt !=''">
+                salt=#{salt},
+            </if>
+            <if test="roleIdsStr != null and roleIdsStr !=''">
+                role_ids=#{roleIdsStr},
+            </if>
+            <if test="locked != null">
+                locked=#{locked},
+            </if>
+            <if test="email != null and email != ''">
+                email=#{email},
+            </if>
+            <if test="mobile != null and mobile != ''">
+                mobile=#{mobile},
+            </if>
+        </trim>
+        where id=#{id}
+    </update>
+
+    <!-- 删除用户 -->
+    <delete id="deleteUser" parameterType="long">
+        delete from sys_user where id=#{userId}
+    </delete>
+
+    <!--查询用户-->
+    <select id="findOne" parameterType="long" resultType="t_user">
+        select
+        <include refid="base_columns"/>
+        from sys_user
+        where id=#{userId}
+    </select>
+
+    <select id="findAll" resultType="t_user">
+        select
+        <include refid="base_columns"/>
+        from sys_user
+    </select>
+
+    <select id="findByUsername" parameterType="string" resultType="t_user">
+        select
+        <include refid="base_columns"/>
+        from sys_user where username=#{username} or email=#{username} or mobile=#{username}
+    </select>
+
+</mapper> 

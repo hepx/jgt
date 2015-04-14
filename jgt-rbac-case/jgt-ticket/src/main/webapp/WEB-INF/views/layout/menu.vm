@@ -1,0 +1,33 @@
+<a class="menu-toggler" id="menu-toggler" href="#">
+    <span class="menu-text"></span>
+</a>
+<div class="sidebar" id="sidebar">
+    <script type="text/javascript">
+        try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
+    </script>
+    <ul class="nav nav-list">
+        <li>
+            <a href="${rc.contextPath}/">
+                <i class="fa fa-dashboard"></i>
+                <span class="menu-text"> 控制台 </span>
+            </a>
+        </li>
+        #foreach($menu in $!{session.getAttribute("menus")})
+            <li>
+                <a href="${rc.contextPath}$!{menu.url}">
+                    <i class="fa fa-fw fa-$!{menu.style}"></i>
+                    <span class="menu-text"> $!{menu.name} </span>
+                </a>
+            </li>
+        #end
+    </ul>
+    <div class="sidebar-collapse" id="sidebar-collapse">
+        <i class="fa fa-angle-double-left" data-icon1="fa fa-angle-double-left" data-icon2="fa fa-angle-double-right"></i>
+    </div>
+    <script type="text/javascript">
+        try {
+            ace.settings.check('sidebar', 'collapsed')
+        } catch (e) {
+        }
+    </script>
+</div>

@@ -1,0 +1,72 @@
+#set($page_title="资源列表")
+#set($cssUrls=["${rc.contextPath}/assets/css/jquery.treetable.css"])
+#set($jsUrls=["${rc.contextPath}/assets/js/jquery.treetable.js","${rc.contextPath}/static/resource/list.js"])
+<div class="main-content">
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try {
+                ace.settings.check('breadcrumbs', 'fixed');
+            } catch (e) {
+            }
+        </script>
+        <ul class="breadcrumb">
+            <li>
+                <i class="fa fa-home home-icon"></i>
+                <a href="${rc.contextPath}/">首页</a>
+            </li>
+            <li class="active">$page_title</li>
+        </ul>
+    </div>
+    <div class="page-content">
+        <div class="row">
+            <div class="col-xs-12">
+                <h3 class="header smaller lighter blue">$page_title</h3>
+                <div class="table-responsive">
+                    <div class="text-info">$!{msg}</div>
+                    <table id="resourcelist" class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th class="center col-lg-2">名称</th>
+                            <th class="center col-lg-1">类型</th>
+                            <th class="center col-lg-1">图标</th>
+                            <th class="center col-lg-3">URL路径</th>
+                            <th class="center col-lg-2">权限字符串</th>
+                            <th class="center col-lg-2">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            #foreach($resource in $resourceList)
+                            <tr data-tt-id="$!{resource.id}" #if($!{resource.rootNode}!=true) data-tt-parent-id="$!{resource.parentId}" #end >
+                                <td>$!{resource.name}</td>
+                                <td class="center">$!{resource.type.info}</td>
+                                <td class="center"><i class="fa fa-$!{resource.style}"></i></td>
+                                <td>$!{resource.url}</td>
+                                <td>$!{resource.permission}</td>
+                                <td>
+                                    <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
+                                        #if($shiro.hasPermission("resource:create"))
+                                            <a class="green" href="${rc.contextPath}/resource/$!{resource.id}/appendChild">
+                                                添加子节点
+                                            </a>
+                                        #end
+                                        #if($shiro.hasPermission("resource:update"))
+                                            <a class="blue" href="${rc.contextPath}/resource/$!{resource.id}/update">
+                                                编辑
+                                            </a>
+                                        #end
+                                        #if($shiro.hasPermission("resource:delete"))
+                                            <a class="grey del" href="${rc.contextPath}/resource/$!{resource.id}/delete">
+                                                删除
+                                            </a>
+                                        #end
+                                    </div>
+                                </td>
+                            </tr>
+                            #end
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

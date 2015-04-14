@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="org.hepx.ticket.mapper.CustomerMapper">
+    <cache/>
+
+    <sql id="base_columns">
+        id, name, telphone, idCard
+    </sql>
+
+    <insert id="createCustomer" parameterType="t_customer" useGeneratedKeys="true" keyProperty="id">
+        insert into tb_customer (name, telphone, idCard)
+        values (#{name}, #{telphone},#{idCard})
+    </insert>
+
+    <update id="updateCustomer" parameterType="t_customer">
+        update tb_customer
+        <trim prefix="set" suffixOverrides=",">
+            <if test="name != null and name !=''">
+                name=#{name},
+            </if>
+            <if test="telphone != null and telphone != ''">
+                telphone=#{telphone},
+            </if>
+            <if test="idCard != null and idCard != ''">
+                idCard=#{idCard},
+            </if>
+        </trim>
+        where id=#{id}
+    </update>
+
+    <delete id="deleteCustomer" parameterType="long">
+        delete from tb_customer where id=#{customerId}
+    </delete>
+
+    <select id="findOne" parameterType="long" resultType="t_customer">
+        select
+        <include refid="base_columns"/>
+        from tb_customer
+        where id=#{customerId}
+    </select>
+
+    <select id="findAll" resultType="t_customer">
+        select
+        <include refid="base_columns"/>
+        from tb_customer
+        order by id desc
+    </select>
+
+</mapper>
