@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="org.hepx.ticket.mapper.BankAccountMapper">
+    <cache/>
+
+    <sql id="base_columns">
+        id, bankName, account
+    </sql>
+
+    <insert id="createBankAccount" parameterType="t_bank_account" useGeneratedKeys="true" keyProperty="id">
+        insert into tb_bankaccount (bankName, account)
+        values (#{bankName}, #{account})
+    </insert>
+
+    <update id="updateBankAccount" parameterType="t_bank_account">
+        update tb_bankaccount
+        <trim prefix="set" suffixOverrides=",">
+            <if test="bankName != null and bankName !=''">
+                bankName=#{bankName},
+            </if>
+            <if test="account != null and account != ''">
+                account=#{account},
+            </if>
+        </trim>
+        where id=#{id}
+    </update>
+
+    <delete id="deleteBankAccount" parameterType="long">
+        delete from tb_bankaccount where id=#{bankAccountId}
+    </delete>
+
+    <select id="findOne" parameterType="long" resultType="t_bank_account">
+        select
+        <include refid="base_columns"/>
+        from tb_bankaccount
+        where id=#{bankAccountId}
+    </select>
+
+    <select id="findAll" resultType="t_bank_account">
+        select
+        <include refid="base_columns"/>
+        from tb_bankaccount
+        order by id desc
+    </select>
+
+</mapper>

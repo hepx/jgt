@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="org.hepx.ticket.mapper.TicketMapper">
+    <cache/>
+
+    <sql id="base_columns">
+        id, ticketNo,ticketMoney,expireDate,certifyFee,ticketOdd,inPoint,otherFee,ticketSurplus
+    </sql>
+
+    <insert id="createTicket" parameterType="t_ticket" useGeneratedKeys="true" keyProperty="id">
+        insert into tb_ticket (ticketNo,ticketMoney,expireDate,certifyFee,ticketOdd,inPoint,otherFee,ticketSurplus)
+        values (#{ticketNo},#{ticketMoney},#{expireDate},#{certifyFee},#{ticketOdd},#{inPoint},#{otherFee},#{ticketSurplus})
+    </insert>
+
+    <update id="updateTicket" parameterType="t_ticket">
+        update tb_ticket
+        <trim prefix="set" suffixOverrides=",">
+            <if test="ticketNo != null and ticketNo !=''">
+                ticketNo=#{ticketNo},
+            </if>
+            <if test="ticketMoney != null">
+                ticketMoney=#{ticketMoney},
+            </if>
+            <if test="certifyFee != null">
+                certifyFee=#{certifyFee},
+            </if>
+        </trim>
+        where id=#{id}
+    </update>
+
+    <delete id="deleteTicket" parameterType="long">
+        delete from tb_ticket where id=#{ticketId}
+    </delete>
+
+    <select id="findOne" parameterType="long" resultType="t_ticket">
+        select
+        <include refid="base_columns"/>
+        from tb_ticket
+        where id=#{ticketId}
+    </select>
+
+    <select id="findAll" resultType="t_ticket">
+        select
+        <include refid="base_columns"/>
+        from tb_ticket
+        order by id desc
+    </select>
+
+</mapper>

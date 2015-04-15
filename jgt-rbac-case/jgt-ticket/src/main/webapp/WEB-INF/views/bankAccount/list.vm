@@ -1,0 +1,63 @@
+#set($page_title="银行帐号管理")
+#set($jsUrls=["${rc.contextPath}/static/bankAccount/list.js"])
+<div class="main-content">
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try {
+                ace.settings.check('breadcrumbs', 'fixed');
+            } catch (e) {
+            }
+        </script>
+        <ul class="breadcrumb">
+            <li>
+                <i class="fa fa-home home-icon"></i>
+                <a href="${rc.contextPath}/">首页</a>
+            </li>
+            <li class="active">$page_title</li>
+        </ul>
+    </div>
+    <div class="page-content">
+        <div class="row">
+            <div class="col-xs-12">
+                <h3 class="header smaller lighter blue">$page_title</h3>
+                <div class="table-responsive">
+                    <div class="text-info">$!{msg}</div>
+                    #if($shiro.hasPermission("bankaccount:create"))
+                        <a href="${rc.contextPath}/bankaccount/create" class="btn btn-primary btn-sm">新增银行卡</a>
+                    #end
+                    <table id="bankaccountlist" class="table table-striped table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th class="center col-lg-2">开户行</th>
+                            <th class="center col-lg-2">卡号</th>
+                            <th class="center col-lg-1">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            #foreach($bankAccount in $bankAccountList)
+                            <tr>
+                                <td>$!{bankAccount.bankName}</td>
+                                <td>$!{bankAccount.account}</td>
+                                <td>
+                                    <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
+                                        #if($shiro.hasPermission("bankaccount:update"))
+                                            <a class="blue" href="${rc.contextPath}/bankaccount/$!{bankAccount.id}/update">
+                                                编辑
+                                            </a>
+                                        #end
+                                        #if($shiro.hasPermission("bankaccount:delete"))
+                                            <a class="grey del" href="${rc.contextPath}/bankaccount/$!{bankAccount.id}/delete">
+                                                删除
+                                            </a>
+                                        #end
+                                    </div>
+                                </td>
+                            </tr>
+                            #end
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

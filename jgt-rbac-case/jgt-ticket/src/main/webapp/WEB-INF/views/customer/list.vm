@@ -1,0 +1,65 @@
+#set($page_title="客户管理")
+#set($jsUrls=["${rc.contextPath}/static/customer/list.js"])
+<div class="main-content">
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try {
+                ace.settings.check('breadcrumbs', 'fixed');
+            } catch (e) {
+            }
+        </script>
+        <ul class="breadcrumb">
+            <li>
+                <i class="fa fa-home home-icon"></i>
+                <a href="${rc.contextPath}/">首页</a>
+            </li>
+            <li class="active">$page_title</li>
+        </ul>
+    </div>
+    <div class="page-content">
+        <div class="row">
+            <div class="col-xs-12">
+                <h3 class="header smaller lighter blue">$page_title</h3>
+                <div class="table-responsive">
+                    <div class="text-info">$!{msg}</div>
+                    #if($shiro.hasPermission("customer:create"))
+                        <a href="${rc.contextPath}/customer/create" class="btn btn-primary btn-sm">新增客户</a>
+                    #end
+                    <table id="customerlist" class="table table-striped table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th class="center col-lg-1">名称</th>
+                            <th class="center col-lg-1">电话</th>
+                            <th class="center col-lg-2">身份证</th>
+                            <th class="center col-lg-1">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            #foreach($customer in $customerList)
+                            <tr>
+                                <td>$!{customer.name}</td>
+                                <td>$!{customer.telphone}</td>
+                                <td>$!{customer.idCard}</td>
+                                <td>
+                                    <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
+                                        #if($shiro.hasPermission("customer:update"))
+                                            <a class="blue" href="${rc.contextPath}/customer/$!{customer.id}/update">
+                                                编辑
+                                            </a>
+                                        #end
+                                        #if($shiro.hasPermission("customer:delete"))
+                                            <a class="grey del" href="${rc.contextPath}/customer/$!{customer.id}/delete">
+                                                删除
+                                            </a>
+                                        #end
+                                    </div>
+                                </td>
+                            </tr>
+                            #end
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
