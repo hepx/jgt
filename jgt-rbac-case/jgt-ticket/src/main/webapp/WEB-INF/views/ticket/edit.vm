@@ -1,7 +1,10 @@
 #set($page_title="编辑汇票信息")
 #set($bankUrl="${request.getHeader('Referer')}")
-#set($cssUrls=["${rc.contextPath}/static/ticket/floatLabels.css"])
-#set($jsUrls= ["${rc.contextPath}/static/ticket/floatLabels.js","${rc.contextPath}/static/ticket/edit.js"])
+#set($cssUrls=["${rc.contextPath}/static/ticket/floatLabels.css","${rc.contextPath}/assets/css/jquery-ui-1.10.3.full.min.css",
+"${rc.contextPath}/assets/css/datepicker.css","${rc.contextPath}/assets/css/ui.jqgrid.css"])
+#set($jsUrls= ["${rc.contextPath}/static/ticket/floatLabels.js","${rc.contextPath}/assets/js/date-time/bootstrap-datepicker.min.js",
+"${rc.contextPath}/assets/js/jqGrid/jquery.jqGrid.min.js","${rc.contextPath}/assets/js/jqGrid/i18n/grid.locale-cn.js",
+"${rc.contextPath}/static/ticket/edit.js"])
 <div class="main-content">
     <div class="breadcrumbs" id="breadcrumbs">
         <script type="text/javascript">
@@ -26,129 +29,77 @@
     <div class="page-content">
         <div class="row">
             <div class="col-xs-12">
-                <h3 class="header smaller lighter blue">$page_title</h3>
+                #*<h3 class="header smaller lighter blue">$page_title</h3>*#
 
                 <div class="" id="step-container">
-                    <div class="widget-box">
-                        <div class="widget-header">
-                            <h4><i class="fa fa-sign-in"></i>进票</h4>
-                            <div class="widget-toolbar">
-                                <a href="#" data-action="collapse">
-                                    <i class="fa fa-chevron-up"></i>
-                                </a>
-                            </div>
+                    <div class="row">
+                        <div class="form-group float-label-control col-xs-3">
+                            <label for="" class="control-label">交易编号</label>
+                            <input type="text" name="orderNo" class="form-control" placeholder="交易编号">
                         </div>
-                        <div class="widget-body">
-                            <div class="widget-main">
+                        <div class="form-group float-label-control col-xs-3">
+                            <label for="" class="control-label">客户姓名</label>
+                            <input type="text" name="name" class="form-control" placeholder="客户姓名">
+                        </div>
+                        <div class="form-group float-label-control col-xs-3">
+                            <label for="" class="control-label">客户电话</label>
+                            <input type="text" name="telphone" class="form-control" placeholder="客户电话">
+                        </div>
+                        <div class="form-group float-label-control col-xs-3">
+                            <label for="" class="control-label">身份证号</label>
+                            <input type="text" name="idCard" class="form-control" placeholder="身份证号">
+                        </div>
+                    </div>
 
-                                <form id="validation-form" method="post">
-                                    <div class="row">
-                                        <div class="form-group float-label-control col-xs-3">
-                                            <label for="" class="control-label">交易编号</label>
-                                            <input type="text" name="orderNo" class="form-control" placeholder="交易编号">
-                                        </div>
-                                        <div class="form-group float-label-control col-xs-3">
-                                            <label for="" class="control-label">客户姓名</label>
-                                            <input type="text" name="name" class="form-control" placeholder="客户姓名">
-                                        </div>
-                                        <div class="form-group float-label-control col-xs-3">
-                                            <label for="" class="control-label">客户电话</label>
-                                            <input type="text" name="telphone" class="form-control" placeholder="客户电话">
-                                        </div>
-                                        <div class="form-group float-label-control col-xs-3">
-                                            <label for="" class="control-label">身份证号</label>
-                                            <input type="text" name="idCard" class="form-control" placeholder="身份证号">
-                                        </div>
+                    <table id="in-ticket-table"></table>
+                    <div id="in-grid-pager" class="height-auto"></div>
 
-                                        <div class="form-group float-label-control col-xs-3">
-                                            <label for="" class="control-label">票号</label>
-                                            <input type="text" name="ticketNo" class="form-control" placeholder="票号">
-                                        </div>
-                                        <div class="form-group float-label-control col-xs-3">
-                                            <label for="">票面金额</label>
-                                            <input type="text" name="ticketMoney" class="form-control" placeholder="票面金额">
-                                        </div>
-                                        <div class="form-group float-label-control col-xs-3">
-                                            <label for="">到期日期</label>
-                                            <input type="text" name="expireDate" class="form-control" placeholder="到期日期">
-                                        </div>
-                                        <div class="form-group float-label-control col-xs-3">
-                                            <label for="">证明费</label>
-                                            <input type="text" name="certifyFee" class="form-control" placeholder="证明费">
-                                        </div>
-                                        <div class="form-group float-label-control col-xs-3">
-                                            <label for="">票面零头</label>
-                                            <input type="text" name="ticketOdd" class="form-control" placeholder="票面零头">
-                                        </div>
-                                        <div class="form-group float-label-control col-xs-3">
-                                            <label for="">进票点</label>
-                                            <input type="text" name="inPoint" class="form-control" placeholder="进票点">
-                                        </div>
-                                        <div class="form-group float-label-control col-xs-3">
-                                            <label for="">其它费用</label>
-                                            <input type="text" name="otherFee" class="form-control" placeholder="其它费用">
-                                        </div>
-                                        <div class="form-group float-label-control col-xs-3">
-                                            <label for="">票面实际金额</label>
-                                            <input type="text" name="ticketSurplus" class="form-control" placeholder="票面实际金额">
-                                        </div>
-                                    </div>
-                                    <div class="clearfix form-actions">
-                                        <div class="col-md-offset-3 col-md-9">
-                                            <button class="btn btn-info" type="submit">
-                                                <i class="fa fa-check bigger-110"></i>
-                                                ${op}
-                                            </button>
-                                            &nbsp; &nbsp; &nbsp;
-                                            <button class="btn" type="reset">
-                                                <i class="fa fa-undo bigger-110"></i>
-                                                重置
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
+                    <table id="out-ticket-table"></table>
+                    <div id="out-grid-pager" class="height-auto"></div>
+
+                    <div class="hr hr8 hr-double hr-dotted"></div>
+                    <div class="row">
+                        <div class="col-md-offset-9 col-md-3">
+                            <div class="col-md-6">
+                                <h4>合计:</h4>
+                            </div>
+                            <div class="col-md-6 align-right">
+                                <h4>395</h4>
                             </div>
                         </div>
                     </div>
-                    <div class="widget-box">
-                        <div class="widget-header">
-                            <h4><i class="fa fa-sign-out"></i>出票</h4>
-                            <div class="widget-toolbar">
-                                <a href="#" data-action="collapse">
-                                    <i class="fa fa-chevron-up"></i>
-                                </a>
+                    <div class="row">
+                        <div class="col-md-offset-9 col-md-3">
+                            <div class="col-xs-6">
+                                <h4>支付方式:</h4>
+                            </div>
+                            <div class="col-xs-3">
+                                <select name="payType">
+                                    <option vale=""></option>
+                                    <option vale="">现金</option>
+                                    <option vale="">网银</option>
+                                    <option vale="">刷卡机</option>
+                                </select>
+
+                            </div>
+                            <div class="col-xs-3">
+                                <input type="text" class="input-small">
                             </div>
                         </div>
-                        <div class="widget-body">
-                            <div class="widget-main">
-                                 <table class="table table-striped table-hover">
-                                     <thead>
-                                        <tr>
-                                            <th>编号</th>
-                                            <th>票号</th>
-                                            <th>票面金额</th>
-                                            <th>出票点</th>
-                                            <th>出票实际金额</th>
-                                        </tr>
-                                     </thead>
-                                     <tbody>
-                                        <tr>
-                                           <td>1</td>
-                                           <td>12345678</td>
-                                           <td>10000.00</td>
-                                           <td>0.00</td>
-                                           <td>10000.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>12345687</td>
-                                            <td>10000.00</td>
-                                            <td>0.00</td>
-                                            <td>10000.00</td>
-                                        </tr>
-                                     </tbody>
-                                 </table>
-                            </div>
+                    </div>
+                    <div class="hr hr8 hr-double hr-dotted"></div>
+                    <div class="space-6"></div>
+                    <div class="clearfix well">
+                        <div class="col-md-offset-5 col-md-7">
+                            <button class="btn btn-info" type="submit">
+                                <i class="fa fa-check bigger-110"></i>
+                                ${op}
+                            </button>
+                            &nbsp; &nbsp; &nbsp;
+                            <button class="btn" type="reset">
+                                <i class="fa fa-undo bigger-110"></i>
+                                重置
+                            </button>
                         </div>
                     </div>
                 </div>

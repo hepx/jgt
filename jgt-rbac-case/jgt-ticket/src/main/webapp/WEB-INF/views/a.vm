@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+
+    <title>Tiny editable jQuery Bootstrap spreadsheet from MindMup</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="keywords" content="opensource jquery bootstrap editable table spreadsheet"/>
+    <meta name="description" content="This tiny jQuery bootstrap plugin turns any table into an editable spreadsheet"/>
+    <link href="external/google-code-prettify/prettify.css" rel="stylesheet">
+
+    <link href="http://apps.bdimg.com/libs/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+
+
+    <script src="http://apps.bdimg.com/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    <script src="http://apps.bdimg.com/libs/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
+    <script src="external/google-code-prettify/prettify.js"></script>
+    <link href="index.css" rel="stylesheet">
+    <script src="mindmup-editabletable.js"></script>
+    <script src="numeric-input-example.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="hero-unit">
+        <h1>editableTableWidget<br/>
+            <small>tiny editable jQuery Bootstrap spreadsheet</small>
+        </h1>
+        <hr/>
+        <table id="mainTable" class="table table-striped">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Cost</th>
+                <th>Profit</th>
+                <th>Fun</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Car</td>
+                <td>100</td>
+                <td>200</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>Bike</td>
+                <td>330</td>
+                <td>240</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>Plane</td>
+                <td>430</td>
+                <td>540</td>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td>Yacht</td>
+                <td>100</td>
+                <td>200</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>Segway</td>
+                <td>330</td>
+                <td>240</td>
+                <td>1</td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <th><strong>TOTAL</strong></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+
+<script>
+    $('#mainTable').editableTableWidget().numericInputExample().find('td:first').focus();
+    $('#textAreaEditor').editableTableWidget({editor: $('<textarea>')});
+    window.prettyPrint && prettyPrint();
+</script>
+
+
+</body>
+</html>
