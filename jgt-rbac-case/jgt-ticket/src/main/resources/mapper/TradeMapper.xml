@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="org.hepx.ticket.mapper.TradeMapper">
+    <cache/>
+
+    <sql id="base_columns">
+        id, name, telphone, idCard,tradeNo,inTicketMoney,outTicketMoney,tradeTotal
+    </sql>
+
+    <insert id="createTrade" parameterType="t_trade" useGeneratedKeys="true" keyProperty="id">
+        insert into tb_trade (name, telphone, idCard,tradeNo,inTicketMoney,outTicketMoney,tradeTotal)
+        values (#{name}, #{telphone}, #{idCard},#{tradeNo},#{inTicketMoney},#{outTicketMoney},#{tradeTotal})
+    </insert>
+
+    <update id="updateTrade" parameterType="t_trade">
+        update tb_trade
+        <trim prefix="set" suffixOverrides=",">
+            <if test="inTicketMoney != null">
+                inTicketMoney=#{inTicketMoney},
+            </if>
+            <if test="outTicketMoney != null">
+                outTicketMoney=#{outTicketMoney},
+            </if>
+            <if test="tradeTotal != null">
+                tradeTotal=#{tradeTotal},
+            </if>
+        </trim>
+        where id=#{id}
+    </update>
+
+    <delete id="deleteTrade" parameterType="long">
+        delete from tb_trade where id=#{tradeId}
+    </delete>
+
+    <select id="findOne" parameterType="long" resultType="t_trade">
+        select
+        <include refid="base_columns"/>
+        from tb_trade
+        where id=#{tradeId}
+    </select>
+
+    <select id="findAll" resultType="t_trade">
+        select
+        <include refid="base_columns"/>
+        from tb_trade
+        order by id desc
+    </select>
+
+    <select id="findLast" resultType="t_trade">
+        select tradeNo from tb_trade order by id desc limit 1
+    </select>
+
+</mapper>

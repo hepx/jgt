@@ -7,37 +7,12 @@
  */
 
 $(function () {
-    //表单验证
-    $('#validation-form').validate({
-        errorClass: 'help-block inline',
-        focusInvalid: false,
-        rules: {
-            name: {
-                required: true
-            },
-            telphone: {
-                required: true
-            },
-            ticketNo: {
-                required: true,
-                maxlength: 8,
-                minlength: 8
-            }
-        },
-        highlight: function (e) {
-            $(e).closest('.form-group').removeClass('has-success').addClass('has-error');
-        },
-        success: function (e) {
-            $(e).closest('.form-group').removeClass('has-error').addClass('has-success');
-            $(e).remove();
-        }
-    });
 
-    var grid_data =
+/*    var grid_data =
         [
             {id: "1", ticketNo: "12345678", ticketMoney: "10000", expireDate: "2007-12-03", certifyFee: 0, ticketOdd: "0", inPoint: "0", otherFee: "0", ticketSurplus: "10000"},
             {id: "2", ticketNo: "54545478", ticketMoney: "10000", expireDate: "2007-12-03", certifyFee: 0, ticketOdd: "0", inPoint: "0", otherFee: "500", ticketSurplus: "9500"}
-        ];
+        ];*/
 
     var in_ticket_table = "#in-ticket-table";
     var out_ticket_table = "#out-ticket-table";
@@ -46,7 +21,7 @@ $(function () {
     };
     /*进票table*/
     $(in_ticket_table).jqGrid({
-        data: grid_data,
+        //data: grid_data,
         datatype: "local",
         colNames: ['票号', '票面金额', '到期日期', '证明费', '票面零头', '进票点', '其它费用', '票面实际金额'],
         colModel: [
@@ -150,7 +125,70 @@ $(function () {
             position:"last"
         });
 
+    $('#submit').on('click',function(e){
+        e.preventDefault();
+        if(!verifyTicketHeader()){
+           return ;
+        }
+        //表单数据
+        var formData=$('#validation-form').serializeArray().reduce(function(obj, item) {
+            obj[item.name] = item.value;
+            return obj;
+        }, {});
+        //进票数据
+        var in_datas=$(in_ticket_table).jqGrid("getRowData");
+        if(in_datas.length==0){
+            showErrors("请添加进票。");
+            return
+        }
+        //出票数据
+        var out_datas=$(out_ticket_table).jqGrid("getRowData");
+        console.log("{trade:"+JSON.stringify(formData)+",inTickets:"+JSON.stringify(in_datas)+",outTickets:"+JSON.stringify(out_datas)+"}");
+        return ;
+        $.ajax({
+            url:RS_PATH+'ticket/create',
+            type: "POST",
+            data: "{trade:"+formData+",inTickets:"+in_datas+",outTickets:"+out_datas+"}",
+            dataType: "json",
+            success: function (data) {
+                if(data.result){
+                    showInfo("票据保存成功。");
+                }else{
+                    showErrors("发生未知异常。");
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                showErrors(errorThrown);
+            }
+        })
+    });
 
+    function verifyTicketHeader(){
+        if(!$('#name').val()){
+            showErrors("请填写客户名。");
+            return false;
+        }
+        if(!$('#telphone').val()){
+            showErrors("请填写客户电话。");
+            return false;
+        }
+        return true;
+    }
+
+    function showErrors(msg){
+        $.gritter.add({
+            title: '警告',
+            text: msg,
+            class_name: 'gritter-error'
+        });
+    }
+    function showInfo(msg){
+        $.gritter.add({
+            title: '提示',
+            text: msg,
+            class_name: 'gritter-success'
+        });
+    }
     function in_add(){
         var rowNum=$(in_ticket_table).jqGrid('getGridParam','records')+1;
         $(in_ticket_table).jqGrid('addRowData',rowNum,{},'last');

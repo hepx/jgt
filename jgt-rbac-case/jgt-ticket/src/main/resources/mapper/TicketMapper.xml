@@ -6,25 +6,30 @@
     <cache/>
 
     <sql id="base_columns">
-        id, ticketNo,ticketMoney,expireDate,certifyFee,ticketOdd,inPoint,otherFee,ticketSurplus
+        id,
+        ticketNo,ticketMoney,expireDate,certifyFee,ticketOdd,otherFee,inPoint,inTicketSurplus,outPoint,outTicketSurplus,outDate,tradeId,ticketStatus
     </sql>
 
     <insert id="createTicket" parameterType="t_ticket" useGeneratedKeys="true" keyProperty="id">
-        insert into tb_ticket (ticketNo,ticketMoney,expireDate,certifyFee,ticketOdd,inPoint,otherFee,ticketSurplus)
-        values (#{ticketNo},#{ticketMoney},#{expireDate},#{certifyFee},#{ticketOdd},#{inPoint},#{otherFee},#{ticketSurplus})
+        insert into tb_ticket (ticketNo,ticketMoney,expireDate,certifyFee,ticketOdd,inPoint,otherFee,inTicketSurplus,tradeId,ticketStatus)
+        values
+        (#{ticketNo},#{ticketMoney},#{expireDate},#{certifyFee},#{ticketOdd},#{inPoint},#{otherFee},#{inTicketSurplus},#{tradeId},#{ticketStatus})
     </insert>
 
     <update id="updateTicket" parameterType="t_ticket">
         update tb_ticket
         <trim prefix="set" suffixOverrides=",">
-            <if test="ticketNo != null and ticketNo !=''">
-                ticketNo=#{ticketNo},
+            <if test="ticketStatus != null">
+                ticketStatus=#{ticketStatus}
             </if>
-            <if test="ticketMoney != null">
-                ticketMoney=#{ticketMoney},
+            <if test="outDate != null">
+                outData=#{outData}
             </if>
-            <if test="certifyFee != null">
-                certifyFee=#{certifyFee},
+            <if test="outPoint != null">
+                outPoint=#{outPoint}
+            </if>
+            <if test="outTicketSurplus != null">
+                outTicketSurplus=#{outTicketSurplus}
             </if>
         </trim>
         where id=#{id}
