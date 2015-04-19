@@ -16,11 +16,11 @@ public class Trade extends IdEntity implements Serializable {
 
     private String tradeNo;//交易号
 
-    private BigDecimal inTicketMoney;    //进票总额
+    private double inTicketMoney;    //进票总额
 
-    private BigDecimal outTicketMoney;   //出票总额
+    private double outTicketMoney;   //出票总额
 
-    private BigDecimal tradeTotal;//合计
+    private double tradeTotal;//合计
 
     private String name;
 
@@ -36,27 +36,27 @@ public class Trade extends IdEntity implements Serializable {
         this.tradeNo = tradeNo;
     }
 
-    public BigDecimal getInTicketMoney() {
+    public double getInTicketMoney() {
         return inTicketMoney;
     }
 
-    public void setInTicketMoney(BigDecimal inTicketMoney) {
+    public void setInTicketMoney(double inTicketMoney) {
         this.inTicketMoney = inTicketMoney;
     }
 
-    public BigDecimal getOutTicketMoney() {
+    public double getOutTicketMoney() {
         return outTicketMoney;
     }
 
-    public void setOutTicketMoney(BigDecimal outTicketMoney) {
+    public void setOutTicketMoney(double outTicketMoney) {
         this.outTicketMoney = outTicketMoney;
     }
 
-    public BigDecimal getTradeTotal() {
+    public double getTradeTotal() {
         return tradeTotal;
     }
 
-    public void setTradeTotal(BigDecimal tradeTotal) {
+    public void setTradeTotal(double tradeTotal) {
         this.tradeTotal = tradeTotal;
     }
 

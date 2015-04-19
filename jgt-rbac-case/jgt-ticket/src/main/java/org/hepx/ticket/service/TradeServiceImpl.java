@@ -1,10 +1,12 @@
 package org.hepx.ticket.service;
 
+import org.hepx.jgt.common.math.Arith;
 import org.hepx.jgt.common.random.NumberGenerater;
 import org.hepx.ticket.entity.Ticket;
 import org.hepx.ticket.entity.Trade;
 import org.hepx.ticket.mapper.TicketMapper;
 import org.hepx.ticket.mapper.TradeMapper;
+import org.hepx.ticket.web.TicketVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -65,7 +67,14 @@ public class TradeServiceImpl implements TradeService {
     }
 
     @Override
-    public void crateTrade(Trade trade, List<Ticket> inTickets, List<Ticket> outTickets) {
+    public void crateTrade(TicketVo vo) {
+        Trade trade = vo.getTrade();
+        List<Ticket> inTickets = vo.getInTickets();
+        verifInTicket(inTickets);
+        List<Ticket> outTickets = vo.getOutTickets();
+        verifOutTicket(outTickets);
+        trade.setInTicketMoney(sumInTicketMoney(inTickets));
+        trade.setOutTicketMoney(sumOutTicketMoney(outTickets));
         Trade t = createTrade(trade);
         for (Ticket in_ticket : inTickets) {
             in_ticket.setTradeId(t.getId());
@@ -88,8 +97,9 @@ public class TradeServiceImpl implements TradeService {
      */
     private void verifInTicket(List<Ticket> inTicets){
         for(Ticket t : inTicets){
-            t.setInTicketSurplus((t.getTicketMoney().subtract(t.getTicketOdd())).multiply(new BigDecimal(1).subtract(t.getInPoint())).subtract(t
-                    .getCertifyFee()).subtract(t.getOtherFee()));
+            t.setInTicketSurplus((BigDecimal.valueOf(t.getTicketMoney()).subtract(BigDecimal.valueOf(t.getTicketOdd())))
+                    .multiply(new BigDecimal(1).subtract(BigDecimal.valueOf(t.getInPoint())))
+                    .subtract(BigDecimal.valueOf(t.getCertifyFee())).subtract(BigDecimal.valueOf(t.getOtherFee())).doubleValue());
         }
     }
 
@@ -101,25 +111,26 @@ public class TradeServiceImpl implements TradeService {
      */
     private void verifOutTicket(List<Ticket> outTicets){
         for(Ticket t : outTicets){
-            t.setOutTicketSurplus(t.getTicketMoney().multiply(new BigDecimal(1).subtract(t.getOutPoint())));
+            t.setOutTicketSurplus(BigDecimal.valueOf(t.getTicketMoney()).multiply(new BigDecimal(1).
+                    subtract(BigDecimal.valueOf(t.getOutPoint()))).doubleValue());
         }
     }
 
     //汇总进票金额
-    private BigDecimal sumInTicketMoney(List<Ticket> inTicets) {
+    private double sumInTicketMoney(List<Ticket> inTicets) {
         BigDecimal totalInTicketMoney = new BigDecimal(0);
         for (Ticket t : inTicets) {
-            totalInTicketMoney.add(t.getInTicketSurplus());
+            totalInTicketMoney.add(BigDecimal.valueOf(t.getInTicketSurplus()));
         }
-        return totalInTicketMoney;
+        return totalInTicketMoney.doubleValue();
     }
 
     //汇总出票金额
-    public BigDecimal sumOutTicketMoney(List<Ticket> outTicets) {
+    public double sumOutTicketMoney(List<Ticket> outTicets) {
         BigDecimal totalOutTicketMoney = new BigDecimal(0);
         for(Ticket t : outTicets){
-            totalOutTicketMoney.add(t.getOutTicketSurplus());
+            totalOutTicketMoney.add(BigDecimal.valueOf(t.getOutTicketSurplus()));
         }
-        return totalOutTicketMoney;
+        return totalOutTicketMoney.doubleValue();
     }
 }

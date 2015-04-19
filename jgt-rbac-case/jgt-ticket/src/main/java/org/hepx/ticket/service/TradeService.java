@@ -2,6 +2,7 @@ package org.hepx.ticket.service;
 
 import org.hepx.ticket.entity.Ticket;
 import org.hepx.ticket.entity.Trade;
+import org.hepx.ticket.web.TicketVo;
 
 import java.util.List;
 
@@ -19,6 +20,6 @@ public interface TradeService {
 
     public String getTradeNo();
 
-    public void crateTrade(Trade trade,List<Ticket>inTickets,List<Ticket>outTickets);
+    public void crateTrade(TicketVo vo);
 
 }

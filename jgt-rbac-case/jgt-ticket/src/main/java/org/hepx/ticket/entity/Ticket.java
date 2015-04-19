@@ -17,23 +17,23 @@ public class Ticket extends IdEntity implements Serializable {
 
     private String ticketNo;//票号8位
 
-    private BigDecimal ticketMoney;//票面金额
+    private double ticketMoney;//票面金额
 
     private Date expireDate;   //到期日期
 
-    private BigDecimal certifyFee;//证明费
+    private double certifyFee;//证明费
 
-    private BigDecimal ticketOdd;//票面零头
+    private double ticketOdd;//票面零头
 
-    private BigDecimal otherFee;//其它费用
+    private double otherFee;//其它费用
 
-    private BigDecimal inPoint;//进票点数
+    private double inPoint;//进票点数
 
-    private BigDecimal outPoint;//出票点数
+    private double outPoint;//出票点数
 
-    private BigDecimal inTicketSurplus;//进票票面实际金额
+    private double inTicketSurplus;//进票票面实际金额
 
-    private BigDecimal outTicketSurplus;//出票票面实际金额
+    private double outTicketSurplus;//出票票面实际金额
 
     private Date outDate;//出票日期
 
@@ -54,6 +54,78 @@ public class Ticket extends IdEntity implements Serializable {
         public String getValue() {
             return value;
         }
+    }
+
+    public double getTicketMoney() {
+        return ticketMoney;
+    }
+
+    public void setTicketMoney(double ticketMoney) {
+        this.ticketMoney = ticketMoney;
+    }
+
+    public Date getExpireDate() {
+        return expireDate;
+    }
+
+    public void setExpireDate(Date expireDate) {
+        this.expireDate = expireDate;
+    }
+
+    public double getCertifyFee() {
+        return certifyFee;
+    }
+
+    public void setCertifyFee(double certifyFee) {
+        this.certifyFee = certifyFee;
+    }
+
+    public double getTicketOdd() {
+        return ticketOdd;
+    }
+
+    public void setTicketOdd(double ticketOdd) {
+        this.ticketOdd = ticketOdd;
+    }
+
+    public double getOtherFee() {
+        return otherFee;
+    }
+
+    public void setOtherFee(double otherFee) {
+        this.otherFee = otherFee;
+    }
+
+    public double getInPoint() {
+        return inPoint;
+    }
+
+    public void setInPoint(double inPoint) {
+        this.inPoint = inPoint;
+    }
+
+    public double getOutPoint() {
+        return outPoint;
+    }
+
+    public void setOutPoint(double outPoint) {
+        this.outPoint = outPoint;
+    }
+
+    public double getInTicketSurplus() {
+        return inTicketSurplus;
+    }
+
+    public void setInTicketSurplus(double inTicketSurplus) {
+        this.inTicketSurplus = inTicketSurplus;
+    }
+
+    public double getOutTicketSurplus() {
+        return outTicketSurplus;
+    }
+
+    public void setOutTicketSurplus(double outTicketSurplus) {
+        this.outTicketSurplus = outTicketSurplus;
     }
 
     public TicketStatus getTicketStatus() {
@@ -78,78 +150,6 @@ public class Ticket extends IdEntity implements Serializable {
 
     public void setTicketNo(String ticketNo) {
         this.ticketNo = ticketNo;
-    }
-
-    public BigDecimal getTicketMoney() {
-        return ticketMoney;
-    }
-
-    public void setTicketMoney(BigDecimal ticketMoney) {
-        this.ticketMoney = ticketMoney;
-    }
-
-    public Date getExpireDate() {
-        return expireDate;
-    }
-
-    public void setExpireDate(Date expireDate) {
-        this.expireDate = expireDate;
-    }
-
-    public BigDecimal getCertifyFee() {
-        return certifyFee;
-    }
-
-    public void setCertifyFee(BigDecimal certifyFee) {
-        this.certifyFee = certifyFee;
-    }
-
-    public BigDecimal getTicketOdd() {
-        return ticketOdd;
-    }
-
-    public void setTicketOdd(BigDecimal ticketOdd) {
-        this.ticketOdd = ticketOdd;
-    }
-
-    public BigDecimal getOtherFee() {
-        return otherFee;
-    }
-
-    public void setOtherFee(BigDecimal otherFee) {
-        this.otherFee = otherFee;
-    }
-
-    public BigDecimal getInPoint() {
-        return inPoint;
-    }
-
-    public void setInPoint(BigDecimal inPoint) {
-        this.inPoint = inPoint;
-    }
-
-    public BigDecimal getOutPoint() {
-        return outPoint;
-    }
-
-    public void setOutPoint(BigDecimal outPoint) {
-        this.outPoint = outPoint;
-    }
-
-    public BigDecimal getInTicketSurplus() {
-        return inTicketSurplus;
-    }
-
-    public void setInTicketSurplus(BigDecimal inTicketSurplus) {
-        this.inTicketSurplus = inTicketSurplus;
-    }
-
-    public BigDecimal getOutTicketSurplus() {
-        return outTicketSurplus;
-    }
-
-    public void setOutTicketSurplus(BigDecimal outTicketSurplus) {
-        this.outTicketSurplus = outTicketSurplus;
     }
 
     public Date getOutDate() {

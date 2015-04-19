@@ -22,4 +22,6 @@ public interface TicketMapper {
     public Ticket findOne(Long ticketId);
 
     public List<Ticket> findAll();
+
+    public List<Ticket> findByStatus(Ticket.TicketStatus status);
 }

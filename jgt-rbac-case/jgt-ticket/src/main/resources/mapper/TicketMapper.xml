@@ -53,4 +53,10 @@
         order by id desc
     </select>
 
+    <select id="findByStatus" resultType="t_ticket" parameterType="string">
+        select id,ticketNo,ticketMoney from tb_ticket
+        where ticketStatus=#{status}
+        order by id desc
+    </select>
+
 </mapper>
