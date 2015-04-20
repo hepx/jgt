@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 票据管理
  * User: hepx
  * Date: 15-4-19
  * Time: 下午3:47
