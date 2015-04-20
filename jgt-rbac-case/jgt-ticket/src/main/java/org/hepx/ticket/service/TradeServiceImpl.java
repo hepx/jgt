@@ -1,6 +1,5 @@
 package org.hepx.ticket.service;
 
-import org.hepx.jgt.common.math.Arith;
 import org.hepx.jgt.common.random.NumberGenerater;
 import org.hepx.ticket.entity.Ticket;
 import org.hepx.ticket.entity.Trade;

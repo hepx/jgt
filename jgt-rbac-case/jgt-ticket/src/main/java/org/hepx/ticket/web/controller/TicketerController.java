@@ -97,7 +97,7 @@ public class TicketerController {
     }
 
 
-    public String findByStatus(Ticket.TicketStatus ticketStatus) {
+    private String findByStatus(Ticket.TicketStatus ticketStatus) {
         //在库票据
         List<Ticket> ticketList = ticketService.findByStatus(ticketStatus);
         //构建select格式数据
