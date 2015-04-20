@@ -27,6 +27,7 @@ import java.util.Map;
 public class TicketController {
 
     private static Logger logger = LoggerFactory.getLogger(TicketController.class);
+
     @Autowired
     private TicketService ticketService;
 
