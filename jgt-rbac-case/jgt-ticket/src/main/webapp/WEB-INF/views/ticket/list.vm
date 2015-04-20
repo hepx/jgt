@@ -28,7 +28,7 @@
                     <table id="ticketlist" class="table table-striped table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th class="center col-md-1">序号</th>
+                            <th class="center width-auto">序号</th>
                             <th class="center col-lg-1">票号</th>
                             <th class="center col-lg-1">票面金额</th>
                             <th class="center col-lg-1">到期日期</th>
@@ -40,30 +40,30 @@
                             <th class="center col-lg-1">出票日期</th>
                             <th class="center col-lg-1">出票点</th>
                             <th class="center col-lg-1">出票实际金额</th>
-                            <th class="center col-lg-1">操作</th>
+                            <th class="center width-auto">操作</th>
                         </tr>
                         </thead>
                         <tbody>
                             #foreach($ticket in $ticketList)
                             <tr>
-                                <td>$velocityCount</td>
+                                <td class="center">$velocityCount</td>
                                 <td>$!{ticket.ticketNo}</td>
-                                <td>$!{ticket.ticketMoney}</td>
-                                <td>$!dateTool.format("yyyy-MM-dd",$!{ticket.expireDate})</td>
-                                <td>$!{ticket.inPoint}</td>
-                                <td>$!{ticket.certifyFee}</td>
-                                <td>$!{ticket.ticketOdd}</td>
-                                <td>$!{ticket.inTicketSurplus}</td>
-                                <td>
+                                <td class="align-right">$numberTool.format("#0.00",$!{ticket.ticketMoney})</td>
+                                <td class="center">$!dateTool.format("yyyy-MM-dd",$!{ticket.expireDate})</td>
+                                <td class="align-right">$numberTool.format("#0.00",$!{ticket.inPoint})</td>
+                                <td class="align-right">$numberTool.format("#0.00",$!{ticket.certifyFee})</td>
+                                <td class="align-right">$numberTool.format("#0.00",$!{ticket.ticketOdd})</td>
+                                <td class="align-right">$numberTool.format("#0.00",$!{ticket.inTicketSurplus})</td>
+                                <td class="center">
                                     #if($!{ticket.ticketStatus}=="EXISTED")
                                         <span class="label label-success"> $!{ticket.ticketStatus.value}</span>
                                     #elseif($!{ticket.ticketStatus}=="SALED")
                                         <span class="label label-warning"> $!{ticket.ticketStatus.value}</span>
                                     #end
                                 </td>
-                                <td>$!dateTool.format("yyyy-MM-dd",$!{ticket.outDate})</td>
-                                <td>$!{ticket.outPoint}</td>
-                                <td>$!{ticket.outTicketSurplus}</td>
+                                <td class="center">$!dateTool.format("yyyy-MM-dd",$!{ticket.outDate})</td>
+                                <td class="align-right">$numberTool.format("#0.00",$!{ticket.outPoint})</td>
+                                <td class="align-right">$numberTool.format("#0.00",$!{ticket.outTicketSurplus})</td>
                                 <td>
                                     <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
                                         #if($shiro.hasPermission("ticket:delete"))

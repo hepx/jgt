@@ -20,16 +20,16 @@
         update tb_ticket
         <trim prefix="set" suffixOverrides=",">
             <if test="ticketStatus != null">
-                ticketStatus=#{ticketStatus}
+                ticketStatus=#{ticketStatus},
             </if>
             <if test="outDate != null">
-                outData=#{outData}
+                outDate=#{outDate},
             </if>
             <if test="outPoint != null">
-                outPoint=#{outPoint}
+                outPoint=#{outPoint},
             </if>
             <if test="outTicketSurplus != null">
-                outTicketSurplus=#{outTicketSurplus}
+                outTicketSurplus=#{outTicketSurplus},
             </if>
         </trim>
         where id=#{id}

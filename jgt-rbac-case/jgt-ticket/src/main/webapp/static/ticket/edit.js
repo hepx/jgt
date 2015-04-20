@@ -8,12 +8,6 @@
 
 $(function () {
 
-/*    var grid_data =
-        [
-            {id: "1", ticketNo: "12345678", ticketMoney: "10000", expireDate: "2007-12-03", certifyFee: 0, ticketOdd: "0", inPoint: "0", otherFee: "0", ticketSurplus: "10000"},
-            {id: "2", ticketNo: "54545478", ticketMoney: "10000", expireDate: "2007-12-03", certifyFee: 0, ticketOdd: "0", inPoint: "0", otherFee: "500", ticketSurplus: "9500"}
-        ];*/
-
     var in_ticket_table = "#in-ticket-table";
     var out_ticket_table = "#out-ticket-table";
     var formatter = {
@@ -21,13 +15,12 @@ $(function () {
     };
     /*进票table*/
     $(in_ticket_table).jqGrid({
-        //data: grid_data,
         datatype: "local",
         colNames: ['票号', '票面金额', '到期日期', '证明费', '票面零头', '进票点', '其它费用', '票面实际金额'],
         colModel: [
-            {name: 'ticketNo', index: 'ticketNo', width: 100, editable: true, sortable: false,editrules:{required:true,number:true} },
+            {name: 'ticketNo', index: 'ticketNo', width: 100, editable: true, sortable: false, editrules: {required: true, number: true} },
             {name: 'ticketMoney', index: 'ticketMoney', width: 100, editable: true, sortable: false, formatter: 'currency', formatoptions: formatter.number},
-            {name: 'expireDate', index: 'expireDate', width: 90, editable: true, sortable: false},
+            {name: 'expireDate', index: 'expireDate', width: 90, editable: true, sortable: false,editoptions: {readonly: true}},
             {name: 'certifyFee', index: 'certifyFee', width: 90, editable: true, sortable: false, formatter: 'currency', formatoptions: formatter.number},
             {name: 'ticketOdd', index: 'ticketOdd', width: 90, editable: true, sortable: false, formatter: 'currency', formatoptions: formatter.number},
             {name: 'inPoint', index: 'inPoint', width: 60, editable: true, sortable: false, formatter: 'currency', formatoptions: formatter.number},
@@ -37,7 +30,7 @@ $(function () {
         viewrecords: true,
         autowidth: true,
         //forceFit: true,
-        height: 150,
+        height: 120,
         scroll: true,
         cellEdit: true,
         rownumbers: true,
@@ -45,52 +38,50 @@ $(function () {
         cellsubmit: 'clientArray',
         footerrow: true,
         gridComplete: completeInTicket,
-        caption:'进票',
+        caption: '进票',
         pager: '#in-grid-pager',
         afterEditCell: function (id, name, val, iRow, iCol) {
             if (name == 'expireDate') {
-                $("#" + iRow + "_expireDate").datepicker({language:'cn',format: "yyyy-mm-dd"});
+                $("#" + iRow + "_expireDate").datepicker({language: 'cn', format: "yyyy-mm-dd"});
             }
         },
         afterSaveCell: function (rowid, name, val, iRow, iCol) {
-            if($.inArray(name,['ticketMoney','certifyFee','ticketOdd','inPoint','otherFee'])!=-1){
-                computeInTicketSurplus(rowid,iCol);
+            if ($.inArray(name, ['ticketMoney', 'certifyFee', 'ticketOdd', 'inPoint', 'otherFee']) != -1) {
+                computeInTicketSurplus(rowid, iCol);
                 completeInTicket();
             }
         }
     });
-    $(in_ticket_table).navGrid('#in-grid-pager',{edit:false,add:false,del:false,search:false})
-        .navButtonAdd('#in-grid-pager',{
-            caption:"增加进票",
-            buttonicon:"ui-icon-add",
-            onClickButton: function(){
+    $(in_ticket_table).navGrid('#in-grid-pager', {edit: false, add: false, del: false, search: false})
+        .navButtonAdd('#in-grid-pager', {
+            caption: "增加进票",
+            buttonicon: "ui-icon-add",
+            onClickButton: function () {
                 in_add();
             },
-            position:"last"
-        })
-        .navButtonAdd('#in-grid-pager',{
-            caption:"删除",
-            buttonicon:"ui-icon-del",
-            onClickButton: function(){
-                //alert("Deleting Row");
-            },
-            position:"last"
+            position: "last"
         });
 
     /*出票table*/
     $(out_ticket_table).jqGrid({
         datatype: "local",
-        colNames: ['票号', '票面金额', '出票点', '出票实际金额'],
+        colNames: ['票号', '票面金额', '出票点', '出票实际金额','ID'],
         colModel: [
-            {name: 'ticketNo', index: 'ticketNo', width: 100, editable: true, sortable: false,editrules:{required:true,number:true} },
-            {name: 'ticketMoney', index: 'ticketMoney', width: 100, editable: false, sortable: false, formatter: 'currency', formatoptions: formatter.number},
-            {name: 'outPoint', index: 'outPoint', width: 60, editable: true, sortable: false, formatter: 'currency', formatoptions: formatter.number},
-            {name: 'outTicketSurplus', index: 'outTicketSurplus', width: 100, editable: false, sortable: false, formatter: 'currency', formatoptions: formatter.number}
+            {name: 'ticketNo', index: 'ticketNo', width: 100,sortable: false,
+                editable: true, edittype:'select', editrules: {required: true},
+                editoptions: {readonly: true, value: getSelectTicketNos()} },
+            {name: 'ticketMoney', index: 'ticketMoney', width: 100,
+                editable: false, sortable: false, formatter: 'currency', formatoptions: formatter.number},
+            {name: 'outPoint', index: 'outPoint', width: 60,
+                editable: true, sortable: false, formatter: 'currency', formatoptions: formatter.number},
+            {name: 'outTicketSurplus', index: 'outTicketSurplus', width: 100,
+                editable: false, sortable: false, formatter: 'currency', formatoptions: formatter.number},
+            {name: 'id',index:'id',sortable:false,hidden:true}
         ],
         viewrecords: true,
         autowidth: true,
         forceFit: true,
-        height: 150,
+        height: 120,
         scroll: true,
         cellEdit: true,
         rownumbers: true,
@@ -99,64 +90,63 @@ $(function () {
         footerrow: true,
         gridComplete: completeOutTicket,
         pager: '#out-grid-pager',
-        caption:'出票',
+        caption: '出票',
         afterSaveCell: function (rowid, name, val, iRow, iCol) {
-            if($.inArray(name,['ticketNo','outPoint'])!=-1){
-                computeOutTicketSurplus(rowid,iCol);
+            if ($.inArray(name, ['ticketNo', 'outPoint']) != -1) {
+                if(name==='ticketNo'){
+                    var ticketNo = $(out_ticket_table).jqGrid('getCell', rowid, 1)
+                    var ticket = getSelectTicket(ticketNo);
+                    if(ticket){
+                        $(out_ticket_table).jqGrid('setRowData', rowid, {id:ticket.id,ticketMoney: ticket.ticketMoney});
+                    }
+                }
+                computeOutTicketSurplus(rowid, iCol);
                 completeOutTicket()
             }
         }
     });
-    $(out_ticket_table).navGrid('#out-grid-pager',{edit:false,add:false,del:false,search:false})
-        .navButtonAdd('#out-grid-pager',{
-            caption:"增加出票",
-            buttonicon:"ui-icon-add",
-            onClickButton: function(){
+    $(out_ticket_table).navGrid('#out-grid-pager', {edit: false, add: false, del: false, search: false})
+        .navButtonAdd('#out-grid-pager', {
+            caption: "增加出票",
+            buttonicon: "ui-icon-add",
+            onClickButton: function () {
                 out_add();
             },
-            position:"last"
-        })
-        .navButtonAdd('#out-grid-pager',{
-            caption:"删除",
-            buttonicon:"ui-icon-del",
-            onClickButton: function(){
-                //alert("Deleting Row");
-            },
-            position:"last"
+            position: "last"
         });
 
-    $('#submit').on('click',function(e){
+    $('#submit').on('click', function (e) {
         e.preventDefault();
-        if(!verifyTicketHeader()){
-           return ;
+        if (!verifyTicketHeader()) {
+            return;
         }
         //表单数据
-        var formData=$('#validation-form').serializeArray().reduce(function(obj, item) {
+        var formData = $('#validation-form').serializeArray().reduce(function (obj, item) {
             obj[item.name] = item.value;
             return obj;
         }, {});
         //进票数据
-        var in_datas=$(in_ticket_table).jqGrid("getRowData");
-        if(in_datas.length==0){
+        var in_datas = $(in_ticket_table).jqGrid("getRowData");
+        if (in_datas.length == 0) {
             showErrors("请添加进票。");
             return
         }
         //出票数据
-        var out_datas=$(out_ticket_table).jqGrid("getRowData");
+        var out_datas = $(out_ticket_table).jqGrid("getRowData");
         var data = "{\"trade\":" + JSON.stringify(formData) + ",\"inTickets\":" + JSON.stringify(in_datas) + ",\"outTickets\":" + JSON.stringify(out_datas) + "}";
         $.ajax({
-            url:RS_PATH+'ticket/create',
+            url: RS_PATH + 'ticket/create',
             type: "POST",
             contentType: 'application/json;charset=utf-8',
             data: data,
             dataType: "json",
             success: function (data) {
-                if(data.result){
+                if (data.result) {
                     showInfo("票据保存成功。");
-                    setTimeout(function(){
-                        window.location.href = RS_PATH+'ticket/create';
-                    },3000);
-                }else{
+                    setTimeout(function () {
+                        window.location.href = RS_PATH + 'ticket/create';
+                    }, 3000);
+                } else {
                     showErrors("发生未知异常。");
                 }
             },
@@ -166,56 +156,81 @@ $(function () {
         })
     });
 
-    function verifyTicketHeader(){
-        if(!$('#name').val()){
+    function verifyTicketHeader() {
+        if (!$('#name').val()) {
             showErrors("请填写客户名。");
             return false;
         }
-        if(!$('#telphone').val()){
+        if (!$('#telphone').val()) {
             showErrors("请填写客户电话。");
             return false;
         }
         return true;
     }
 
-    function showErrors(msg){
+    function showErrors(msg) {
         $.gritter.add({
             title: '警告',
             text: msg,
             class_name: 'gritter-error'
         });
     }
-    function showInfo(msg){
+
+    function showInfo(msg) {
         $.gritter.add({
             title: '提示',
             text: msg,
             class_name: 'gritter-success'
         });
     }
-    function in_add(){
-        var rowNum=$(in_ticket_table).jqGrid('getGridParam','records')+1;
-        $(in_ticket_table).jqGrid('addRowData',rowNum,{},'last');
-        $(in_ticket_table).jqGrid('editCell',rowNum,1,true);
+
+    function in_add() {
+        var rowNum = $(in_ticket_table).jqGrid('getGridParam', 'records') + 1;
+        $(in_ticket_table).jqGrid('addRowData', rowNum, {}, 'last');
+        $(in_ticket_table).jqGrid('editCell', rowNum, 1, true);
     }
 
-    function out_add(){
-        var rowNum=$(out_ticket_table).jqGrid('getGridParam','records')+1;
-        $(out_ticket_table).jqGrid('addRowData',rowNum,{ticketMoney:100},'last');
-        $(out_ticket_table).jqGrid('editCell',rowNum,1,true);
+    function out_add() {
+        var rowNum = $(out_ticket_table).jqGrid('getGridParam', 'records') + 1;
+        $(out_ticket_table).jqGrid('addRowData', rowNum, {}, 'last');
+        $(out_ticket_table).jqGrid('editCell', rowNum, 1, true);
     }
 
     //统计进票
-    function completeInTicket(){
-        var sum_ticketMoney=$(in_ticket_table).getCol('ticketMoney',false,'sum');
-        var sum_inTicketSurplus=$(in_ticket_table).getCol('inTicketSurplus',false,'sum');
+    function completeInTicket() {
+        var sum_ticketMoney = $(in_ticket_table).getCol('ticketMoney', false, 'sum');
+        var sum_inTicketSurplus = $(in_ticket_table).getCol('inTicketSurplus', false, 'sum');
         $(in_ticket_table).footerData('set', { ticketNo: '合计:', ticketMoney: sum_ticketMoney, inTicketSurplus: sum_inTicketSurplus });
+        completeProfit();
     }
 
     //统计出票
-    function completeOutTicket(){
-        var sum_ticketMoney=$(out_ticket_table).getCol('ticketMoney',false,'sum');
-        var sum_outTicketSurplus=$(out_ticket_table).getCol('outTicketSurplus',false,'sum');
+    function completeOutTicket() {
+        var sum_ticketMoney = $(out_ticket_table).getCol('ticketMoney', false, 'sum');
+        var sum_outTicketSurplus = $(out_ticket_table).getCol('outTicketSurplus', false, 'sum');
         $(out_ticket_table).footerData('set', { ticketNo: '合计:', ticketMoney: sum_ticketMoney, outTicketSurplus: sum_outTicketSurplus });
+        completeProfit();
+    }
+
+
+    /*
+    * 统计利润
+    * 合计金额=出票实际金额总额-进票实际金额总额；
+    * 当合计数值为正时，需要向客户收取款项，对话框中显示“收取”；
+    * 当合计数值为负时，需要向客户支付款项，对话框中显示“支付”
+    * */
+    function completeProfit(){
+        var profit = $(out_ticket_table).getCol('outTicketSurplus', false, 'sum') - $(in_ticket_table).getCol('inTicketSurplus', false, 'sum');
+        var lable="";
+        if(profit>0){
+            lable = "(收取)";
+            $('#profit').attr('class','green');
+        }else if (profit < 0){
+            lable = "(支付)";
+            $('#profit').attr('class','red');
+        }
+        $('#profit').html(profit.toFixed(2)+lable);
+
     }
 
     //计算进票的票面实际金额
@@ -237,5 +252,21 @@ $(function () {
         //计算公式= 票面金额*（1-出票点数）
         var ticketSurplus = ticketMoney * (1 - outPoint);
         $(out_ticket_table).jqGrid('setRowData', rowid, {outTicketSurplus: parseFloat(ticketSurplus)});
+    }
+
+    //取在库的票据
+    function getSelectTicketNos(){
+        return ticketData.ticketNos;
+    }
+    //通过票号查到票面金额
+    function getSelectTicket(ticketNo){
+        var ticket = undefined;
+        $.each(ticketData.tickets,function(i){
+            if(this.ticketNo===ticketNo){
+                ticket = this;
+                return false;
+            }
+        });
+        return ticket;
     }
 })

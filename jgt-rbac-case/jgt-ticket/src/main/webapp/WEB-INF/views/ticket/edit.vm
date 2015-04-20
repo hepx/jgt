@@ -9,7 +9,9 @@
     <div class="breadcrumbs" id="breadcrumbs">
         <script type="text/javascript">
             try {
-                ace.settings.check('breadcrumbs', 'fixed')
+                ace.settings.check('breadcrumbs', 'fixed');
+                //在库的票号
+                var ticketData =$!{ticketData};
             } catch (e) {
             }
         </script>
@@ -29,8 +31,6 @@
     <div class="page-content">
         <div class="row">
             <div class="col-xs-12">
-                #*<h3 class="header smaller lighter blue">$page_title</h3>*#
-
                 <div class="" id="step-container">
                     <div class="row">
                         <form  id="validation-form" method="post">
@@ -66,7 +66,7 @@
                                 <h4>合计:</h4>
                             </div>
                             <div class="col-md-6 align-right">
-                                <h4 class="bigger-120 red">0.00</h4>
+                                <h4 id="profit" class="green">0.00</h4>
                             </div>
                         </div>
                     </div>

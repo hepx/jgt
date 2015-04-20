@@ -68,7 +68,7 @@
                         </div>
                         <div class="infobox-data">
                             <span class="infobox-data-number">3</span>
-                            <div class="infobox-content">任务</div>
+                            <div class="infobox-content">票据总数</div>
                         </div>
                     </div>
 
@@ -81,45 +81,9 @@
                             <div class="infobox-content">页面查看次数</div>
                         </div>
                     </div>
-                    <div class="space-6"></div>
-
-                    <div class="infobox infobox-green infobox-small infobox-dark">
-                        <div class="infobox-progress">
-                            <div class="easy-pie-chart percentage" data-percent="61" data-size="39">
-                                <span class="percent">61</span>%
-                            </div>
-                        </div>
-
-                        <div class="infobox-data">
-                            <div class="infobox-content">任务</div>
-                            <div class="infobox-content">完成</div>
-                        </div>
-                    </div>
-
-                    <div class="infobox infobox-blue infobox-small infobox-dark">
-                        <div class="infobox-chart">
-                            <span class="sparkline" data-values="3,4,2,3,4,4,2,2"></span>
-                        </div>
-
-                        <div class="infobox-data">
-                            <div class="infobox-content">获得</div>
-                            <div class="infobox-content">$32,000</div>
-                        </div>
-                    </div>
-
-                    <div class="infobox infobox-grey infobox-small infobox-dark">
-                        <div class="infobox-icon">
-                            <i class="fa fa-cloud-download"></i>
-                        </div>
-
-                        <div class="infobox-data">
-                            <div class="infobox-content">下载次数</div>
-                            <div class="infobox-content">1,205</div>
-                        </div>
-                    </div>
                 </div>
             </div>
-            <div class="hr hr32 hr-dotted"></div>
+ #*           <div class="hr hr32 hr-dotted"></div>
             <div class="row">
                 <div class="col-lg-7 col-lg-offset-2">
                     <div class="widget-box">
@@ -202,7 +166,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>*#
             <!-- PAGE CONTENT ENDS -->
         </div>
     </div>

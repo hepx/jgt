@@ -23,5 +23,5 @@ public interface TicketMapper {
 
     public List<Ticket> findAll();
 
-    public List<Ticket> findByStatus(Ticket.TicketStatus status);
+    public List<Ticket> findByStatus(String status);
 }

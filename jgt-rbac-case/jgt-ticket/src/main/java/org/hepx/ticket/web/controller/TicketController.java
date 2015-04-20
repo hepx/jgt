@@ -15,6 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -46,6 +48,7 @@ public class TicketController {
     public String showCreateForm(Model model) {
         model.addAttribute("op", "新增");
         model.addAttribute("tradeNo", tradeService.getTradeNo());
+        model.addAttribute("ticketData",findByStatus(Ticket.TicketStatus.EXISTED));
         return "ticket/edit";
     }
 
@@ -89,5 +92,21 @@ public class TicketController {
             logger.error(e.getMessage(), e);
             return ResponseResult.buildFailResult().toMap();
         }
+    }
+
+
+    public String findByStatus(Ticket.TicketStatus ticketStatus){
+        //在库票据
+        List<Ticket> ticketList=ticketService.findByStatus(ticketStatus);
+        //构建select格式数据
+        Map<Long,String> options =new HashMap<Long,String>();
+        options.put(0L,"请选择");
+        for(Ticket t : ticketList){
+            options.put(t.getId(),t.getTicketNo());
+        }
+        Map<String,Object> map = new HashMap<String,Object>();
+        map.put("tickets",ticketList);
+        map.put("ticketNos",options);
+        return JsonUtil.objectToJson(map);
     }
 }
