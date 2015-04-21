@@ -6,6 +6,67 @@
  * To change this template use File | Settings | File Templates.
  */
 
+(function ($) {
+    $(function () {
+
+        var addFormGroup = function (event) {
+            event.preventDefault();
+
+            var $formGroup = $(this).closest('.form-group');
+            var $multipleFormGroup = $formGroup.closest('.multiple-form-group');
+            var $formGroupClone = $formGroup.clone();
+
+            $(this)
+                .toggleClass('btn-success btn-add btn-danger btn-remove')
+                .html('–');
+
+            $formGroupClone.find('input').val('');
+            $formGroupClone.find('.concept').text('现金');
+            $formGroupClone.insertAfter($formGroup);
+
+            var $lastFormGroupLast = $multipleFormGroup.find('.form-group:last');
+            if ($multipleFormGroup.data('max') <= countFormGroup($multipleFormGroup)) {
+                $lastFormGroupLast.find('.btn-add').attr('disabled', true);
+            }
+        };
+
+        var removeFormGroup = function (event) {
+            event.preventDefault();
+
+            var $formGroup = $(this).closest('.form-group');
+            var $multipleFormGroup = $formGroup.closest('.multiple-form-group');
+
+            var $lastFormGroupLast = $multipleFormGroup.find('.form-group:last');
+            if ($multipleFormGroup.data('max') >= countFormGroup($multipleFormGroup)) {
+                $lastFormGroupLast.find('.btn-add').attr('disabled', false);
+            }
+
+            $formGroup.remove();
+        };
+
+        var selectFormGroup = function (event) {
+            event.preventDefault();
+
+            var $selectGroup = $(this).closest('.input-group-select');
+            var param = $(this).attr("href").replace("#","");
+            var concept = $(this).text();
+
+            $selectGroup.find('.concept').text(concept);
+            $selectGroup.find('.input-group-select-val').val(param);
+
+        }
+
+        var countFormGroup = function ($form) {
+            return $form.find('.form-group').length;
+        };
+
+        $(document).on('click', '.btn-add', addFormGroup);
+        $(document).on('click', '.btn-remove', removeFormGroup);
+        $(document).on('click', '.dropdown-menu a', selectFormGroup);
+
+    });
+})(jQuery);
+
 $(function () {
 
     var in_ticket_table = "#in-ticket-table";
@@ -14,11 +75,12 @@ $(function () {
         number: {decimalSeparator: ".", thousandsSeparator: " ", decimalPlaces: 2, defaultValue: '0.00'}
     };
     /*进票table*/
+    var in_lastsel;
     $(in_ticket_table).jqGrid({
         datatype: "local",
         colNames: ['票号', '票面金额', '到期日期', '证明费', '票面零头', '进票点', '其它费用', '票面实际金额'],
         colModel: [
-            {name: 'ticketNo', index: 'ticketNo', width: 100, editable: true, sortable: false, editrules: {required: true, number: true} },
+            {name: 'ticketNo', index: 'ticketNo', width: 100, editable: true, sortable: false, editrules: {required: true, number: true,custom:true,custom_func:verifyTicketNo}},
             {name: 'ticketMoney', index: 'ticketMoney', width: 100, editable: true, sortable: false, formatter: 'currency', formatoptions: formatter.number},
             {name: 'expireDate', index: 'expireDate', width: 90, editable: true, sortable: false,editoptions: {readonly: true}},
             {name: 'certifyFee', index: 'certifyFee', width: 90, editable: true, sortable: false, formatter: 'currency', formatoptions: formatter.number},
@@ -41,6 +103,7 @@ $(function () {
         caption: '进票',
         pager: '#in-grid-pager',
         afterEditCell: function (id, name, val, iRow, iCol) {
+            $('#'+iRow+'_'+name).select();
             if (name == 'expireDate') {
                 $("#" + iRow + "_expireDate").datepicker({language: 'cn', format: "yyyy-mm-dd"});
             }
@@ -166,6 +229,13 @@ $(function () {
             return false;
         }
         return true;
+    }
+
+    function verifyTicketNo(value,colname){
+        if(value.length != 8){
+            return [false,"长度必须为8位"];
+        }
+        return [true,""];
     }
 
     function showErrors(msg) {

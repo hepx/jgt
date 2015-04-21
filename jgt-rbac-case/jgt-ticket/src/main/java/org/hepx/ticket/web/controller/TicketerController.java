@@ -59,7 +59,7 @@ public class TicketerController {
     Map create(@RequestBody String requestData) {
         try {
             TicketVo vo = JsonUtil.json2Object(requestData, TicketVo.class);
-            tradeService.crateTrade(vo);
+            tradeService.createTrade(vo);
             return ResponseResult.buildSuccessResult().toMap();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
@@ -96,6 +96,18 @@ public class TicketerController {
         }
     }
 
+    /**
+     * 票据盈利分析
+     * @param model
+     * @return
+     */
+    @RequiresPermissions("analysis:view")
+    @RequestMapping(value = "/analysis",method = RequestMethod.GET)
+    public String analysis(Model model){
+        List<Ticket> tickets = ticketService.findAll();
+        model.addAttribute("ticketList",tickets);
+        return "ticket/analysis";
+    }
 
     private String findByStatus(Ticket.TicketStatus ticketStatus) {
         //在库票据

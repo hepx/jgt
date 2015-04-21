@@ -7,13 +7,13 @@
 
     <sql id="base_columns">
         id,
-        ticketNo,ticketMoney,expireDate,certifyFee,ticketOdd,otherFee,inPoint,inTicketSurplus,outPoint,outTicketSurplus,outDate,tradeId,ticketStatus
+        ticketNo,ticketMoney,expireDate,inDate,certifyFee,ticketOdd,otherFee,inPoint,inTicketSurplus,outPoint,outTicketSurplus,outDate,tradeId,ticketStatus
     </sql>
 
     <insert id="createTicket" parameterType="t_ticket" useGeneratedKeys="true" keyProperty="id">
-        insert into tb_ticket (ticketNo,ticketMoney,expireDate,certifyFee,ticketOdd,inPoint,otherFee,inTicketSurplus,tradeId,ticketStatus)
+        insert into tb_ticket (ticketNo,ticketMoney,expireDate,inDate,certifyFee,ticketOdd,inPoint,otherFee,inTicketSurplus,tradeId,ticketStatus)
         values
-        (#{ticketNo},#{ticketMoney},#{expireDate},#{certifyFee},#{ticketOdd},#{inPoint},#{otherFee},#{inTicketSurplus},#{tradeId},#{ticketStatus})
+        (#{ticketNo},#{ticketMoney},#{expireDate},#{inDate},#{certifyFee},#{ticketOdd},#{inPoint},#{otherFee},#{inTicketSurplus},#{tradeId},#{ticketStatus})
     </insert>
 
     <update id="updateTicket" parameterType="t_ticket">

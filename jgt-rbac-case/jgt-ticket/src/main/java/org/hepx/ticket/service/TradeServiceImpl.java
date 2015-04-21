@@ -1,8 +1,10 @@
 package org.hepx.ticket.service;
 
 import org.hepx.jgt.common.random.NumberGenerater;
+import org.hepx.ticket.entity.Payment;
 import org.hepx.ticket.entity.Ticket;
 import org.hepx.ticket.entity.Trade;
+import org.hepx.ticket.mapper.PaymentMapper;
 import org.hepx.ticket.mapper.TicketMapper;
 import org.hepx.ticket.mapper.TradeMapper;
 import org.hepx.ticket.web.TicketVo;
@@ -28,6 +30,9 @@ public class TradeServiceImpl implements TradeService {
 
     @Autowired
     private TicketMapper ticketMapper;
+
+    @Autowired
+    private PaymentMapper paymentMapper;
 
     @Override
     public Trade createTrade(Trade trade) {
@@ -66,17 +71,19 @@ public class TradeServiceImpl implements TradeService {
     }
 
     @Override
-    public void crateTrade(TicketVo vo) {
+    public void createTrade(TicketVo vo) {
         Trade trade = vo.getTrade();
         List<Ticket> inTickets = vo.getInTickets();
         verifInTicket(inTickets);
         List<Ticket> outTickets = vo.getOutTickets();
         verifOutTicket(outTickets);
+        //List<Payment>payments = vo.getPayments();
         trade.setInTicketMoney(sumInTicketMoney(inTickets));
         trade.setOutTicketMoney(sumOutTicketMoney(outTickets));
         Trade t = createTrade(trade);
         for (Ticket in_ticket : inTickets) {
             in_ticket.setTradeId(t.getId());
+            in_ticket.setInDate(new Date());
             in_ticket.setTicketStatus(Ticket.TicketStatus.EXISTED);
             ticketMapper.createTicket(in_ticket);
         }
@@ -85,6 +92,10 @@ public class TradeServiceImpl implements TradeService {
             out_ticket.setTicketStatus(Ticket.TicketStatus.SALED);
             ticketMapper.updateTicket(out_ticket);
         }
+        /*for(Payment payment : payments){
+            payment.setTradeId(t.getId());
+            paymentMapper.createPayment(payment);
+        }*/
     }
 
     /**

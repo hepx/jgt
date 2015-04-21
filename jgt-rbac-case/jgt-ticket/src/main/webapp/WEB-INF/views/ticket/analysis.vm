@@ -1,0 +1,75 @@
+#set($page_title="票据盈利分析")
+#set($jsUrls=["${rc.contextPath}/static/ticket/list.js"])
+<div class="main-content">
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try {
+                ace.settings.check('breadcrumbs', 'fixed');
+            } catch (e) {
+            }
+        </script>
+        <ul class="breadcrumb">
+            <li>
+                <i class="fa fa-home home-icon"></i>
+                <a href="${rc.contextPath}/">首页</a>
+            </li>
+            <li class="active">$page_title</li>
+        </ul>
+    </div>
+    <div class="page-content">
+        <div class="row">
+            <div class="col-xs-12">
+                <h3 class="header smaller lighter blue">$page_title</h3>
+                <div class="table-responsive">
+                    <table id="ticketlist" class="table table-striped table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th class="center col-lg-1" style="background: aliceblue;">票号</th>
+                            <th class="center col-lg-1" style="background: aliceblue;">票面金额</th>
+                            <th class="center col-lg-1" style="background: aliceblue;">到期日期</th>
+                            <th class="center col-lg-1" style="background: aliceblue;">状态</th>
+                            <th class="center col-lg-1" style="background: lightcyan;">进票日期</th>
+                            <th class="center col-lg-1" style="background: lightcyan;">进票点数</th>
+                            <th class="center col-lg-1" style="background: lightcyan;">进票实际金额</th>
+                            <th class="center col-lg-1" style="background:lightyellow;">出票日期</th>
+                            <th class="center col-lg-1" style="background:lightyellow;">出票点</th>
+                            <th class="center col-lg-1" style="background:lightyellow;">出票实际金额</th>
+                            <th class="center col-lg-1" style="background: antiquewhite;">利润</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            #foreach($ticket in $ticketList)
+                            <tr>
+                                <td class="center" style="background: aliceblue;">$!{ticket.ticketNo}</td>
+                                <td class="align-right" style="background: aliceblue;">$!numberTool.format("#0.00",$!{ticket.ticketMoney})</td>
+                                <td class="center" style="background: aliceblue;">$!dateTool.format("yyyy-MM-dd",$!{ticket.expireDate})</td>
+                                <td class="center" style="background: aliceblue;">
+                                    #if($!{ticket.ticketStatus}=="EXISTED")
+                                        <span class="label label-success"> $!{ticket.ticketStatus.value}</span>
+                                    #elseif($!{ticket.ticketStatus}=="SALED")
+                                        <span class="label label-warning"> $!{ticket.ticketStatus.value}</span>
+                                    #end
+                                </td>
+                                <td class="center" style="background: lightcyan;">$!dateTool.format("yyyy-MM-dd",$!{ticket.inDate})</td>
+                                <td class="align-right" style="background: lightcyan;">$!numberTool.format("#0.00",$!{ticket.inPoint})</td>
+                                <td class="align-right" style="background: lightcyan;">$!numberTool.format("#0.00",$!{ticket.inTicketSurplus})</td>
+                                <td class="center" style="background:lightyellow;">$!dateTool.format("yyyy-MM-dd",$!{ticket.outDate})</td>
+                                <td class="align-right" style="background:lightyellow;">$!numberTool.format("#0.00",$!{ticket.outPoint})</td>
+                                <td class="align-right" style="background:lightyellow;">$!numberTool.format("#0.00",$!{ticket.outTicketSurplus})</td>
+                                <td class="align-right" style="background: antiquewhite;">
+                                    #set($temp=$!{ticket.outTicketSurplus}-$!{ticket.inTicketSurplus})
+                                    #if($temp>0)
+                                        <span class="text-success">$!numberTool.format("#0.00",$!{temp})</span>
+                                    #elseif($temp<0)
+                                        <span class="text-danger"><strong>$!numberTool.format("#0.00",$!{temp})</strong></span>
+                                    #end
+                                </td>
+                            </tr>
+                            #end
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

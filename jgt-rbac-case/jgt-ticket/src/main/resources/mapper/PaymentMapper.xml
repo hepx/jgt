@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="org.hepx.ticket.mapper.PaymentMapper">
+    <cache/>
+
+    <sql id="base_columns">
+        id, payType,account,payMoney,tradeId
+    </sql>
+
+    <insert id="createPayment" parameterType="t_payment" useGeneratedKeys="true" keyProperty="id">
+        insert into tb_payment (payType,account,payMoney,tradeId)
+        values (#{payType},#{account},#{payMoney},#{tradeId})
+    </insert>
+
+    <update id="updatePayment" parameterType="t_payment">
+        update tb_payment
+        <trim prefix="set" suffixOverrides=",">
+            <if test="payType != null">
+                payType=#{payType},
+            </if>
+            <if test="account != null and account != ''">
+                account=#{account},
+            </if>
+            <if test="payMoney != null">
+                payMoney=#{payMoney},
+            </if>
+        </trim>
+        where id=#{id}
+    </update>
+
+    <delete id="deletePayment" parameterType="long">
+        delete from tb_payment where id=#{paymentId}
+    </delete>
+
+    <select id="findOne" parameterType="long" resultType="t_payment">
+        select
+        <include refid="base_columns"/>
+        from tb_payment
+        where id=#{paymentId}
+    </select>
+
+    <select id="findAll" resultType="t_payment">
+        select
+        <include refid="base_columns"/>
+        from tb_payment
+        order by id desc
+    </select>
+
+</mapper>

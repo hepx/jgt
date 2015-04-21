@@ -1,5 +1,6 @@
 package org.hepx.ticket.web;
 
+import org.hepx.ticket.entity.Payment;
 import org.hepx.ticket.entity.Ticket;
 import org.hepx.ticket.entity.Trade;
 
@@ -12,11 +13,21 @@ import java.util.List;
  */
 public class TicketVo {
 
-    private Trade trade;
+    private Trade trade;  //交易信息
 
-    private List<Ticket> inTickets;
+    private List<Ticket> inTickets;   //进票
 
-    private List<Ticket> outTickets;
+    private List<Ticket> outTickets;  //出票
+
+    private List<Payment> payments;   //支付
+
+    public List<Payment> getPayments() {
+        return payments;
+    }
+
+    public void setPayments(List<Payment> payments) {
+        this.payments = payments;
+    }
 
     public Trade getTrade() {
         return trade;

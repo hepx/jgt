@@ -1,6 +1,5 @@
 package org.hepx.ticket.service;
 
-import org.hepx.ticket.entity.Ticket;
 import org.hepx.ticket.entity.Trade;
 import org.hepx.ticket.web.TicketVo;
 
@@ -20,6 +19,6 @@ public interface TradeService {
 
     public String getTradeNo();
 
-    public void crateTrade(TicketVo vo);
+    public void createTrade(TicketVo vo);
 
 }

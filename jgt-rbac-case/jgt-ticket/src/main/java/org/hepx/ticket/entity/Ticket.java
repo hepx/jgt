@@ -21,6 +21,8 @@ public class Ticket extends IdEntity implements Serializable {
 
     private Date expireDate;   //到期日期
 
+    private Date inDate;    //进票日期
+
     private double certifyFee;//证明费
 
     private double ticketOdd;//票面零头
@@ -54,6 +56,14 @@ public class Ticket extends IdEntity implements Serializable {
         public String getValue() {
             return value;
         }
+    }
+
+    public Date getInDate() {
+        return inDate;
+    }
+
+    public void setInDate(Date inDate) {
+        this.inDate = inDate;
     }
 
     public double getTicketMoney() {
