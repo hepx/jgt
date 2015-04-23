@@ -39,7 +39,7 @@ public class TicketerController {
     @RequiresPermissions("ticket:view")
     @RequestMapping(method = RequestMethod.GET)
     public String list(Model model) {
-        model.addAttribute("ticketList", ticketService.findAll());
+        model.addAttribute("ticketList", ticketService.findByStock());
         return "ticket/list";
     }
 

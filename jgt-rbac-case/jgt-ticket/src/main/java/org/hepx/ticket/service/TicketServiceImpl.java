@@ -50,4 +50,9 @@ public class TicketServiceImpl implements TicketService {
     public List<Ticket> findByStatus(Ticket.TicketStatus status) {
         return ticketMapper.findByStatus(status.toString());
     }
+
+    @Override
+    public List<Ticket> findByStock() {
+        return ticketMapper.findByStock();
+    }
 }

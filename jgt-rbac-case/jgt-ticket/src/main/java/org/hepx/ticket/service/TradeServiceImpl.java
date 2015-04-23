@@ -108,7 +108,7 @@ public class TradeServiceImpl implements TradeService {
     private void verifInTicket(List<Ticket> inTicets){
         for(Ticket t : inTicets){
             t.setInTicketSurplus((BigDecimal.valueOf(t.getTicketMoney()).subtract(BigDecimal.valueOf(t.getTicketOdd())))
-                    .multiply(new BigDecimal(1).subtract(BigDecimal.valueOf(t.getInPoint())))
+                    .multiply(new BigDecimal(1).subtract(BigDecimal.valueOf(t.getInPoint()/100)))
                     .subtract(BigDecimal.valueOf(t.getCertifyFee())).subtract(BigDecimal.valueOf(t.getOtherFee())).doubleValue());
         }
     }
@@ -122,7 +122,7 @@ public class TradeServiceImpl implements TradeService {
     private void verifOutTicket(List<Ticket> outTicets){
         for(Ticket t : outTicets){
             t.setOutTicketSurplus(BigDecimal.valueOf(t.getTicketMoney()).multiply(new BigDecimal(1).
-                    subtract(BigDecimal.valueOf(t.getOutPoint()))).doubleValue());
+                    subtract(BigDecimal.valueOf(t.getOutPoint()/100))).doubleValue());
         }
     }
 

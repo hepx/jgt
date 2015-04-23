@@ -59,4 +59,10 @@
         order by id desc
     </select>
 
+    <select id="findByStock" resultType="t_ticket">
+        select id,ticketNo,ticketMoney,expireDate from tb_ticket
+        where ticketStatus = 'EXISTED'
+        order by expireDate asc,ticketMoney desc
+    </select>
+
 </mapper>

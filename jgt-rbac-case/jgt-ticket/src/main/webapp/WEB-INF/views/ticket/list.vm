@@ -1,4 +1,4 @@
-#set($page_title="汇票管理")
+#set($page_title="票据交易")
 #set($jsUrls=["${rc.contextPath}/static/ticket/list.js"])
 <div class="main-content">
     <div class="breadcrumbs" id="breadcrumbs">
@@ -23,24 +23,15 @@
                 <div class="table-responsive">
                     <div class="text-info">$!{msg}</div>
                     #if($shiro.hasPermission("ticket:create"))
-                        <a href="${rc.contextPath}/ticket/create" class="btn btn-primary btn-sm">新增汇票</a>
+                        <a href="${rc.contextPath}/ticket/create" class="btn btn-primary btn-lg">创建票据交易</a>
                     #end
                     <table id="ticketlist" class="table table-striped table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th class="center width-auto">序号</th>
+                            <th class="center col-lg-1">序号</th>
                             <th class="center col-lg-1">票号</th>
                             <th class="center col-lg-1">票面金额</th>
                             <th class="center col-lg-1">到期日期</th>
-                            <th class="center col-lg-1">进票点数</th>
-                            <th class="center col-lg-1">证明费</th>
-                            <th class="center col-lg-1">票面零头</th>
-                            <th class="center col-lg-1">进票实际金额</th>
-                            <th class="center col-lg-1">状态</th>
-                            <th class="center col-lg-1">出票日期</th>
-                            <th class="center col-lg-1">出票点</th>
-                            <th class="center col-lg-1">出票实际金额</th>
-                            <th class="center width-auto">操作</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -50,29 +41,6 @@
                                 <td>$!{ticket.ticketNo}</td>
                                 <td class="align-right">$numberTool.format("#0.00",$!{ticket.ticketMoney})</td>
                                 <td class="center">$!dateTool.format("yyyy-MM-dd",$!{ticket.expireDate})</td>
-                                <td class="align-right">$numberTool.format("#0.00",$!{ticket.inPoint})</td>
-                                <td class="align-right">$numberTool.format("#0.00",$!{ticket.certifyFee})</td>
-                                <td class="align-right">$numberTool.format("#0.00",$!{ticket.ticketOdd})</td>
-                                <td class="align-right">$numberTool.format("#0.00",$!{ticket.inTicketSurplus})</td>
-                                <td class="center">
-                                    #if($!{ticket.ticketStatus}=="EXISTED")
-                                        <span class="label label-success"> $!{ticket.ticketStatus.value}</span>
-                                    #elseif($!{ticket.ticketStatus}=="SALED")
-                                        <span class="label label-warning"> $!{ticket.ticketStatus.value}</span>
-                                    #end
-                                </td>
-                                <td class="center">$!dateTool.format("yyyy-MM-dd",$!{ticket.outDate})</td>
-                                <td class="align-right">$numberTool.format("#0.00",$!{ticket.outPoint})</td>
-                                <td class="align-right">$numberTool.format("#0.00",$!{ticket.outTicketSurplus})</td>
-                                <td>
-                                    <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
-                                        #if($shiro.hasPermission("ticket:delete"))
-                                            <a class="grey del" href="#">
-                                                删除
-                                            </a>
-                                        #end
-                                    </div>
-                                </td>
                             </tr>
                             #end
                         </tbody>

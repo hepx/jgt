@@ -78,14 +78,15 @@ $(function () {
     var in_lastsel;
     $(in_ticket_table).jqGrid({
         datatype: "local",
-        colNames: ['票号', '票面金额', '到期日期', '证明费', '票面零头', '进票点', '其它费用', '票面实际金额'],
+        colNames: ['票号', '票面金额', '到期日期', '证明费', '票面零头', '进票点', '其它费用', '进票实际金额'],
         colModel: [
             {name: 'ticketNo', index: 'ticketNo', width: 100, editable: true, sortable: false, editrules: {required: true, number: true,custom:true,custom_func:verifyTicketNo}},
             {name: 'ticketMoney', index: 'ticketMoney', width: 100, editable: true, sortable: false, formatter: 'currency', formatoptions: formatter.number},
             {name: 'expireDate', index: 'expireDate', width: 90, editable: true, sortable: false,editoptions: {readonly: true}},
             {name: 'certifyFee', index: 'certifyFee', width: 90, editable: true, sortable: false, formatter: 'currency', formatoptions: formatter.number},
             {name: 'ticketOdd', index: 'ticketOdd', width: 90, editable: true, sortable: false, formatter: 'currency', formatoptions: formatter.number},
-            {name: 'inPoint', index: 'inPoint', width: 60, editable: true, sortable: false, formatter: 'currency', formatoptions: formatter.number},
+            {name: 'inPoint', index: 'inPoint', width: 60, editable: true, sortable: false, formatter: 'currency',
+                formatoptions: {decimalSeparator: ".", decimalPlaces: 2, defaultValue: '0.00',suffix:'%'}},
             {name: 'otherFee', index: 'otherFee', width: 90, editable: true, sortable: false, formatter: 'currency', formatoptions: formatter.number},
             {name: 'inTicketSurplus', index: 'inTicketSurplus', width: 100, editable: false, sortable: false, formatter: 'currency', formatoptions: formatter.number}
         ],
@@ -100,7 +101,7 @@ $(function () {
         cellsubmit: 'clientArray',
         footerrow: true,
         gridComplete: completeInTicket,
-        caption: '进票',
+        caption: '<strong>进票</strong>&nbsp;&nbsp;<a id="in_add" class="btn btn-xs btn-success">增加进票</a>',
         pager: '#in-grid-pager',
         afterEditCell: function (id, name, val, iRow, iCol) {
             $('#'+iRow+'_'+name).select();
@@ -115,15 +116,7 @@ $(function () {
             }
         }
     });
-    $(in_ticket_table).navGrid('#in-grid-pager', {edit: false, add: false, del: false, search: false})
-        .navButtonAdd('#in-grid-pager', {
-            caption: "增加进票",
-            buttonicon: "ui-icon-add",
-            onClickButton: function () {
-                in_add();
-            },
-            position: "last"
-        });
+    $(in_ticket_table).navGrid('#in-grid-pager', {edit: false, add: false, del: false, search: false});
 
     /*出票table*/
     $(out_ticket_table).jqGrid({
@@ -136,7 +129,8 @@ $(function () {
             {name: 'ticketMoney', index: 'ticketMoney', width: 100,
                 editable: false, sortable: false, formatter: 'currency', formatoptions: formatter.number},
             {name: 'outPoint', index: 'outPoint', width: 60,
-                editable: true, sortable: false, formatter: 'currency', formatoptions: formatter.number},
+                editable: true, sortable: false, formatter: 'currency',
+                formatoptions: {decimalSeparator: ".", decimalPlaces: 2, defaultValue: '0.00',suffix:'%'}},
             {name: 'outTicketSurplus', index: 'outTicketSurplus', width: 100,
                 editable: false, sortable: false, formatter: 'currency', formatoptions: formatter.number},
             {name: 'id',index:'id',sortable:false,hidden:true}
@@ -153,7 +147,7 @@ $(function () {
         footerrow: true,
         gridComplete: completeOutTicket,
         pager: '#out-grid-pager',
-        caption: '出票',
+        caption: '<strong>出票</strong>&nbsp;&nbsp;<a id="out_add" class="btn btn-xs btn-success">增加出票</a>',
         afterSaveCell: function (rowid, name, val, iRow, iCol) {
             if ($.inArray(name, ['ticketNo', 'outPoint']) != -1) {
                 if(name==='ticketNo'){
@@ -168,15 +162,17 @@ $(function () {
             }
         }
     });
-    $(out_ticket_table).navGrid('#out-grid-pager', {edit: false, add: false, del: false, search: false})
-        .navButtonAdd('#out-grid-pager', {
-            caption: "增加出票",
-            buttonicon: "ui-icon-add",
-            onClickButton: function () {
-                out_add();
-            },
-            position: "last"
-        });
+    $(out_ticket_table).navGrid('#out-grid-pager', {edit: false, add: false, del: false, search: false});
+
+    $('#in_add').on('click',function(e){
+        e.preventDefault();
+        in_add();
+    });
+
+    $('#out_add').on('click',function(e){
+        e.preventDefault();
+        out_add();
+    })
 
     $('#submit').on('click', function (e) {
         e.preventDefault();
@@ -190,12 +186,13 @@ $(function () {
         }, {});
         //进票数据
         var in_datas = $(in_ticket_table).jqGrid("getRowData");
-        if (in_datas.length == 0) {
-            showErrors("请添加进票。");
-            return
-        }
         //出票数据
         var out_datas = $(out_ticket_table).jqGrid("getRowData");
+        //出票和进票必须有一项
+        if (in_datas.length == 0 && out_datas.length == 0) {
+            showErrors("请添加进票或出票，二者必须填写一项。");
+            return
+        }
         var data = "{\"trade\":" + JSON.stringify(formData) + ",\"inTickets\":" + JSON.stringify(in_datas) + ",\"outTickets\":" + JSON.stringify(out_datas) + "}";
         $.ajax({
             url: RS_PATH + 'ticket/create',
@@ -308,7 +305,7 @@ $(function () {
         var ticketMoney = parseFloat($(in_ticket_table).jqGrid('getCell', rowid, 2));
         var certifyFee = parseFloat($(in_ticket_table).jqGrid('getCell', rowid, 4));
         var ticketOdd = parseFloat($(in_ticket_table).jqGrid('getCell', rowid, 5));
-        var inPoint = parseFloat($(in_ticket_table).jqGrid('getCell', rowid, 6));
+        var inPoint = parseFloat($(in_ticket_table).jqGrid('getCell', rowid, 6))/100;
         var otherFee = parseFloat($(in_ticket_table).jqGrid('getCell', rowid, 7));
         //计算公式=（票面金额-票面零头）*（1-点数）-证明费-其他
         var ticketSurplus = (ticketMoney - ticketOdd) * (1 - inPoint) - certifyFee - otherFee;
@@ -318,7 +315,7 @@ $(function () {
     //计算进票的票面实际金额
     function computeOutTicketSurplus(rowid, iCol) {
         var ticketMoney = parseFloat($(out_ticket_table).jqGrid('getCell', rowid, 2));
-        var outPoint = parseFloat($(out_ticket_table).jqGrid('getCell', rowid, 3));
+        var outPoint = parseFloat($(out_ticket_table).jqGrid('getCell', rowid, 3))/100;
         //计算公式= 票面金额*（1-出票点数）
         var ticketSurplus = ticketMoney * (1 - outPoint);
         $(out_ticket_table).jqGrid('setRowData', rowid, {outTicketSurplus: parseFloat(ticketSurplus)});
