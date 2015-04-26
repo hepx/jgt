@@ -23,4 +23,6 @@ public interface BankAccountMapper {
 
     public List<BankAccount> findAll();
 
+    public List<BankAccount> findJson(String account);
+
 }

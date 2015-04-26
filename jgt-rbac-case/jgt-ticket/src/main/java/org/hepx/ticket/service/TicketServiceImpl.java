@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * User: hepanxi
@@ -54,5 +55,10 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public List<Ticket> findByStock() {
         return ticketMapper.findByStock();
+    }
+
+    @Override
+    public List<Map> findJsonByStock(String ticketNo) {
+        return ticketMapper.findJsonByStock(ticketNo);
     }
 }

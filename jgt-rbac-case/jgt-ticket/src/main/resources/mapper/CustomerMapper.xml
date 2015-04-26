@@ -48,4 +48,23 @@
         order by id desc
     </select>
 
+    <select id="findJson" resultType="t_customer" parameterType="string">
+        select  name, telphone, idCard from tb_customer
+        where name like CONCAT('%',#{name},'%')
+    </select>
+
+    <select id="criteriaQuery" resultType="t_customer" parameterType="t_customer">
+        select
+        <include refid="base_columns"/>
+        from tb_customer
+        <where>
+            <if test="name != null and name !=''">
+               and name=#{name}
+            </if>
+            <if test="telphone != null and telphone != ''">
+               and telphone=#{telphone}
+            </if>
+        </where>
+    </select>
+
 </mapper>

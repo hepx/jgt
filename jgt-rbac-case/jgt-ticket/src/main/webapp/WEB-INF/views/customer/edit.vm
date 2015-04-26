@@ -42,7 +42,7 @@
                             <label class="control-label col-xs-12 col-sm-3 no-padding-right">电话</label>
                             <div class="col-xs-12 col-sm-9">
                                 <div class="clearfix">
-                                    <input type="text" name="telphone" value="$!{customer.telphone}">
+                                    <input type="text" name="telphone" maxlength="11" value="$!{customer.telphone}">
                                 </div>
                             </div>
                         </div>
@@ -51,7 +51,7 @@
                             <label class="control-label col-xs-12 col-sm-3 no-padding-right">身份证</label>
                             <div class="col-xs-12 col-sm-9">
                                 <div class="clearfix">
-                                    <input type="text" name="idCard" value="$!{customer.idCard}">
+                                    <input type="text" name="idCard" maxlength="18" value="$!{customer.idCard}">
                                 </div>
                             </div>
                         </div>

@@ -3,6 +3,7 @@ package org.hepx.ticket.service;
 import org.hepx.ticket.entity.Ticket;
 
 import java.util.List;
+import java.util.Map;
 
 public interface TicketService {
 
@@ -19,5 +20,7 @@ public interface TicketService {
     public List<Ticket> findByStatus(Ticket.TicketStatus status);
 
     public List<Ticket> findByStock();
+
+    public List<Map> findJsonByStock(String ticketNo);
 
 }

@@ -65,4 +65,9 @@
         order by expireDate asc,ticketMoney desc
     </select>
 
+    <select id="findJsonByStock" resultType="map" parameterType="string">
+        select id,ticketNo as value,ticketMoney from tb_ticket
+        where ticketStatus = 'EXISTED' and ticketNo like CONCAT('%',#{ticketNo},'%')
+    </select>
+
 </mapper>

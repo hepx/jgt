@@ -1,5 +1,6 @@
 package org.hepx.ticket.web.controller;
 
+import com.alibaba.fastjson.JSON;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.hepx.jgt.common.json.JsonUtil;
 import org.hepx.ticket.entity.Ticket;
@@ -48,7 +49,6 @@ public class TicketerController {
     public String showCreateForm(Model model) {
         model.addAttribute("op", "新增");
         model.addAttribute("tradeNo", tradeService.getTradeNo());
-        model.addAttribute("ticketData", findByStatus(Ticket.TicketStatus.EXISTED));
         return "ticket/edit";
     }
 
@@ -94,6 +94,12 @@ public class TicketerController {
             logger.error(e.getMessage(), e);
             return ResponseResult.buildFailResult().toMap();
         }
+    }
+
+    @RequestMapping(value = "getTickets",method = RequestMethod.GET)
+    @ResponseBody
+    public String getTicketJson(@RequestParam("term")String term){
+         return JsonUtil.objectToJson(ticketService.findJsonByStock(term));
     }
 
     /**

@@ -3,7 +3,6 @@ package org.hepx.ticket.entity;
 import org.apache.ibatis.type.Alias;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 
 /**

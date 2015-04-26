@@ -4,14 +4,13 @@
 "${rc.contextPath}/assets/css/datepicker.css","${rc.contextPath}/assets/css/ui.jqgrid.css"])
 #set($jsUrls= ["${rc.contextPath}/static/ticket/floatLabels.js","${rc.contextPath}/assets/js/date-time/bootstrap-datepicker.min.js",
 "${rc.contextPath}/assets/js/jqGrid/jquery.jqGrid.min.js","${rc.contextPath}/assets/js/jqGrid/i18n/grid.locale-cn.js",
+"${rc.contextPath}/assets/js/jquery.tabletojson.min.js","${rc.contextPath}/assets/js/jquery-ui-1.10.4.custom.min.js",
 "${rc.contextPath}/static/ticket/edit.js"])
 <div class="main-content">
     <div class="breadcrumbs" id="breadcrumbs">
         <script type="text/javascript">
             try {
                 ace.settings.check('breadcrumbs', 'fixed');
-                //在库的票号
-                var ticketData =$!{ticketData};
             } catch (e) {
             }
         </script>
@@ -33,10 +32,11 @@
             <div class="col-xs-12">
                 <div class="" id="step-container">
                     <div class="row">
-                        <form  id="validation-form" method="post">
+                        <form id="validation-form" method="post">
                             <div class="form-group float-label-control col-xs-3">
                                 <label for="" class="control-label">交易编号</label>
-                                <input type="text" name="tradeNo" class="form-control" placeholder="交易编号" value="$!{tradeNo}" readonly="true">
+                                <input type="text" name="tradeNo" class="form-control" placeholder="交易编号"
+                                       value="$!{tradeNo}" readonly="true">
                             </div>
                             <div class="form-group float-label-control col-xs-3">
                                 <label for="" class="control-label">客户姓名</label>
@@ -44,11 +44,12 @@
                             </div>
                             <div class="form-group float-label-control col-xs-3">
                                 <label for="" class="control-label">客户电话</label>
-                                <input type="text" name="telphone" id="telphone" class="form-control" maxlength="11" placeholder="客户电话">
+                                <input type="text" name="telphone" id="telphone" class="form-control" maxlength="11"
+                                       placeholder="客户电话">
                             </div>
                             <div class="form-group float-label-control col-xs-3">
                                 <label for="" class="control-label">身份证号</label>
-                                <input type="text" name="idCard" class="form-control" maxlength="18" placeholder="身份证号">
+                                <input type="text" name="idCard" id="idCard" class="form-control" maxlength="18" placeholder="身份证号">
                             </div>
                         </form>
                     </div>
@@ -62,39 +63,54 @@
                     <div class="hr hr8 hr-double hr-dotted"></div>
 
                     <div class="row">
-                        <div class="col-md-offset-8 col-md-4">
-                            <div class="col-md-4">
-                                <h4>合计:</h4>
+                        <div class="col-md-offset-7 col-md-5">
+                            <div class="col-md-3">
+                                <h4 id="flag">合计</h4>
                             </div>
-                            <div class="col-md-8 align-right">
+                            <div class="col-md-9 align-right">
                                 <h4 id="profit" class="green">0.00</h4>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-offset-8 col-md-4">
-                            <div class="col-md-4">
-                                <h4>支付方式:</h4>
+                        <div class="col-md-offset-7 col-md-5">
+                            <div class="col-md-3">
+                                <h4>支付方式</h4>
                             </div>
-                            <div class="col-md-8">
-                                <div class="contacts">
-                                    <div class="form-group multiple-form-group input-group">
-                                        <div class="input-group-btn input-group-select">
-                                            <button type="button" class="btn  btn-white btn-sm dropdown-toggle" data-toggle="dropdown">
-                                                <span class="concept">现金</span> <span class="caret"></span>
-                                            </button>
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li><a href="#phone">现金</a></li>
-                                                <li><a href="#fax">网银</a></li>
-                                                <li><a href="#skype">刷卡机</a></li>
-                                            </ul>
-                                            <input type="hidden" class="input-sm input-group-select-val" name="contacts['type'][]" value="phone">
-                                        </div>
-                                        <input type="text" name="contacts['value'][]" class="form-control input-sm">
-                                        <span class="input-group-btn">
-                                            <button type="button" class="btn btn-sm btn-success btn-add">+</button>
-                                        </span>
-                                    </div>
+                            <div class="col-md-9">
+                                <div class="pull-left">
+                                    <table id="paymentTable">
+                                        <thead class="hidden">
+                                            <tr>
+                                                <th>payType</th>
+                                                <th>account</th>
+                                                <th>payMoney</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>
+                                                <select name="payType">
+                                                    <option value="CASH">现金</option>
+                                                    <option value="EBANK">网银</option>
+                                                    <option value="POS">刷卡机</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="input-small account" placeholder="帐号"
+                                                       maxlength="16">
+                                            </td>
+                                            <td>
+                                                <input type="text" class="input-small" placeholder="金额">
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="pull-right">
+                                    <a id="addPayment" class="btn btn-sm btn-success">
+                                        <i class="icon-only fa fa-plus"></i>
+                                    </a>
                                 </div>
                             </div>
                         </div>

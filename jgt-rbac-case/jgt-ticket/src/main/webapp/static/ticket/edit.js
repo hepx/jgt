@@ -5,68 +5,6 @@
  * Time: 下午2:00
  * To change this template use File | Settings | File Templates.
  */
-
-(function ($) {
-    $(function () {
-
-        var addFormGroup = function (event) {
-            event.preventDefault();
-
-            var $formGroup = $(this).closest('.form-group');
-            var $multipleFormGroup = $formGroup.closest('.multiple-form-group');
-            var $formGroupClone = $formGroup.clone();
-
-            $(this)
-                .toggleClass('btn-success btn-add btn-danger btn-remove')
-                .html('–');
-
-            $formGroupClone.find('input').val('');
-            $formGroupClone.find('.concept').text('现金');
-            $formGroupClone.insertAfter($formGroup);
-
-            var $lastFormGroupLast = $multipleFormGroup.find('.form-group:last');
-            if ($multipleFormGroup.data('max') <= countFormGroup($multipleFormGroup)) {
-                $lastFormGroupLast.find('.btn-add').attr('disabled', true);
-            }
-        };
-
-        var removeFormGroup = function (event) {
-            event.preventDefault();
-
-            var $formGroup = $(this).closest('.form-group');
-            var $multipleFormGroup = $formGroup.closest('.multiple-form-group');
-
-            var $lastFormGroupLast = $multipleFormGroup.find('.form-group:last');
-            if ($multipleFormGroup.data('max') >= countFormGroup($multipleFormGroup)) {
-                $lastFormGroupLast.find('.btn-add').attr('disabled', false);
-            }
-
-            $formGroup.remove();
-        };
-
-        var selectFormGroup = function (event) {
-            event.preventDefault();
-
-            var $selectGroup = $(this).closest('.input-group-select');
-            var param = $(this).attr("href").replace("#","");
-            var concept = $(this).text();
-
-            $selectGroup.find('.concept').text(concept);
-            $selectGroup.find('.input-group-select-val').val(param);
-
-        }
-
-        var countFormGroup = function ($form) {
-            return $form.find('.form-group').length;
-        };
-
-        $(document).on('click', '.btn-add', addFormGroup);
-        $(document).on('click', '.btn-remove', removeFormGroup);
-        $(document).on('click', '.dropdown-menu a', selectFormGroup);
-
-    });
-})(jQuery);
-
 $(function () {
 
     var in_ticket_table = "#in-ticket-table";
@@ -124,8 +62,7 @@ $(function () {
         colNames: ['票号', '票面金额', '出票点', '出票实际金额','ID'],
         colModel: [
             {name: 'ticketNo', index: 'ticketNo', width: 100,sortable: false,
-                editable: true, edittype:'select', editrules: {required: true},
-                editoptions: {readonly: true, value: getSelectTicketNos()} },
+                editable: true },
             {name: 'ticketMoney', index: 'ticketMoney', width: 100,
                 editable: false, sortable: false, formatter: 'currency', formatoptions: formatter.number},
             {name: 'outPoint', index: 'outPoint', width: 60,
@@ -150,19 +87,35 @@ $(function () {
         caption: '<strong>出票</strong>&nbsp;&nbsp;<a id="out_add" class="btn btn-xs btn-success">增加出票</a>',
         afterSaveCell: function (rowid, name, val, iRow, iCol) {
             if ($.inArray(name, ['ticketNo', 'outPoint']) != -1) {
-                if(name==='ticketNo'){
+                /*if(name==='ticketNo'){
                     var ticketNo = $(out_ticket_table).jqGrid('getCell', rowid, 1)
                     var ticket = getSelectTicket(ticketNo);
                     if(ticket){
                         $(out_ticket_table).jqGrid('setRowData', rowid, {id:ticket.id,ticketMoney: ticket.ticketMoney});
                     }
-                }
+                }*/
                 computeOutTicketSurplus(rowid, iCol);
                 completeOutTicket()
             }
         }
     });
     $(out_ticket_table).navGrid('#out-grid-pager', {edit: false, add: false, del: false, search: false});
+
+    $('#name').autocomplete({
+        minLength: 1,
+        source: RS_PATH +"customer/getCustomers",
+        focus: function( event, ui ) {
+            $( "#name" ).val( ui.item.value);
+            return false;
+        },
+        select: function( event, ui ) {
+            $("#telphone" ).val( ui.item.telphone );
+            $("#idCard" ).val( ui.item.idCard );
+            return false;
+        }
+    });
+
+    accoutAutocomplete();
 
     $('#in_add').on('click',function(e){
         e.preventDefault();
@@ -172,7 +125,12 @@ $(function () {
     $('#out_add').on('click',function(e){
         e.preventDefault();
         out_add();
-    })
+    });
+
+    $('#addPayment').on('click',function(e){
+        e.preventDefault();
+        addPayment();
+    });
 
     $('#submit').on('click', function (e) {
         e.preventDefault();
@@ -193,7 +151,34 @@ $(function () {
             showErrors("请添加进票或出票，二者必须填写一项。");
             return
         }
-        var data = "{\"trade\":" + JSON.stringify(formData) + ",\"inTickets\":" + JSON.stringify(in_datas) + ",\"outTickets\":" + JSON.stringify(out_datas) + "}";
+        //支付总额
+        var paymentTotal=0;
+        //支付内容
+        var payments= $('#paymentTable').tableToJSON({
+            textExtractor : {
+                0 : function(cellIndex, $cell) {
+                    return $cell.find('select').val();
+                },
+                1 : function(cellIndex, $cell) {
+                    return $cell.find('input').val();
+                },
+                2 : function(cellIndex, $cell) {
+                    var v = $cell.find('input').val();
+                    if(v){
+                        paymentTotal+=parseFloat(v);
+                    }
+                    return v;
+                }
+            }
+        });
+        if(Math.abs(parseFloat(paymentTotal)) != Math.abs(parseFloat($('#profit').html()))){
+            showErrors("填写的支付金额与票据合计不符,请认真检查!");
+            return ;
+        }
+        var data = "{\"trade\":" + JSON.stringify(formData) + ",\"inTickets\":" + JSON.stringify(in_datas) +
+            ",\"outTickets\":" + JSON.stringify(out_datas) + ",\"payments\":"+JSON.stringify(payments)+"}";
+        //console.log(data);
+        //return;
         $.ajax({
             url: RS_PATH + 'ticket/create',
             type: "POST",
@@ -261,6 +246,20 @@ $(function () {
         var rowNum = $(out_ticket_table).jqGrid('getGridParam', 'records') + 1;
         $(out_ticket_table).jqGrid('addRowData', rowNum, {}, 'last');
         $(out_ticket_table).jqGrid('editCell', rowNum, 1, true);
+        $('#'+rowNum+'_ticketNo').autocomplete({
+            minLength: 2,
+            source: RS_PATH + 'ticket/getTickets',
+            focus: function( event, ui ) {
+                $( '#'+rowNum+'_ticketNo' ).val( ui.item.value);
+                return false;
+            },
+            select: function( event, ui ) {
+                //$('#'+rowNum+'ticketMoney' ).val( ui.item.ticketMoney );
+                //$('#'+rowNum+'_id' ).val( ui.item.id );
+                $(out_ticket_table).jqGrid('setRowData', rowNum, {id:ui.item.id,ticketMoney:  ui.item.ticketMoney})
+                return false;
+            }
+        });
     }
 
     //统计进票
@@ -279,7 +278,6 @@ $(function () {
         completeProfit();
     }
 
-
     /*
     * 统计利润
     * 合计金额=出票实际金额总额-进票实际金额总额；
@@ -288,15 +286,18 @@ $(function () {
     * */
     function completeProfit(){
         var profit = $(out_ticket_table).getCol('outTicketSurplus', false, 'sum') - $(in_ticket_table).getCol('inTicketSurplus', false, 'sum');
-        var lable="";
+        var lable="合计";
         if(profit>0){
-            lable = "(收取)";
+            lable = "合计(收取)";
+            $('#flag').attr('class','green');
             $('#profit').attr('class','green');
         }else if (profit < 0){
-            lable = "(支付)";
+            lable = "合计(支付)";
+            $('#flag').attr('class','red');
             $('#profit').attr('class','red');
         }
-        $('#profit').html(profit.toFixed(2)+lable);
+        $('#flag').html(lable);
+        $('#profit').html(profit.toFixed(2));
 
     }
 
@@ -321,7 +322,7 @@ $(function () {
         $(out_ticket_table).jqGrid('setRowData', rowid, {outTicketSurplus: parseFloat(ticketSurplus)});
     }
 
-    //取在库的票据
+/*    //取在库的票据
     function getSelectTicketNos(){
         return ticketData.ticketNos;
     }
@@ -335,5 +336,31 @@ $(function () {
             }
         });
         return ticket;
+    }*/
+
+    function accoutAutocomplete(){
+        $(".account").autocomplete({
+            source: RS_PATH+"bankaccount/getBankAccounts",
+            minLength: 2
+        });
+    }
+
+    function addPayment(){
+        $('#paymentTable').append('<tr>'+
+            '<td>'+
+            '<select name="payType">'+
+                '<option value="CASH">现金</option>'+
+                '<option value="EBANK">网银</option>'+
+                '<option value="POS">刷卡机</option>'+
+            '</select>'+
+            '</td>'+
+        '<td>'+
+            '<input type="text" name="account" class="input-small account" placeholder="帐号" maxlength="16">'+
+            '</td>'+
+            '<td>'+
+                '<input type="text" name="payMoney" class="input-small" placeholder="金额">'+
+                '</td>'+
+            '</tr>');
+        accoutAutocomplete();
     }
 })

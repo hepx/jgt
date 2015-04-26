@@ -4,6 +4,7 @@ import org.hepx.ticket.entity.Ticket;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * User: hepanxi
@@ -26,4 +27,6 @@ public interface TicketMapper {
     public List<Ticket> findByStatus(String status);
 
     public List<Ticket> findByStock();
+
+    public List<Map> findJsonByStock(String ticketNo);
 }

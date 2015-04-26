@@ -16,4 +16,6 @@ public interface BankAccountService {
 
     public List<BankAccount> findAll();
 
+    public List<BankAccount> findJson(String account);
+
 }

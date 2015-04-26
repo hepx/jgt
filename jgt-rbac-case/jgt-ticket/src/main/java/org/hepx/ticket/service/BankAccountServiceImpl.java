@@ -46,4 +46,8 @@ public class BankAccountServiceImpl implements BankAccountService {
         return bankAccountMapper.findAll();
     }
 
+    @Override
+    public List<BankAccount> findJson(String account) {
+        return bankAccountMapper.findJson(account);
+    }
 }

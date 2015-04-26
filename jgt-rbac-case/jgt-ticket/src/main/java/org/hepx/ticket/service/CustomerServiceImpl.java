@@ -45,4 +45,14 @@ public class CustomerServiceImpl implements CustomerService {
     public List<Customer> findAll() {
         return customerMapper.findAll();
     }
+
+    @Override
+    public List<Customer> findJson(String name) {
+        return customerMapper.findJson(name);
+    }
+
+    @Override
+    public Customer criteriaQuery(Customer customer) {
+        return customerMapper.criteriaQuery(customer);
+    }
 }

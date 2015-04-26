@@ -1,13 +1,16 @@
 package org.hepx.ticket.service;
 
 import org.hepx.jgt.common.random.NumberGenerater;
+import org.hepx.ticket.entity.Customer;
 import org.hepx.ticket.entity.Payment;
 import org.hepx.ticket.entity.Ticket;
 import org.hepx.ticket.entity.Trade;
+import org.hepx.ticket.mapper.CustomerMapper;
 import org.hepx.ticket.mapper.PaymentMapper;
 import org.hepx.ticket.mapper.TicketMapper;
 import org.hepx.ticket.mapper.TradeMapper;
 import org.hepx.ticket.web.TicketVo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,6 +36,9 @@ public class TradeServiceImpl implements TradeService {
 
     @Autowired
     private PaymentMapper paymentMapper;
+
+    @Autowired
+    private CustomerMapper customerMapper;
 
     @Override
     public Trade createTrade(Trade trade) {
@@ -77,7 +83,7 @@ public class TradeServiceImpl implements TradeService {
         verifInTicket(inTickets);
         List<Ticket> outTickets = vo.getOutTickets();
         verifOutTicket(outTickets);
-        //List<Payment>payments = vo.getPayments();
+        List<Payment> payments = vo.getPayments();
         trade.setInTicketMoney(sumInTicketMoney(inTickets));
         trade.setOutTicketMoney(sumOutTicketMoney(outTickets));
         Trade t = createTrade(trade);
@@ -92,23 +98,34 @@ public class TradeServiceImpl implements TradeService {
             out_ticket.setTicketStatus(Ticket.TicketStatus.SALED);
             ticketMapper.updateTicket(out_ticket);
         }
-        /*for(Payment payment : payments){
+        for (Payment payment : payments) {
             payment.setTradeId(t.getId());
             paymentMapper.createPayment(payment);
-        }*/
+        }
+        //自动创建新客户或更新旧的客户信息
+        Customer customer_vo = new Customer(trade);
+        Customer customer_ey = customerMapper.criteriaQuery(customer_vo);
+        if (customer_ey != null) {
+            customer_ey.setIdCard(customer_vo.getIdCard());
+            customerMapper.updateCustomer(customer_ey);
+        } else {
+            customerMapper.createCustomer(customer_vo);
+        }
     }
+
 
     /**
      * 验证进票金额计算，前端有计算，确保数据的准确性，这里再验证一下,
      * 最终以这里计算为准
      * 计算公式=（票面金额-票面零头）*（1-点数）-证明费-其他
+     *
      * @param inTicets
      * @return
      */
-    private void verifInTicket(List<Ticket> inTicets){
-        for(Ticket t : inTicets){
+    private void verifInTicket(List<Ticket> inTicets) {
+        for (Ticket t : inTicets) {
             t.setInTicketSurplus((BigDecimal.valueOf(t.getTicketMoney()).subtract(BigDecimal.valueOf(t.getTicketOdd())))
-                    .multiply(new BigDecimal(1).subtract(BigDecimal.valueOf(t.getInPoint()/100)))
+                    .multiply(new BigDecimal(1).subtract(BigDecimal.valueOf(t.getInPoint() / 100)))
                     .subtract(BigDecimal.valueOf(t.getCertifyFee())).subtract(BigDecimal.valueOf(t.getOtherFee())).doubleValue());
         }
     }
@@ -117,12 +134,13 @@ public class TradeServiceImpl implements TradeService {
      * 验证出票金额计算，前端有计算，确保数据的准确性，这里再验证一下,
      * 最终以这里计算为准
      * 出票公式=票面金额*（1-出票点数）
+     *
      * @param outTicets
      */
-    private void verifOutTicket(List<Ticket> outTicets){
-        for(Ticket t : outTicets){
+    private void verifOutTicket(List<Ticket> outTicets) {
+        for (Ticket t : outTicets) {
             t.setOutTicketSurplus(BigDecimal.valueOf(t.getTicketMoney()).multiply(new BigDecimal(1).
-                    subtract(BigDecimal.valueOf(t.getOutPoint()/100))).doubleValue());
+                    subtract(BigDecimal.valueOf(t.getOutPoint() / 100))).doubleValue());
         }
     }
 
@@ -130,7 +148,7 @@ public class TradeServiceImpl implements TradeService {
     private double sumInTicketMoney(List<Ticket> inTicets) {
         BigDecimal totalInTicketMoney = new BigDecimal(0);
         for (Ticket t : inTicets) {
-            totalInTicketMoney.add(BigDecimal.valueOf(t.getInTicketSurplus()));
+            totalInTicketMoney = totalInTicketMoney.add(BigDecimal.valueOf(t.getInTicketSurplus()));
         }
         return totalInTicketMoney.doubleValue();
     }
@@ -138,8 +156,8 @@ public class TradeServiceImpl implements TradeService {
     //汇总出票金额
     public double sumOutTicketMoney(List<Ticket> outTicets) {
         BigDecimal totalOutTicketMoney = new BigDecimal(0);
-        for(Ticket t : outTicets){
-            totalOutTicketMoney.add(BigDecimal.valueOf(t.getOutTicketSurplus()));
+        for (Ticket t : outTicets) {
+            totalOutTicketMoney = totalOutTicketMoney.add(BigDecimal.valueOf(t.getOutTicketSurplus()));
         }
         return totalOutTicketMoney.doubleValue();
     }

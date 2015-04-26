@@ -16,4 +16,8 @@ public interface CustomerService {
 
     public List<Customer> findAll();
 
+    public List<Customer> findJson(String name);
+
+    public Customer criteriaQuery(Customer customer);
+
 }

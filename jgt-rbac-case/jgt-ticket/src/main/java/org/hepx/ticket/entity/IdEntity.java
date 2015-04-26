@@ -1,7 +1,7 @@
 package org.hepx.ticket.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.alibaba.fastjson.annotation.JSONField;
 
 import java.io.Serializable;
 
@@ -25,7 +25,7 @@ public abstract class IdEntity implements Serializable {
 		this.id = id;
 	}
 
-    @JsonIgnore
+    @JSONField(serialize = false)
     public boolean isNew(){
         return this.id ==null;
     }

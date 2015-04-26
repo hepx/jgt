@@ -45,4 +45,9 @@
         order by id desc
     </select>
 
+    <select id="findJson" resultType="t_bank_account" parameterType="string">
+        select account from tb_bankaccount
+        where account like CONCAT('%',#{account},'%')
+    </select>
+
 </mapper>

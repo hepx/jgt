@@ -31,4 +31,5 @@ public class BankAccount extends IdEntity implements Serializable {
     public void setAccount(String account) {
         this.account = account;
     }
+
 }
