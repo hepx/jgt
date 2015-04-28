@@ -124,10 +124,10 @@
                                 ${op}
                             </button>
                             &nbsp; &nbsp; &nbsp;
-                            <button class="btn" type="reset">
+                            <a class="btn" href="${rc.contextPath}/ticket/create" >
                                 <i class="fa fa-undo bigger-110"></i>
                                 重置
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>

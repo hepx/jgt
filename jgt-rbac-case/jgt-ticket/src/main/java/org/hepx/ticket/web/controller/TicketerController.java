@@ -47,7 +47,7 @@ public class TicketerController {
     @RequiresPermissions("ticket:create")
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String showCreateForm(Model model) {
-        model.addAttribute("op", "新增");
+        model.addAttribute("op", "提交");
         model.addAttribute("tradeNo", tradeService.getTradeNo());
         return "ticket/edit";
     }

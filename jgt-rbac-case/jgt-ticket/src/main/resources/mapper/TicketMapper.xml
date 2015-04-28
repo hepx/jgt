@@ -62,7 +62,7 @@
     <select id="findByStock" resultType="t_ticket">
         select id,ticketNo,ticketMoney,expireDate from tb_ticket
         where ticketStatus = 'EXISTED'
-        order by expireDate asc,ticketMoney desc
+        order by ticketMoney,expireDate
     </select>
 
     <select id="findJsonByStock" resultType="map" parameterType="string">
