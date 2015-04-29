@@ -7,15 +7,20 @@
  */
 
 $(function(){
+    $("#ticketlist").dataTable({
+        ordering:false,
+        pageLength:20,
+        lengthMenu: [[20, 40, 80,100, -1], [20, 40, 80,100, "全部"]]
+    });
     /*删除事件*/
     $(".del").on('click',function(e){
         e.preventDefault();
-/*        var me = $(this);
+        var me = $(this);
         bootbox.confirm("确定要删除吗?", function(result) {
             if(result) {
                del(me);
             }
-        });*/
+        });
     });
 
     function del(me){

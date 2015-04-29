@@ -32,6 +32,9 @@
                             <th class="center col-lg-1">票号</th>
                             <th class="center col-lg-1">票面金额</th>
                             <th class="center col-lg-1">到期日期</th>
+                            #if($shiro.hasPermission("ticket:delete"))
+                            <th class="center col-lg-1">操作</th>
+                            #end
                         </tr>
                         </thead>
                         <tbody>
@@ -41,6 +44,15 @@
                                 <td>$!{ticket.ticketNo}</td>
                                 <td class="align-right">$numberTool.format("#0.00",$!{ticket.ticketMoney})</td>
                                 <td class="center">$!dateTool.format("yyyy-MM-dd",$!{ticket.expireDate})</td>
+                                #if($shiro.hasPermission("ticket:delete"))
+                                <td>
+                                    <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
+                                        <a class="grey del" href="${rc.contextPath}/ticket/$!{ticket.id}/delete">
+                                            删除
+                                        </a>
+                                    </div>
+                                </td>
+                                #end
                             </tr>
                             #end
                         </tbody>
