@@ -38,7 +38,9 @@ public class Ticket extends IdEntity implements Serializable {
 
     private Date outDate;//出票日期
 
-    private Long tradeId;//票据所在交易
+    private Long inTradeId;//进票票据所在交易
+
+    private Long outTradeId;//出票票据所在交易
 
     private TicketStatus ticketStatus; //票据状态
 
@@ -145,12 +147,20 @@ public class Ticket extends IdEntity implements Serializable {
         this.ticketStatus = ticketStatus;
     }
 
-    public Long getTradeId() {
-        return tradeId;
+    public Long getInTradeId() {
+        return inTradeId;
     }
 
-    public void setTradeId(Long tradeId) {
-        this.tradeId = tradeId;
+    public void setInTradeId(Long inTradeId) {
+        this.inTradeId = inTradeId;
+    }
+
+    public Long getOutTradeId() {
+        return outTradeId;
+    }
+
+    public void setOutTradeId(Long outTradeId) {
+        this.outTradeId = outTradeId;
     }
 
     public String getTicketNo() {
@@ -169,20 +179,5 @@ public class Ticket extends IdEntity implements Serializable {
         this.outDate = outDate;
     }
 
-    @Override
-    public String toString() {
-        return "Ticket{" +
-                "ticketNo='" + ticketNo + '\'' +
-                ", ticketMoney=" + ticketMoney +
-                ", expireDate=" + expireDate +
-                ", certifyFee=" + certifyFee +
-                ", ticketOdd=" + ticketOdd +
-                ", otherFee=" + otherFee +
-                ", inPoint=" + inPoint +
-                ", outPoint=" + outPoint +
-                ", inTicketSurplus=" + inTicketSurplus +
-                ", outTicketSurplus=" + outTicketSurplus +
-                ", outDate=" + outDate +
-                '}';
-    }
+
 }

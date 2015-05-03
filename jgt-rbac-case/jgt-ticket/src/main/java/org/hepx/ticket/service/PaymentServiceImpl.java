@@ -45,4 +45,9 @@ public class PaymentServiceImpl implements PaymentService {
     public List<Payment> findAll() {
         return paymentMapper.findAll();
     }
+
+    @Override
+    public List<Payment> findByTradeId(Long tradeId) {
+        return paymentMapper.findByTradeId(tradeId);
+    }
 }

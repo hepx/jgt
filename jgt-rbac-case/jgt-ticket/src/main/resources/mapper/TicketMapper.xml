@@ -6,14 +6,14 @@
     <cache/>
 
     <sql id="base_columns">
-        id,
-        ticketNo,ticketMoney,expireDate,inDate,certifyFee,ticketOdd,otherFee,inPoint,inTicketSurplus,outPoint,outTicketSurplus,outDate,tradeId,ticketStatus
+        id,ticketNo,ticketMoney,expireDate,inDate,certifyFee,ticketOdd,otherFee,inPoint,inTicketSurplus,outPoint,
+        outTicketSurplus,outDate,inTradeId,outTradeId,ticketStatus
     </sql>
 
     <insert id="createTicket" parameterType="t_ticket" useGeneratedKeys="true" keyProperty="id">
-        insert into tb_ticket (ticketNo,ticketMoney,expireDate,inDate,certifyFee,ticketOdd,inPoint,otherFee,inTicketSurplus,tradeId,ticketStatus)
+        insert into tb_ticket (ticketNo,ticketMoney,expireDate,inDate,certifyFee,ticketOdd,inPoint,otherFee,inTicketSurplus,inTradeId,ticketStatus)
         values
-        (#{ticketNo},#{ticketMoney},#{expireDate},#{inDate},#{certifyFee},#{ticketOdd},#{inPoint},#{otherFee},#{inTicketSurplus},#{tradeId},#{ticketStatus})
+        (#{ticketNo},#{ticketMoney},#{expireDate},#{inDate},#{certifyFee},#{ticketOdd},#{inPoint},#{otherFee},#{inTicketSurplus},#{inTradeId},#{ticketStatus})
     </insert>
 
     <update id="updateTicket" parameterType="t_ticket">
@@ -30,6 +30,9 @@
             </if>
             <if test="outTicketSurplus != null">
                 outTicketSurplus=#{outTicketSurplus},
+            </if>
+            <if test="outTradeId != null">
+                outTradeId=#{outTradeId},
             </if>
         </trim>
         where id=#{id}
@@ -68,6 +71,18 @@
     <select id="findJsonByStock" resultType="map" parameterType="string">
         select id,ticketNo as value,ticketMoney from tb_ticket
         where ticketStatus = 'EXISTED' and ticketNo like CONCAT('%',#{ticketNo},'%')
+    </select>
+
+    <select id="findInTicketByTradeId" resultType="t_ticket" parameterType="long">
+        select id,ticketNo,ticketMoney,inDate,certifyFee,ticketOdd,otherFee,inPoint,inTicketSurplus
+        from tb_ticket
+        where inTradeId=#{tradeId}
+    </select>
+
+    <select id="findOutTicketByTradeId" resultType="t_ticket" parameterType="long">
+        select id,ticketNo,ticketMoney,outPoint,outTicketSurplus,outDate
+        from tb_ticket
+        where outTradeId=#{tradeId}
     </select>
 
 </mapper>

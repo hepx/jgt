@@ -61,4 +61,14 @@ public class TicketServiceImpl implements TicketService {
     public List<Map> findJsonByStock(String ticketNo) {
         return ticketMapper.findJsonByStock(ticketNo);
     }
+
+    @Override
+    public List<Ticket> findInTicketByTradeId(Long tradeId) {
+        return ticketMapper.findInTicketByTradeId(tradeId);
+    }
+
+    @Override
+    public List<Ticket> findOutTicketByTradeId(Long tradeId) {
+        return ticketMapper.findOutTicketByTradeId(tradeId);
+    }
 }

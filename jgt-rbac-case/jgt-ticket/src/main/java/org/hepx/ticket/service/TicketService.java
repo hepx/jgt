@@ -23,4 +23,8 @@ public interface TicketService {
 
     public List<Map> findJsonByStock(String ticketNo);
 
+    public List<Ticket> findInTicketByTradeId(Long tradeId);
+
+    public List<Ticket> findOutTicketByTradeId(Long tradeId);
+
 }

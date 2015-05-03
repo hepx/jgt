@@ -4,8 +4,7 @@
 "${rc.contextPath}/assets/css/datepicker.css","${rc.contextPath}/assets/css/ui.jqgrid.css"])
 #set($jsUrls= ["${rc.contextPath}/static/ticket/floatLabels.js","${rc.contextPath}/assets/js/date-time/bootstrap-datepicker.min.js",
 "${rc.contextPath}/assets/js/jqGrid/jquery.jqGrid.min.js","${rc.contextPath}/assets/js/jqGrid/i18n/grid.locale-cn.js",
-"${rc.contextPath}/assets/js/jquery.tabletojson.min.js","${rc.contextPath}/assets/js/jquery-ui-1.10.4.custom.min.js",
-"${rc.contextPath}/static/ticket/edit.js"])
+"${rc.contextPath}/assets/js/jquery-ui-1.10.4.custom.min.js","${rc.contextPath}/static/ticket/edit.js"])
 <div class="main-content">
     <div class="breadcrumbs" id="breadcrumbs">
         <script type="text/javascript">
@@ -63,26 +62,57 @@
                     <div class="hr hr8 hr-double hr-dotted"></div>
 
                     <div class="row">
-                        <div class="col-md-offset-7 col-md-5">
-                            <div class="col-md-3">
-                                <h4 id="flag">合计</h4>
+                        <div class="col-md-offset-5 col-md-7">
+                            <div class="col-md-2">
+                                <h5 id="flag"><b>合计</b></h5>
                             </div>
-                            <div class="col-md-9 align-right">
+                            <div class="col-md-10 align-right">
                                 <h4 id="profit" class="green">0.00</h4>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-offset-7 col-md-5">
-                            <div class="col-md-3">
-                                <h4>支付方式</h4>
+                        <div class="col-md-offset-5 col-md-7">
+                            <div class="col-md-2">
+                                <h5><b>支付方式</b></h5>
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-md-10">
+                                <div id="payments" class="pull-right">
+                                    <form class="form-inline">
+                                        <div class="form-group">
+                                            <select name="payMode" class="form-control">
+                                                <option value="PAY">支付</option>
+                                                <option value="COLLECT">收取</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <select name="payType" class="form-control payType">
+                                                <option value="">请选择</option>
+                                                <option value="CASH">现金</option>
+                                                <option value="TRANSFER">转账</option>
+                                            </select>
+                                        </div>
+                                        <button id="addPayment" type="button" class="btn btn-sm btn-success">
+                                            <i class="icon-only fa fa-plus"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    #*<div class="row">
+                        <div class="col-md-offset-6 col-md-6">
+                            <div class="col-md-2">
+                                <h5>支付方式</h5>
+                            </div>
+                            <div class="col-md-10">
                                 <div class="pull-left">
                                     <table id="paymentTable">
                                         <thead class="hidden">
                                             <tr>
+                                                <th>payMode</th>
                                                 <th>payType</th>
+                                                <th>transferType</th>
                                                 <th>account</th>
                                                 <th>payMoney</th>
                                             </tr>
@@ -90,8 +120,19 @@
                                         <tbody>
                                         <tr>
                                             <td>
+                                                <select name="payMode">
+                                                    <option value="PAY">支付</option>
+                                                    <option value="COLLECT">收取</option>
+                                                </select>
+                                            </td>
+                                            <td>
                                                 <select name="payType">
                                                     <option value="CASH">现金</option>
+                                                    <option value="TRANSFER">转账</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select name="transferType">
                                                     <option value="EBANK">网银</option>
                                                     <option value="POS">刷卡机</option>
                                                 </select>
@@ -114,7 +155,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>*#
                     <div class="hr hr8 hr-double hr-dotted"></div>
                     <div class="space-6"></div>
                     <div class="clearfix well">

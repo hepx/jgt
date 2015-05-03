@@ -4,12 +4,14 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.mgt.eis.SessionDAO;
 import org.hepx.ticket.entity.Resource;
 import org.hepx.ticket.service.ResourceService;
+import org.hepx.ticket.service.TradeService;
 import org.hepx.ticket.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -23,6 +25,8 @@ public class IndexController {
     private UserService userService;
     @Autowired
     private SessionDAO sessionDAO;
+    @Autowired
+    private TradeService tradeService;
 
     @RequestMapping("/")
     public String index(Model model) {
@@ -33,6 +37,10 @@ public class IndexController {
         SecurityUtils.getSubject().getSession().setAttribute("menus",menus);
         //当前在线用户
         model.addAttribute("inline",sessionDAO.getActiveSessions().size());
+        //总交易数
+        model.addAttribute("allTrade",tradeService.statTradeByAll());
+        //当天交易数
+        model.addAttribute("dayTrade",tradeService.statTradeByDay(new Date()));
         return "index";
     }
 

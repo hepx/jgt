@@ -12,7 +12,11 @@ import java.io.Serializable;
 @Alias("t_payment")
 public class Payment extends IdEntity implements Serializable {
 
-    private PayType payType;//支付方式
+    private PayMode payMode; //支付方式
+
+    private PayType payType;//支付类型
+
+    private TransferType transferType;//转帐类型
 
     private String account; //支付帐号 现金方式没有此项
 
@@ -21,15 +25,54 @@ public class Payment extends IdEntity implements Serializable {
     private Long tradeId;//所属交易
 
     //支付方式
+    public static enum PayMode{
+        PAY("支付"),COLLECT("收取");
+        private String value;
+        private PayMode(String value){
+            this.value = value;
+        }
+        public String getValue() {
+            return value;
+        }
+    }
+    //支付类型
     public static enum PayType{
-        CASH("现金"),EBANK("网银"),POS("刷卡机");
+        CASH("现金"),TRANSFER("转帐");
         private String value;
         private PayType(String value){
             this.value = value;
         }
-        String getValue() {
+        public String getValue() {
             return value;
         }
+    }
+
+    //转帐类型
+    public static enum TransferType{
+        EBANK("网银"),POS("刷卡机");
+        private String value;
+        private TransferType(String value){
+            this.value = value;
+        }
+        public String getValue() {
+            return value;
+        }
+    }
+
+    public PayMode getPayMode() {
+        return payMode;
+    }
+
+    public void setPayMode(PayMode payMode) {
+        this.payMode = payMode;
+    }
+
+    public TransferType getTransferType() {
+        return transferType;
+    }
+
+    public void setTransferType(TransferType transferType) {
+        this.transferType = transferType;
     }
 
     public PayType getPayType() {

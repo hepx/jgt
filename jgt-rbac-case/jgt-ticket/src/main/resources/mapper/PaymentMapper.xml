@@ -6,19 +6,25 @@
     <cache/>
 
     <sql id="base_columns">
-        id, payType,account,payMoney,tradeId
+        id, payMode,payType,transferType,account,payMoney,tradeId
     </sql>
 
     <insert id="createPayment" parameterType="t_payment" useGeneratedKeys="true" keyProperty="id">
-        insert into tb_payment (payType,account,payMoney,tradeId)
-        values (#{payType},#{account},#{payMoney},#{tradeId})
+        insert into tb_payment (payMode,payType,transferType,account,payMoney,tradeId)
+        values (#{payMode},#{payType},#{transferType},#{account},#{payMoney},#{tradeId})
     </insert>
 
     <update id="updatePayment" parameterType="t_payment">
         update tb_payment
         <trim prefix="set" suffixOverrides=",">
+            <if test="payMode != null">
+                payMode=#{payMode},
+            </if>
             <if test="payType != null">
                 payType=#{payType},
+            </if>
+            <if test="transferType != null">
+                transferType=#{transferType},
             </if>
             <if test="account != null and account != ''">
                 account=#{account},
@@ -46,6 +52,13 @@
         <include refid="base_columns"/>
         from tb_payment
         order by id desc
+    </select>
+
+    <select id="findByTradeId" resultType="t_payment" parameterType="long">
+        select
+        <include refid="base_columns"/>
+        from tb_payment
+        where tradeId=#{tradeId}
     </select>
 
 </mapper>

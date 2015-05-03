@@ -138,10 +138,10 @@
                 }
             });
 
-/*            *//**
-             * 序列化JSON对象
+            /*
+             * 把Form序列化JSON对象
              * @returns {{}}
-             *//*
+             */
             $.fn.serializeObject = function()
             {
                 var o = {};
@@ -157,7 +157,7 @@
                     }
                 });
                 return o;
-            };*/
+            };
         })
     </script>
 </body>

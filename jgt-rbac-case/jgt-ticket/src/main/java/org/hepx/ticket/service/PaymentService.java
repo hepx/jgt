@@ -16,4 +16,6 @@ public interface PaymentService {
 
     public List<Payment> findAll();
 
+    public List<Payment> findByTradeId(Long tradeId);
+
 }

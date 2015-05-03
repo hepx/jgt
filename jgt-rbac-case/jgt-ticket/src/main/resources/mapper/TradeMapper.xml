@@ -6,12 +6,12 @@
     <cache/>
 
     <sql id="base_columns">
-        id, name, telphone, idCard,tradeNo,inTicketMoney,outTicketMoney,tradeTotal
+        id, name, telphone, idCard,tradeNo,createTime,inTicketMoney,outTicketMoney,tradeTotal,tradeStatus
     </sql>
 
     <insert id="createTrade" parameterType="t_trade" useGeneratedKeys="true" keyProperty="id">
-        insert into tb_trade (name, telphone, idCard,tradeNo,inTicketMoney,outTicketMoney,tradeTotal)
-        values (#{name}, #{telphone}, #{idCard},#{tradeNo},#{inTicketMoney},#{outTicketMoney},#{tradeTotal})
+        insert into tb_trade (name, telphone, idCard,tradeNo,createTime,inTicketMoney,outTicketMoney,tradeTotal,tradeStatus)
+        values (#{name}, #{telphone}, #{idCard},#{tradeNo},#{createTime},#{inTicketMoney},#{outTicketMoney},#{tradeTotal},#{tradeStatus})
     </insert>
 
     <update id="updateTrade" parameterType="t_trade">
@@ -25,6 +25,9 @@
             </if>
             <if test="tradeTotal != null">
                 tradeTotal=#{tradeTotal},
+            </if>
+            <if test="tradeStatus != null">
+                tradeStatus=#{tradeStatus},
             </if>
         </trim>
         where id=#{id}
@@ -52,4 +55,34 @@
         select tradeNo from tb_trade order by id desc limit 1
     </select>
 
+    <select id="findByCondition" resultType="t_trade" parameterType="map">
+        select A.* from tb_trade A LEFT JOIN tb_ticket B ON A.id=B.inTradeId
+        <where>
+            <if test="ticketNo != null and ticketNo != ''">
+                and B.ticketNo=#{ticketNo}
+            </if>
+            <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
+                and A.createTime between #{startTime} and #{endTime}
+            </if>
+        </where>
+        union
+        select A.* from tb_trade A LEFT JOIN tb_ticket B ON A.id=B.outTradeId
+        <where>
+            <if test="ticketNo != null and ticketNo != ''">
+                and B.ticketNo=#{ticketNo}
+            </if>
+            <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
+                and A.createTime between #{startTime} and #{endTime}
+            </if>
+        </where>
+    </select>
+
+    <select id="statTradeByAll" resultType="long">
+        select count(id) from tb_trade
+    </select>
+
+    <select id="statTradeByDay" resultType="long" parameterType="string">
+        select count(id) from tb_trade
+        where createTime=#{date}
+    </select>
 </mapper>

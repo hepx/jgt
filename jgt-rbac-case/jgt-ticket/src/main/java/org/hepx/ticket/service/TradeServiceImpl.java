@@ -1,5 +1,6 @@
 package org.hepx.ticket.service;
 
+import org.hepx.jgt.common.date.DateUtil;
 import org.hepx.jgt.common.random.NumberGenerater;
 import org.hepx.ticket.entity.Customer;
 import org.hepx.ticket.entity.Payment;
@@ -17,7 +18,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * User: hepanxi
@@ -67,6 +70,15 @@ public class TradeServiceImpl implements TradeService {
     }
 
     @Override
+    public List<Trade> findByCondition(String ticketNo, String startTime, String endTime) {
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("ticketNo", ticketNo);
+        param.put("startTime", startTime);
+        param.put("endTime", endTime);
+        return tradeMapper.findByCondition(param);
+    }
+
+    @Override
     public String getTradeNo() {
         Trade trade = tradeMapper.findLast();
         if (trade == null) {
@@ -86,9 +98,12 @@ public class TradeServiceImpl implements TradeService {
         List<Payment> payments = vo.getPayments();
         trade.setInTicketMoney(sumInTicketMoney(inTickets));
         trade.setOutTicketMoney(sumOutTicketMoney(outTickets));
+        trade.setTradeTotal(BigDecimal.valueOf(trade.getOutTicketMoney())
+                .subtract(BigDecimal.valueOf(trade.getInTicketMoney())).doubleValue());
+        trade.setCreateTime(new Date());
         Trade t = createTrade(trade);
         for (Ticket in_ticket : inTickets) {
-            in_ticket.setTradeId(t.getId());
+            in_ticket.setInTradeId(t.getId());
             in_ticket.setInDate(new Date());
             in_ticket.setTicketStatus(Ticket.TicketStatus.EXISTED);
             ticketMapper.createTicket(in_ticket);
@@ -96,6 +111,7 @@ public class TradeServiceImpl implements TradeService {
         for (Ticket out_ticket : outTickets) {
             out_ticket.setOutDate(new Date());
             out_ticket.setTicketStatus(Ticket.TicketStatus.SALED);
+            out_ticket.setOutTradeId(t.getId());
             ticketMapper.updateTicket(out_ticket);
         }
         for (Payment payment : payments) {
@@ -160,5 +176,15 @@ public class TradeServiceImpl implements TradeService {
             totalOutTicketMoney = totalOutTicketMoney.add(BigDecimal.valueOf(t.getOutTicketSurplus()));
         }
         return totalOutTicketMoney.doubleValue();
+    }
+
+    @Override
+    public long statTradeByAll() {
+        return tradeMapper.statTradeByAll();
+    }
+
+    @Override
+    public long statTradeByDay(Date date) {
+        return tradeMapper.statTradeByDay(DateUtil.formateDate(date));
     }
 }

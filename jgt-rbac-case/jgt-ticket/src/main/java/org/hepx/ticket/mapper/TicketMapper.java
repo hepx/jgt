@@ -29,4 +29,9 @@ public interface TicketMapper {
     public List<Ticket> findByStock();
 
     public List<Map> findJsonByStock(String ticketNo);
+
+    public List<Ticket> findInTicketByTradeId(Long tradeId);
+
+    public List<Ticket> findOutTicketByTradeId(Long tradeId);
+
 }

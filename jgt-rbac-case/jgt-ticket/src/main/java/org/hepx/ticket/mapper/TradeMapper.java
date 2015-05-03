@@ -4,6 +4,7 @@ import org.hepx.ticket.entity.Trade;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * User: hepanxi
@@ -24,4 +25,10 @@ public interface TradeMapper {
     public List<Trade> findAll();
 
     public Trade findLast();
+
+    public List<Trade> findByCondition(Map param);
+
+    public long statTradeByAll();
+
+    public long statTradeByDay(String date);
 }

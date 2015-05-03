@@ -57,12 +57,14 @@
                                 <td class="align-right" style="background:lightyellow;">$!numberTool.format("#0.00",$!{ticket.outPoint})</td>
                                 <td class="align-right" style="background:lightyellow;">$!numberTool.format("#0.00",$!{ticket.outTicketSurplus})</td>
                                 <td class="align-right" style="background: antiquewhite;">
-                                    #set($temp=$!{ticket.outTicketSurplus}-$!{ticket.inTicketSurplus})
-                                    #if($temp>0)
-                                        <span class="text-success">$!numberTool.format("#0.00",$!{temp})</span>
-                                    #elseif($temp<0)
-                                        <span class="text-danger"><strong>$!numberTool.format("#0.00",$!{temp})</strong></span>
-                                    #end
+                                    #if($!{ticket.ticketStatus}=="SALED")
+                                        #set($temp=$!{ticket.outTicketSurplus}-$!{ticket.inTicketSurplus})
+                                        #if($temp>0)
+                                            <span class="text-success">$!numberTool.format("#0.00",$!{temp})</span>
+                                        #elseif($temp<0)
+                                            <span class="text-danger"><strong>$!numberTool.format("#0.00",$!{temp})</strong></span>
+                                        #end
+                                     #end
                                 </td>
                             </tr>
                             #end

@@ -1,0 +1,160 @@
+#set($page_title="交易详情")
+#set($bankUrl="${request.getHeader('Referer')}")
+###set($jsUrls=["${rc.contextPath}/static/trade/list.js"])
+<div class="main-content">
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try {
+                ace.settings.check('breadcrumbs', 'fixed');
+            } catch (e) {
+            }
+        </script>
+        <ul class="breadcrumb">
+            <li>
+                <i class="fa fa-home home-icon"></i>
+                <a href="${rc.contextPath}/">首页</a>
+            </li>
+            <li class="active">$page_title</li>
+        </ul>
+        <div class="nav-search">
+            <a class="btn btn-xs btn-grey arrowed" href="${bankUrl}" title="返回">
+                <i class="fa fa-reply"></i> 返回
+            </a>
+        </div>
+    </div>
+    <div class="page-content">
+        <div class="row">
+            <div class="col-xs-12">
+                <h3 class="header smaller lighter blue">交易基本信息</h3>
+                <div class="col-lg-offset-2 col-lg-10 text-info">
+                    <form class="form-horizontal">
+                        <div class="form-group col-xs-6">
+                            <label class="col-sm-4 control-label align-left">交易号</label>
+                            <div class="col-sm-8">
+                                <p class="form-control-static"><u>$!{trade.tradeNo}</u></p>
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-6">
+                            <label class="col-sm-4 control-label align-left">交易日期</label>
+                            <div class="col-sm-8">
+                                <p class="form-control-static"><u>$!dateTool.format("yyyy-MM-dd",$!{trade.createTime})</u></p>
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-6">
+                            <label class="col-sm-4 control-label align-left">客户名称</label>
+                            <div class="col-sm-8">
+                                <p class="form-control-static"><u>$!{trade.name}</u></p>
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-6">
+                            <label class="col-sm-4 control-label align-left">客户电话</label>
+                            <div class="col-sm-8">
+                                <p class="form-control-static"><u>$!{trade.telphone}</u></p>
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-6">
+                            <label class="col-sm-4 control-label align-left">进票实际总额</label>
+                            <div class="col-sm-8">
+                                <p class="form-control-static"><u>$numberTool.format("#0.00",$!{trade.inTicketMoney})</u></p>
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-6">
+                            <label class="col-sm-4 control-label align-left">出票实际总额</label>
+                            <div class="col-sm-8">
+                                <p class="form-control-static"><u>$numberTool.format("#0.00",$!{trade.outTicketMoney})</u></p>
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-6">
+                            <label class="col-sm-4 control-label align-left">合计</label>
+                            <div class="col-sm-8">
+                                <p class="form-control-static"><u>$numberTool.format("#0.00",$!{trade.tradeTotal})</u></p>
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-6">
+                            <label class="col-sm-4 control-label align-left"></label>
+                            <div class="col-sm-8">
+                                <p class="form-control-static"></p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <h3 class="header smaller lighter blue">进票</h3>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th class="align-center">票号</th>
+                        <th class="align-center">票面金额</th>
+                        <th class="align-center">日期</th>
+                        <th class="align-center">进票点</th>
+                        <th class="align-center">进票实际金额</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        #foreach($inTicket in $inTickets)
+                            <tr>
+                                <td class="align-center">$!{inTicket.ticketNo}</td>
+                                <td class="align-right">$numberTool.format("#0.00",$!{inTicket.ticketMoney})</td>
+                                <td class="align-center">$!dateTool.format("yyyy-MM-dd",$!{inTicket.inDate})</td>
+                                <td class="align-right">$numberTool.format("#0.00",$!{inTicket.inPoint})</td>
+                                <td class="align-right">$numberTool.format("#0.00",$!{inTicket.inTicketSurplus})</td>
+                            </tr>
+                        #end
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-xs-12">
+                <h3 class="header smaller lighter blue">出票</h3>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th class="align-center">票号</th>
+                        <th class="align-center">票面金额</th>
+                        <th class="align-center">日期</th>
+                        <th class="align-center">出票点</th>
+                        <th class="align-center">出票实际金额</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        #foreach($outTicket in $outTickets)
+                            <tr>
+                                <td class="align-center">$!{outTicket.ticketNo}</td>
+                                <td class="align-right">$numberTool.format("#0.00",$!{outTicket.ticketMoney})</td>
+                                <td class="align-center">$!dateTool.format("yyyy-MM-dd",$!{outTicket.outDate})</td>
+                                <td class="align-right">$numberTool.format("#0.00",$!{outTicket.outPoint})</td>
+                                <td class="align-right">$numberTool.format("#0.00",$!{outTicket.outTicketSurplus})</td>
+                            </tr>
+                        #end
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-xs-12">
+                <h3 class="header smaller lighter blue">支付</h3>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th class="align-center">支付方式</th>
+                        <th class="align-center">金额</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        #foreach($payment in $payments)
+                        <tr>
+                            <td class="align-left">
+                                $!{payment.payMode.value}
+                                / $!{payment.payType.value}
+                                #if($!{payment.payType}=="TRANSFER")
+                                    / $!{payment.transferType.value}
+                                    / $!{payment.account}
+                                #end
+                            </td>
+                            <td class="align-left">$numberTool.format("#0.00",$!{payment.payMoney})</td>
+                        </tr>
+                        #end
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

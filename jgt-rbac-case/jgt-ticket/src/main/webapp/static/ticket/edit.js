@@ -154,31 +154,19 @@ $(function () {
         //支付总额
         var paymentTotal=0;
         //支付内容
-        var payments= $('#paymentTable').tableToJSON({
-            textExtractor : {
-                0 : function(cellIndex, $cell) {
-                    return $cell.find('select').val();
-                },
-                1 : function(cellIndex, $cell) {
-                    return $cell.find('input').val();
-                },
-                2 : function(cellIndex, $cell) {
-                    var v = $cell.find('input').val();
-                    if(v){
-                        paymentTotal+=parseFloat(v);
-                    }
-                    return v;
-                }
-            }
+        var payments=new Array();
+        $('.form-inline').each(function(i){
+            var formValue=$(this).serializeObject();
+            payments.push(formValue);
+            paymentTotal += parseFloat(formValue.payMoney);
         });
+
         if(Math.abs(parseFloat(paymentTotal)) != Math.abs(parseFloat($('#profit').html()))){
             showErrors("填写的支付金额与票据合计不符,请认真检查!");
             return ;
         }
         var data = "{\"trade\":" + JSON.stringify(formData) + ",\"inTickets\":" + JSON.stringify(in_datas) +
             ",\"outTickets\":" + JSON.stringify(out_datas) + ",\"payments\":"+JSON.stringify(payments)+"}";
-        //console.log(data);
-        //return;
         $.ajax({
             url: RS_PATH + 'ticket/create',
             type: "POST",
@@ -296,7 +284,7 @@ $(function () {
             $('#flag').attr('class','red');
             $('#profit').attr('class','red');
         }
-        $('#flag').html(lable);
+        $('#flag').html('<b>'+lable+'</b>');
         $('#profit').html(profit.toFixed(2));
 
     }
@@ -345,22 +333,63 @@ $(function () {
         });
     }
 
+    $('#payments').on('change','.payType',function(e){
+        var form = $(this).parents('form');
+        var form_group = $(this).parents('.form-group');
+        if(this.value==='CASH'){
+            addPayMoneyElement(form,form_group);
+        }else if(this.value==='TRANSFER'){
+            addTransferElement(form,form_group);
+        }
+    });
+
+    function addTransferElement(form,e){
+        $(form).find('input[name="payMoney"]').parents('.form-group').remove();
+        e.after(
+            ' <div class="form-group">'
+               + '<select name="transferType" class="form-control">'
+                   + '<option value="">请选择</option>'
+                   + '<option value="EBANK">网银</option>'
+                   + '<option value="POS">刷卡机</option>'
+               + '</select>'
+           + '</div>'
+               + ' <div class="form-group">'
+           + '<input type="text" name="account" class="form-control input-small account" placeholder="帐号"maxlength="16">'
+           + '</div>'
+           + ' <div class="form-group">'
+           + '<input type="text" name="payMoney" class="form-control input-small" placeholder="金额">'
+           + '</div>'
+        );
+    }
+
+    function addPayMoneyElement(form,e){
+        $(form).find('select[name="transferType"]').parents('.form-group').remove();
+        $(form).find('input[name="account"]').parents('.form-group').remove();
+        $(form).find('input[name="payMoney"]').parents('.form-group').remove();
+        e.after(
+             ' <div class="form-group">'
+            + '<input type="text" name="payMoney" class="form-control input-small" placeholder="金额">'
+            + '</div>')
+    }
+
     function addPayment(){
-        $('#paymentTable').append('<tr>'+
-            '<td>'+
-            '<select name="payType">'+
-                '<option value="CASH">现金</option>'+
-                '<option value="EBANK">网银</option>'+
-                '<option value="POS">刷卡机</option>'+
-            '</select>'+
-            '</td>'+
-        '<td>'+
-            '<input type="text" name="account" class="input-small account" placeholder="帐号" maxlength="16">'+
-            '</td>'+
-            '<td>'+
-                '<input type="text" name="payMoney" class="input-small" placeholder="金额">'+
-                '</td>'+
-            '</tr>');
+        $('#payments').append(
+            '<form class="form-inline">'
+                + '<div class="form-group">'
+                + '<select name="payMode" class="form-control">'
+                + '<option value="PAY">支付</option>'
+                + '<option value="COLLECT">收取</option>'
+                + '</select>'
+                + '</div>'
+                + ' <div class="form-group">'
+                + '<select name="payType" class="form-control payType">'
+                + '<option value="">请选择</option>'
+                + '<option value="CASH">现金</option>'
+                + '<option value="TRANSFER">转账</option>'
+                + '</select>'
+                + '</div>'
+                + '</form>'
+        );
         accoutAutocomplete();
     }
 })
