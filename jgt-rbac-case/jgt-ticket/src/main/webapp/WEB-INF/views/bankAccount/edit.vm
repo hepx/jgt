@@ -30,10 +30,28 @@
                     <form action="" class="form-horizontal" id="validation-form" method="post">
                         <input type="hidden" name="id" value="$!{bankAccount.id}">
                         <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-3 no-padding-right">别名</label>
+                            <div class="col-xs-12 col-sm-9">
+                                <div class="clearfix">
+                                    <input type="text" name="alias" value="$!{bankAccount.alias}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-2"></div>
+                        <div class="form-group">
                             <label class="control-label col-xs-12 col-sm-3 no-padding-right">开户行</label>
                             <div class="col-xs-12 col-sm-9">
                                 <div class="clearfix">
                                     <input type="text" name="bankName" value="$!{bankAccount.bankName}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-2"></div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-3 no-padding-right">户主</label>
+                            <div class="col-xs-12 col-sm-9">
+                                <div class="clearfix">
+                                    <input type="text" name="owner" value="$!{bankAccount.owner}">
                                 </div>
                             </div>
                         </div>

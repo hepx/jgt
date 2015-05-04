@@ -28,7 +28,10 @@
                     <table id="bankaccountlist" class="table table-striped table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th class="center col-lg-2">开户行</th>
+
+                            <th class="center col-lg-1">别名</th>
+                            <th class="center col-lg-1">开户行</th>
+                            <th class="center col-lg-1">户主</th>
                             <th class="center col-lg-2">卡号</th>
                             <th class="center col-lg-1">操作</th>
                         </tr>
@@ -36,7 +39,9 @@
                         <tbody>
                             #foreach($bankAccount in $bankAccountList)
                             <tr>
+                                <td>$!{bankAccount.alias}</td>
                                 <td>$!{bankAccount.bankName}</td>
+                                <td>$!{bankAccount.owner}</td>
                                 <td>$!{bankAccount.account}</td>
                                 <td>
                                     <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">

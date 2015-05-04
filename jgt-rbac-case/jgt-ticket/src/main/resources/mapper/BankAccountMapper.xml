@@ -6,19 +6,25 @@
     <cache/>
 
     <sql id="base_columns">
-        id, bankName, account
+        id, alias,bankName,owner,account
     </sql>
 
     <insert id="createBankAccount" parameterType="t_bank_account" useGeneratedKeys="true" keyProperty="id">
-        insert into tb_bankaccount (bankName, account)
-        values (#{bankName}, #{account})
+        insert into tb_bankaccount (alias,bankName, owner,account)
+        values (#{alias},#{bankName}, #{owner},#{account})
     </insert>
 
     <update id="updateBankAccount" parameterType="t_bank_account">
         update tb_bankaccount
         <trim prefix="set" suffixOverrides=",">
+            <if test="alias != null and alias != ''">
+                alias=#{alias},
+            </if>
             <if test="bankName != null and bankName !=''">
                 bankName=#{bankName},
+            </if>
+            <if test="owner != null and owner !=''">
+                owner=#{owner},
             </if>
             <if test="account != null and account != ''">
                 account=#{account},

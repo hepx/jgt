@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.hepx.jgt.common.json.JsonUtil;
 import org.hepx.ticket.entity.Ticket;
+import org.hepx.ticket.service.BankAccountService;
 import org.hepx.ticket.service.TicketService;
 import org.hepx.ticket.service.TradeService;
 import org.hepx.ticket.web.ResponseResult;
@@ -33,9 +34,10 @@ public class TicketerController {
 
     @Autowired
     private TicketService ticketService;
-
     @Autowired
     private TradeService tradeService;
+    @Autowired
+    private BankAccountService bankAccountService;
 
     @RequiresPermissions("ticket:view")
     @RequestMapping(method = RequestMethod.GET)
@@ -49,6 +51,7 @@ public class TicketerController {
     public String showCreateForm(Model model) {
         model.addAttribute("op", "提交");
         model.addAttribute("tradeNo", tradeService.getTradeNo());
+        model.addAttribute("bankAccounts",bankAccountService.findAll());
         return "ticket/edit";
     }
 

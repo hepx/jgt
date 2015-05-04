@@ -14,9 +14,13 @@ public class Payment extends IdEntity implements Serializable {
 
     private PayMode payMode; //支付方式
 
-    private PayType payType;//支付类型
+    private String payType;//支付类型
 
     private TransferType transferType;//转帐类型
+
+    private String owner;//户主
+
+    private String bankName;//开户行
 
     private String account; //支付帐号 现金方式没有此项
 
@@ -29,17 +33,6 @@ public class Payment extends IdEntity implements Serializable {
         PAY("支付"),COLLECT("收取");
         private String value;
         private PayMode(String value){
-            this.value = value;
-        }
-        public String getValue() {
-            return value;
-        }
-    }
-    //支付类型
-    public static enum PayType{
-        CASH("现金"),TRANSFER("转帐");
-        private String value;
-        private PayType(String value){
             this.value = value;
         }
         public String getValue() {
@@ -59,6 +52,22 @@ public class Payment extends IdEntity implements Serializable {
         }
     }
 
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    public String getBankName() {
+        return bankName;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
+
     public PayMode getPayMode() {
         return payMode;
     }
@@ -75,11 +84,11 @@ public class Payment extends IdEntity implements Serializable {
         this.transferType = transferType;
     }
 
-    public PayType getPayType() {
+    public String getPayType() {
         return payType;
     }
 
-    public void setPayType(PayType payType) {
+    public void setPayType(String payType) {
         this.payType = payType;
     }
 

@@ -10,6 +10,7 @@
         <script type="text/javascript">
             try {
                 ace.settings.check('breadcrumbs', 'fixed');
+                //var bankAccounts=$!{bankAccounts};
             } catch (e) {
             }
         </script>
@@ -88,8 +89,10 @@
                                         <div class="form-group">
                                             <select name="payType" class="form-control payType">
                                                 <option value="">请选择</option>
-                                                <option value="CASH">现金</option>
-                                                <option value="TRANSFER">转账</option>
+                                                <option value="0">现金</option>
+                                                #foreach($!bankAccount in $!{bankAccounts})
+                                                    <option value="$!{bankAccount.id}">$!{bankAccount.alias}</option>
+                                                #end
                                             </select>
                                         </div>
                                         <button id="addPayment" type="button" class="btn btn-sm btn-success">
@@ -100,62 +103,6 @@
                             </div>
                         </div>
                     </div>
-                    #*<div class="row">
-                        <div class="col-md-offset-6 col-md-6">
-                            <div class="col-md-2">
-                                <h5>支付方式</h5>
-                            </div>
-                            <div class="col-md-10">
-                                <div class="pull-left">
-                                    <table id="paymentTable">
-                                        <thead class="hidden">
-                                            <tr>
-                                                <th>payMode</th>
-                                                <th>payType</th>
-                                                <th>transferType</th>
-                                                <th>account</th>
-                                                <th>payMoney</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>
-                                                <select name="payMode">
-                                                    <option value="PAY">支付</option>
-                                                    <option value="COLLECT">收取</option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <select name="payType">
-                                                    <option value="CASH">现金</option>
-                                                    <option value="TRANSFER">转账</option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <select name="transferType">
-                                                    <option value="EBANK">网银</option>
-                                                    <option value="POS">刷卡机</option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <input type="text" class="input-small account" placeholder="帐号"
-                                                       maxlength="16">
-                                            </td>
-                                            <td>
-                                                <input type="text" class="input-small" placeholder="金额">
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="pull-right">
-                                    <a id="addPayment" class="btn btn-sm btn-success">
-                                        <i class="icon-only fa fa-plus"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>*#
                     <div class="hr hr8 hr-double hr-dotted"></div>
                     <div class="space-6"></div>
                     <div class="clearfix well">

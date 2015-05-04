@@ -143,8 +143,8 @@
                         <tr>
                             <td class="align-left">
                                 $!{payment.payMode.value}
-                                / $!{payment.payType.value}
-                                #if($!{payment.payType}=="TRANSFER")
+                                / $!{payment.payType}
+                                #if($!{payment.payType}!="现金")
                                     / $!{payment.transferType.value}
                                     / $!{payment.account}
                                 #end

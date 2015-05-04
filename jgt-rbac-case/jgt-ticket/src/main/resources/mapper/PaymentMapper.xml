@@ -6,12 +6,12 @@
     <cache/>
 
     <sql id="base_columns">
-        id, payMode,payType,transferType,account,payMoney,tradeId
+        id, payMode,payType,transferType,bankName,owner,account,payMoney,tradeId
     </sql>
 
     <insert id="createPayment" parameterType="t_payment" useGeneratedKeys="true" keyProperty="id">
-        insert into tb_payment (payMode,payType,transferType,account,payMoney,tradeId)
-        values (#{payMode},#{payType},#{transferType},#{account},#{payMoney},#{tradeId})
+        insert into tb_payment (payMode,payType,transferType,bankName,owner,account,payMoney,tradeId)
+        values (#{payMode},#{payType},#{transferType},#{bankName},#{owner},#{account},#{payMoney},#{tradeId})
     </insert>
 
     <update id="updatePayment" parameterType="t_payment">

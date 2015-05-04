@@ -2,14 +2,8 @@ package org.hepx.ticket.service;
 
 import org.hepx.jgt.common.date.DateUtil;
 import org.hepx.jgt.common.random.NumberGenerater;
-import org.hepx.ticket.entity.Customer;
-import org.hepx.ticket.entity.Payment;
-import org.hepx.ticket.entity.Ticket;
-import org.hepx.ticket.entity.Trade;
-import org.hepx.ticket.mapper.CustomerMapper;
-import org.hepx.ticket.mapper.PaymentMapper;
-import org.hepx.ticket.mapper.TicketMapper;
-import org.hepx.ticket.mapper.TradeMapper;
+import org.hepx.ticket.entity.*;
+import org.hepx.ticket.mapper.*;
 import org.hepx.ticket.web.TicketVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +36,9 @@ public class TradeServiceImpl implements TradeService {
 
     @Autowired
     private CustomerMapper customerMapper;
+
+    @Autowired
+    private BankAccountMapper bankAccountMapper;
 
     @Override
     public Trade createTrade(Trade trade) {
@@ -116,6 +113,15 @@ public class TradeServiceImpl implements TradeService {
         }
         for (Payment payment : payments) {
             payment.setTradeId(t.getId());
+            if("0".equals(payment.getPayType())){//0表示现金
+                payment.setPayType("现金");
+            }else if(!"".equals(payment.getPayType())) {
+                BankAccount bankAccount = bankAccountMapper.findOne(Long.parseLong(payment.getPayType()));
+                payment.setPayType(bankAccount.getAlias());
+                payment.setAccount(bankAccount.getAccount());
+                payment.setOwner(bankAccount.getOwner());
+                payment.setBankName(bankAccount.getBankName());
+            }
             paymentMapper.createPayment(payment);
         }
         //自动创建新客户或更新旧的客户信息

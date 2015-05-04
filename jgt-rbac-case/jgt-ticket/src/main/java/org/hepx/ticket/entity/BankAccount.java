@@ -12,9 +12,13 @@ import java.io.Serializable;
 @Alias("t_bank_account")
 public class BankAccount extends IdEntity implements Serializable {
 
-    private String bankName;
+    private String alias;//别名
 
-    private String account;
+    private String owner;//户主
+
+    private String bankName;//开户行
+
+    private String account; //卡号
 
     public String getBankName() {
         return bankName;
@@ -32,4 +36,19 @@ public class BankAccount extends IdEntity implements Serializable {
         this.account = account;
     }
 
+    public String getAlias() {
+        return alias;
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
 }

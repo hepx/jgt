@@ -115,8 +115,6 @@ $(function () {
         }
     });
 
-    accoutAutocomplete();
-
     $('#in_add').on('click',function(e){
         e.preventDefault();
         in_add();
@@ -151,14 +149,22 @@ $(function () {
             showErrors("请添加进票或出票，二者必须填写一项。");
             return
         }
+        if (!verifyTicketData(in_datas,"进票")) {
+            return;
+        }
+        if (!verifyTicketData(out_datas,"出票")) {
+            return;
+        }
         //支付总额
         var paymentTotal=0;
         //支付内容
         var payments=new Array();
         $('.form-inline').each(function(i){
             var formValue=$(this).serializeObject();
-            payments.push(formValue);
-            paymentTotal += parseFloat(formValue.payMoney);
+            if(formValue.payMoney){
+                payments.push(formValue);
+                paymentTotal += parseFloat(formValue.payMoney);
+            }
         });
 
         if(Math.abs(parseFloat(paymentTotal)) != Math.abs(parseFloat($('#profit').html()))){
@@ -206,6 +212,18 @@ $(function () {
             return [false,"长度必须为8位"];
         }
         return [true,""];
+    }
+
+    function verifyTicketData(datas,title){
+        var flag=true;
+        $.each(datas, function (i, data) {
+            if (data.ticketNo.length != 8) {
+                showErrors(title+"记录中有无效票号。");
+                flag=false;
+                return false;
+            }
+        });
+        return flag;
     }
 
     function showErrors(msg) {
@@ -326,25 +344,20 @@ $(function () {
         return ticket;
     }*/
 
-    function accoutAutocomplete(){
-        $(".account").autocomplete({
-            source: RS_PATH+"bankaccount/getBankAccounts",
-            minLength: 2
-        });
-    }
-
     $('#payments').on('change','.payType',function(e){
         var form = $(this).parents('form');
         var form_group = $(this).parents('.form-group');
-        if(this.value==='CASH'){
+        if(this.value===''){
+            removePayMoneyElement(form);
+        }else if(this.value==='0'){
             addPayMoneyElement(form,form_group);
-        }else if(this.value==='TRANSFER'){
+        }else{
             addTransferElement(form,form_group);
         }
     });
 
     function addTransferElement(form,e){
-        $(form).find('input[name="payMoney"]').parents('.form-group').remove();
+        removePayMoneyElement(form);
         e.after(
             ' <div class="form-group">'
                + '<select name="transferType" class="form-control">'
@@ -353,9 +366,6 @@ $(function () {
                    + '<option value="POS">刷卡机</option>'
                + '</select>'
            + '</div>'
-               + ' <div class="form-group">'
-           + '<input type="text" name="account" class="form-control input-small account" placeholder="帐号"maxlength="16">'
-           + '</div>'
            + ' <div class="form-group">'
            + '<input type="text" name="payMoney" class="form-control input-small" placeholder="金额">'
            + '</div>'
@@ -363,13 +373,16 @@ $(function () {
     }
 
     function addPayMoneyElement(form,e){
-        $(form).find('select[name="transferType"]').parents('.form-group').remove();
-        $(form).find('input[name="account"]').parents('.form-group').remove();
-        $(form).find('input[name="payMoney"]').parents('.form-group').remove();
+        removePayMoneyElement(form);
         e.after(
              ' <div class="form-group">'
             + '<input type="text" name="payMoney" class="form-control input-small" placeholder="金额">'
             + '</div>')
+    }
+
+    function removePayMoneyElement(form){
+        $(form).find('select[name="transferType"]').parents('.form-group').remove();
+        $(form).find('input[name="payMoney"]').parents('.form-group').remove();
     }
 
     function addPayment(){
@@ -382,14 +395,9 @@ $(function () {
                 + '</select>'
                 + '</div>'
                 + ' <div class="form-group">'
-                + '<select name="payType" class="form-control payType">'
-                + '<option value="">请选择</option>'
-                + '<option value="CASH">现金</option>'
-                + '<option value="TRANSFER">转账</option>'
-                + '</select>'
+                + $('select[name="payType"]:first').parents('.form-group').html()
                 + '</div>'
                 + '</form>'
         );
-        accoutAutocomplete();
     }
 })
