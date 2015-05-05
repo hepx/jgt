@@ -82,6 +82,8 @@
     <script src="${rc.contextPath}/assets/js/excanvas.min.js"></script>
     <![endif]-->
 
+
+    <script src="${rc.contextPath}/assets/js/date-time/moment.min.js"></script>
     <script src="${rc.contextPath}/assets/js/jquery.slimscroll.min.js"></script>
     <script src="${rc.contextPath}/assets/js/jquery.gritter.min.js"></script>
     <script src="${rc.contextPath}/assets/js/jquery.dataTables.min.js"></script>

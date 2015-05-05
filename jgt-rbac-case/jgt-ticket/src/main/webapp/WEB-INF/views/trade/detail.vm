@@ -144,7 +144,7 @@
                             <td class="align-left">
                                 $!{payment.payMode.value}
                                 / $!{payment.payType}
-                                #if($!{payment.payType}!="现金")
+                                #if($!{payment.payType}!="现金" && $!{payment.payType}!="记账" )
                                     / $!{payment.transferType.value}
                                     / $!{payment.account}
                                 #end

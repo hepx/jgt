@@ -101,20 +101,22 @@ public class TradeServiceImpl implements TradeService {
         Trade t = createTrade(trade);
         for (Ticket in_ticket : inTickets) {
             in_ticket.setInTradeId(t.getId());
-            in_ticket.setInDate(new Date());
+            //in_ticket.setInDate(new Date());
             in_ticket.setTicketStatus(Ticket.TicketStatus.EXISTED);
             ticketMapper.createTicket(in_ticket);
         }
         for (Ticket out_ticket : outTickets) {
-            out_ticket.setOutDate(new Date());
+            //out_ticket.setOutDate(new Date());
             out_ticket.setTicketStatus(Ticket.TicketStatus.SALED);
             out_ticket.setOutTradeId(t.getId());
             ticketMapper.updateTicket(out_ticket);
         }
         for (Payment payment : payments) {
             payment.setTradeId(t.getId());
-            if("0".equals(payment.getPayType())){//0表示现金
+            if("CASH".equals(payment.getPayType())){//表示现金
                 payment.setPayType("现金");
+            }else if("TALLY".equals(payment.getPayType())){
+                payment.setPayType("记账");
             }else if(!"".equals(payment.getPayType())) {
                 BankAccount bankAccount = bankAccountMapper.findOne(Long.parseLong(payment.getPayType()));
                 payment.setPayType(bankAccount.getAlias());

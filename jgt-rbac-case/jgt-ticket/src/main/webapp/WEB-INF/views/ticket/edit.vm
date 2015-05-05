@@ -89,7 +89,8 @@
                                         <div class="form-group">
                                             <select name="payType" class="form-control payType">
                                                 <option value="">请选择</option>
-                                                <option value="0">现金</option>
+                                                <option value="CASH">现金</option>
+                                                <option value="TALLY">记账</option>
                                                 #foreach($!bankAccount in $!{bankAccounts})
                                                     <option value="$!{bankAccount.id}">$!{bankAccount.alias}</option>
                                                 #end
