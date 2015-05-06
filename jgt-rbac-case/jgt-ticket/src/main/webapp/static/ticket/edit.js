@@ -40,7 +40,8 @@ $(function () {
         cellsubmit: 'clientArray',
         footerrow: true,
         gridComplete: completeInTicket,
-        caption: '<strong>进票</strong>&nbsp;&nbsp;<a id="in_add" class="btn btn-xs btn-success">增加进票</a>',
+        caption: '<strong>进票</strong>&nbsp;&nbsp;<a id="in_add" class="btn btn-xs btn-success">增加进票</a>' +
+                 '&nbsp;<a id="in_del" class="btn btn-xs btn-danger">删除进票</a>',
         pager: '#in-grid-pager',
         afterEditCell: function (id, name, val, iRow, iCol) {
             $('#' + iRow + '_' + name).select();
@@ -102,10 +103,11 @@ $(function () {
         footerrow: true,
         gridComplete: completeOutTicket,
         pager: '#out-grid-pager',
-        caption: '<strong>出票</strong>&nbsp;&nbsp;<a id="out_add" class="btn btn-xs btn-success">增加出票</a>',
+        caption: '<strong>出票</strong>&nbsp;&nbsp;<a id="out_add" class="btn btn-xs btn-success">增加出票</a>' +
+                '&nbsp;<a id="out_del" class="btn btn-xs btn-danger">删除出票</a>',
         afterEditCell: function (id, name, val, iRow, iCol) {
             $('#' + iRow + '_' + name).select();
-            if(name === 'ticketNo'){
+            if (name === 'ticketNo') {
                 $('#' + iRow + '_ticketNo').autocomplete({
                     minLength: 2,
                     source: RS_PATH + 'ticket/getTickets',
@@ -118,7 +120,7 @@ $(function () {
                         return false;
                     }
                 });
-            }else if (name === 'outDate') {
+            } else if (name === 'outDate') {
                 $("#" + iRow + "_outDate").datepicker({
                     language: 'cn',
                     format: "yyyy-mm-dd",
@@ -130,7 +132,7 @@ $(function () {
         afterSaveCell: function (rowid, name, val, iRow, iCol) {
             if (name === 'outDate') {
                 $(out_ticket_table).jqGrid('setRowData', rowid, {outDate: moment(val).format('YYYY-MM-DD')});
-            }else if ($.inArray(name, ['ticketNo', 'outPoint']) != -1) {
+            } else if ($.inArray(name, ['ticketNo', 'outPoint']) != -1) {
                 computeOutTicketSurplus(rowid, iCol);
                 completeOutTicket()
             }
@@ -152,21 +154,53 @@ $(function () {
         }
     });
 
+    //增加进票
     $('#in_add').on('click', function (e) {
         e.preventDefault();
         in_add();
     });
-
+    //删除进票
+    $('#in_del').on('click', function (e) {
+        e.preventDefault();
+        var id=  $(in_ticket_table).jqGrid('getGridParam', 'selrow');
+        if(!id){
+            showErrors("没有选择进票记录。");
+        }else{
+            //var rowData = $(in_ticket_table).jqGrid('getRowData', id);
+            //showInfo(rowData);
+            var rs = $(in_ticket_table).jqGrid('delRowData', id);
+            if(rs){
+                completeInTicket();
+            }
+        }
+    });
+    //增加出票
     $('#out_add').on('click', function (e) {
         e.preventDefault();
         out_add();
     });
-
+    //删除出票
+    $('#out_del').on('click', function (e) {
+        e.preventDefault();
+        var id=  $(out_ticket_table).jqGrid('getGridParam', 'selrow');
+        if(!id){
+             showErrors("没有选择出票记录。");
+        }else{
+            /*var rowData = $(out_ticket_table).jqGrid('getRowData', id);
+             showInfo(rowData);*/
+            var rs = $(out_ticket_table).jqGrid('delRowData', id);
+            if(rs){
+                completeOutTicket();
+            }
+        }
+    });
+    //增加支付
     $('#addPayment').on('click', function (e) {
         e.preventDefault();
         addPayment();
     });
 
+    //提交交易
     $('#submit').on('click', function (e) {
         e.preventDefault();
         if (!verifyTicketHeader()) {
@@ -200,16 +234,21 @@ $(function () {
             var formValue = $(this).serializeObject();
             if (formValue.payMoney) {
                 payments.push(formValue);
-                paymentTotal += parseFloat(formValue.payMoney);
+                if (formValue.payMode === 'PAY') {//支付
+                    paymentTotal -= parseFloat(formValue.payMoney)
+                } else if (formValue.payMode === 'COLLECT'){ //收取
+                    paymentTotal += parseFloat(formValue.payMoney);
+                }
             }
         });
 
-        if (Math.abs(parseFloat(paymentTotal)) != Math.abs(parseFloat($('#profit').html()))) {
+        if (parseFloat(paymentTotal) != parseFloat($('#profit').html())) {
             showErrors("填写的支付金额与票据合计不符,请认真检查!");
             return;
         }
         var data = "{\"trade\":" + JSON.stringify(formData) + ",\"inTickets\":" + JSON.stringify(in_datas) +
             ",\"outTickets\":" + JSON.stringify(out_datas) + ",\"payments\":" + JSON.stringify(payments) + "}";
+
         $.ajax({
             url: RS_PATH + 'ticket/create',
             type: "POST",

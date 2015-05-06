@@ -58,15 +58,23 @@
                             <tr>
                                 <td class="center">
                                     <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
-                                        <a class="blue bigger tooltip-info" data-rel="popover" data-placement="bottom"
+#*                                        <a class="blue bigger tooltip-info" data-rel="popover" data-placement="bottom"
                                            title="核对" data-content="这个地方有待沟通" href="${rc.contextPath}/trade/$!{trade.id}/detail">$!{trade.tradeNo}
+                                        </a>*#
+                                        <a class="blue bigger" href="${rc.contextPath}/trade/$!{trade.id}/detail">$!{trade.tradeNo}
                                         </a>
                                     </div>
                                 </td>
                                 <td class="center">$!dateTool.format("yyyy-MM-dd",$!{trade.createTime})</td>
                                 <td>$!{trade.name}</td>
                                 <td>$!{trade.telphone}</td>
-                                <td class="align-right">$numberTool.format("#0.00",$!{trade.inTicketMoney})</td>
+                                <td class="align-right">
+                                    #if($!{trade.tradeTotal}>=0)
+                                        <span class="text-success"><strong>$!numberTool.format("#0.00",$!{trade.tradeTotal})</strong></span>
+                                    #else
+                                        <span class="text-danger"><strong>$!numberTool.format("#0.00",$!{trade.tradeTotal})</strong></span>
+                                    #end
+                                </td>
              #*                   <td></td>
                                 <td></td>
                                 <td></td>*#

@@ -60,7 +60,7 @@
                                     #if($!{ticket.ticketStatus}=="SALED")
                                         #set($temp=$!{ticket.outTicketSurplus}-$!{ticket.inTicketSurplus})
                                         #if($temp>0)
-                                            <span class="text-success">$!numberTool.format("#0.00",$!{temp})</span>
+                                            <span class="text-success"><strong>$!numberTool.format("#0.00",$!{temp})</strong></span>
                                         #elseif($temp<0)
                                             <span class="text-danger"><strong>$!numberTool.format("#0.00",$!{temp})</strong></span>
                                         #end

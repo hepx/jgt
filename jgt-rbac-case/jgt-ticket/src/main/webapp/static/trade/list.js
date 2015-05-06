@@ -17,17 +17,17 @@ $(function(){
         format: "yyyy-mm-dd"
     });
     //浮动窗口
-    $('[data-rel=popover]').popover({
+/*    $('[data-rel=popover]').popover({
         html:true,
         trigger:'hover'
-    });
+    });*/
 
 /*    $("#tradelist").dataTable({
         ordering:false,
         pageLength:20,
         lengthMenu: [[20, 40, 80,100, -1], [20, 40, 80,100, "全部"]]
     });*/
-    /*删除事件*/
+    /*完成事件*/
     $(".check").on('click',function(e){
         e.preventDefault();
         var me = $(this);
