@@ -48,6 +48,11 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
+    public List<Ticket> findAll(Ticket ticket) {
+        return ticketMapper.findAllByCriteria(ticket);
+    }
+
+    @Override
     public List<Ticket> findByStatus(Ticket.TicketStatus status) {
         return ticketMapper.findByStatus(status.toString());
     }

@@ -112,9 +112,14 @@ public class TicketerController {
      */
     @RequiresPermissions("analysis:view")
     @RequestMapping(value = "/analysis",method = RequestMethod.GET)
-    public String analysis(Model model){
-        List<Ticket> tickets = ticketService.findAll();
+    public String analysis(@RequestParam(value = "ticketNo",required = false) String ticketNo,@RequestParam(value = "ticketStatus",
+            required = false)Ticket.TicketStatus ticketStatus, Model model){
+        Ticket ticket = new Ticket();
+        ticket.setTicketNo(ticketNo);
+        ticket.setTicketStatus(ticketStatus);
+        List<Ticket> tickets = ticketService.findAll(ticket);
         model.addAttribute("ticketList",tickets);
+        model.addAttribute("ticket",ticket);
         return "ticket/analysis";
     }
 

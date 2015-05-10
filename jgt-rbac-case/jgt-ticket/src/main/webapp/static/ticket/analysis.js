@@ -7,7 +7,18 @@
  */
 
 $(function () {
-    $("#analysislist").dataTable({
+    var t_money =0;
+
+    $('#analysislist tBody tr').each(function(i){
+        totalC(this);
+    });
+    function totalC(tr){
+        var ticketMoeny =parseFloat($(tr).children('td').eq(1).text()) || 0;
+        t_money += ticketMoeny;
+    }
+    $("#total_ticketMoney").html(t_money.toFixed(2));
+
+/*    $("#analysislist").dataTable({
         dom: 'l<"toolbar">rtip',
         ordering: false,
         pageLength: 20,
@@ -43,24 +54,23 @@ $(function () {
     });
     $("div.toolbar").html('<' +
         'div class="pull-right">' +
-        '<input id="ticket_filter" data-index="0" class="input-small" type="text" placeholder="票号">' +
-        '&nbsp;<select id="status_filter" data-index="3">' +
+        '<form id="s_form" class="form-inline" method="GET" action="">' +
+        '<input id="ticket_filter" name="ticketNo" data-index="0" class="input-small" type="text" placeholder="票号">' +
+        '&nbsp;<select id="status_filter" name="ticketStatus" data-index="3">' +
         '<option value="">请选择</option>' +
         '<option value="在库">在库</option>' +
         '<option value="已售出">已售出</option>' +
         '</select>' +
-//        '&nbsp;<button id="a_search" class="btn btn-primary btn-sm">查询</button>' +
+        '&nbsp;<button id="a_search" class="btn btn-primary btn-sm">查询</button>' +
+        '</form>' +
         '</div>');
 
-/*    $('#a_search').on('click',function(e){
+    $('#a_search').on('click',function(e){
         e.preventDefault();
-        var ticketNo = $('#a_ticketNo').val();
-        var ticketStatus = $('#a_ticketStatus').val();
-
-        alert(ticketNo+" "+ticketStatus);
+        $('#s_form').submit();
     });*/
 
-    $('#ticket_filter').on( 'keyup click', function () {
+/*    $('#ticket_filter').on( 'keyup click', function () {
         filterColumn($(this).attr('data-index'), $(this).val());
     });
 
@@ -70,5 +80,5 @@ $(function () {
 
     function filterColumn ( i,val ) {
         $('#analysislist').DataTable().column( i ).search(val).draw();
-    }
+    }*/
 })

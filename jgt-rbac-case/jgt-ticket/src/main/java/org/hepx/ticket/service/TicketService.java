@@ -17,6 +17,8 @@ public interface TicketService {
 
     public List<Ticket> findAll();
 
+    public List<Ticket> findAll(Ticket ticket);
+
     public List<Ticket> findByStatus(Ticket.TicketStatus status);
 
     public List<Ticket> findByStock();

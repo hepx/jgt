@@ -11,7 +11,8 @@
     </sql>
 
     <insert id="createTicket" parameterType="t_ticket" useGeneratedKeys="true" keyProperty="id">
-        insert into tb_ticket (ticketNo,ticketMoney,expireDate,inDate,certifyFee,ticketOdd,inPoint,otherFee,inTicketSurplus,inTradeId,ticketStatus)
+        insert into tb_ticket
+        (ticketNo,ticketMoney,expireDate,inDate,certifyFee,ticketOdd,inPoint,otherFee,inTicketSurplus,inTradeId,ticketStatus)
         values
         (#{ticketNo},#{ticketMoney},#{expireDate},#{inDate},#{certifyFee},#{ticketOdd},#{inPoint},#{otherFee},#{inTicketSurplus},#{inTradeId},#{ticketStatus})
     </insert>
@@ -53,6 +54,20 @@
         select
         <include refid="base_columns"/>
         from tb_ticket
+        order by id desc
+    </select>
+
+    <select id="findAllByCriteria" resultType="t_ticket" parameterType="t_ticket">
+        select id,ticketNo,ticketMoney,expireDate,ticketStatus,inDate,inPoint,inTicketSurplus,outDate,outPoint,outTicketSurplus
+        from tb_ticket
+        <where>
+            <if test="ticketNo != null and ticketNo != ''">
+                and ticketNo like CONCAT('%',#{ticketNo},'%')
+            </if>
+            <if test="ticketStatus !=null and ticketStatus != ''">
+                and ticketStatus=#{ticketStatus}
+            </if>
+        </where>
         order by id desc
     </select>
 
