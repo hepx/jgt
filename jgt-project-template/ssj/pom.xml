@@ -23,7 +23,7 @@
     <dependencies>
         <!-- SPRINGSIDE -->
         <dependency>
-            <groupId>cn.org.springside</groupId>
+            <groupId>io.springside</groupId>
             <artifactId>springside-core</artifactId>
         </dependency>
 
