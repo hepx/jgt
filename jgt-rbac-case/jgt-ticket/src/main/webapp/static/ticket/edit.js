@@ -276,10 +276,10 @@ $(function () {
             showErrors("请填写客户名。");
             return false;
         }
-        if (!$('#telphone').val()) {
+/*        if (!$('#telphone').val()) {
             showErrors("请填写客户电话。");
             return false;
-        }
+        }*/
         return true;
     }
 
@@ -298,11 +298,11 @@ $(function () {
                 flag = false;
                 return false;
             }
-            if (!data.expireDate) {
+/*            if (!data.expireDate) {
                 showErrors("进票记录中有到期日期没有填写。");
                 flag = false;
                 return false;
-            }
+            }*/
             if (!data.inDate) {
                 showErrors("进票记录中有进票日期没有填写。");
                 flag = false;

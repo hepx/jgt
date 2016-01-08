@@ -71,6 +71,23 @@
         order by id desc
     </select>
 
+    <select id="findByCriteria" resultType="t_ticket" parameterType="map">
+        select id,ticketNo,ticketMoney,expireDate,ticketStatus,inDate,inPoint,inTicketSurplus,outDate,outPoint,outTicketSurplus
+        from tb_ticket
+        <where>
+            <if test="ticketNo != null and ticketNo != ''">
+                and ticketNo like CONCAT('%',#{ticketNo},'%')
+            </if>
+            <if test="ticketStatus !=null and ticketStatus != ''">
+                and ticketStatus=#{ticketStatus}
+            </if>
+            <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
+                and inDate between #{startTime} and #{endTime}
+            </if>
+        </where>
+        order by id desc
+    </select>
+
     <select id="findByStatus" resultType="t_ticket" parameterType="string">
         select id,ticketNo,ticketMoney from tb_ticket
         where ticketStatus=#{status}

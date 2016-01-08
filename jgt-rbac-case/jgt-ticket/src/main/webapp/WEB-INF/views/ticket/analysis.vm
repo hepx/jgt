@@ -1,5 +1,6 @@
 #set($page_title="票据盈利分析")
-#set($jsUrls=["${rc.contextPath}/static/ticket/analysis.js"])
+#set($jsUrls=["${rc.contextPath}/assets/js/date-time/bootstrap-datepicker.min.js",
+    "${rc.contextPath}/static/ticket/analysis.js"])
 <div class="main-content">
     <div class="breadcrumbs" id="breadcrumbs">
         <script type="text/javascript">
@@ -20,11 +21,14 @@
         <div class="row">
             <div class="col-xs-12">
                 <h3 class="header smaller lighter blue">$page_title</h3>
-
                 <div>
-                    <form method="get" class="form-inline">
+                    <form id="from_analysis" method="get" class="form-inline">
                         <input type="text" name="ticketNo" id="ticketNo" class="input-small" value="$!{ticket.ticketNo}"
                                placeholder="票号">
+                        <input type="text" name="startTime" id="startTime" class="input-small" value="$!{ticket.startTime}"
+                               placeholder="开始时间">
+                        <input type="text" name="endTime" id="endTime" class="input-small" value="$!{ticket.endTime}"
+                               placeholder="结束时间">
                         <select name="ticketStatus" data-index="3">
                             <option value="">请选择</option>
                                 <option value="EXISTED" #if($!{ticket.ticketStatus} == "EXISTED")
@@ -39,6 +43,11 @@
                             <i class="fa fa-search bigger-110"></i>
                             查询
                         </button>
+                        <div class="pull-right">
+                            <button type="button" id="btn_today" class="btn btn-default btn-sm">今日</button>
+                            <button type="button" id="btn_week" class="btn btn-primary btn-sm">本周</button>
+                            <button type="button" id="btn_month" class="btn btn-danger btn-sm">本月</button>
+                        </div>
                     </form>
                 </div>
                 <div class="table-responsive">
@@ -61,7 +70,10 @@
                         <tfoot>
                         <tr>
                             <th class="center">合计:</th>
-                            <th colspan="10" id="total_ticketMoney" style="text-align:left"></th>
+                            <th id="total_ticketMoney" style="text-align:right"></th>
+                            <th colspan="7"></th>
+                            <th id="total_inTicketSurplus" style="text-align:right"></th>
+                            <th id="total_profit" style="text-align:right"></th>
                         </tr>
                         </tfoot>
                         <tbody>

@@ -53,6 +53,11 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
+    public List<Ticket> findByCondition(Map<String, Object> paramMap) {
+        return ticketMapper.findByCriteria(paramMap);
+    }
+
+    @Override
     public List<Ticket> findByStatus(Ticket.TicketStatus status) {
         return ticketMapper.findByStatus(status.toString());
     }

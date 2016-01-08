@@ -4,6 +4,7 @@ import org.hepx.ticket.entity.Ticket;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public interface TicketService {
 
@@ -18,6 +19,8 @@ public interface TicketService {
     public List<Ticket> findAll();
 
     public List<Ticket> findAll(Ticket ticket);
+
+    public List<Ticket> findByCondition(Map<String,Object> paramMap);
 
     public List<Ticket> findByStatus(Ticket.TicketStatus status);
 

@@ -26,6 +26,8 @@ public interface TicketMapper {
 
     public List<Ticket> findAllByCriteria(Ticket ticket);
 
+    public List<Ticket> findByCriteria(Map<String,Object> paramMap);
+
     public List<Ticket> findByStatus(String status);
 
     public List<Ticket> findByStock();

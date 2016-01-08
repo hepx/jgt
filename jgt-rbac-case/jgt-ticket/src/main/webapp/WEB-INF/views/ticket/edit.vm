@@ -47,10 +47,10 @@
                                 <input type="text" name="telphone" id="telphone" class="form-control" maxlength="11"
                                        placeholder="客户电话">
                             </div>
-                            <div class="form-group float-label-control col-xs-3">
+ #*                           <div class="form-group float-label-control col-xs-3">
                                 <label for="" class="control-label">身份证号</label>
                                 <input type="text" name="idCard" id="idCard" class="form-control" maxlength="18" placeholder="身份证号">
-                            </div>
+                            </div>*#
                         </form>
                     </div>
 

@@ -1,7 +1,7 @@
 package org.hepx.ticket.web.controller;
 
-import com.alibaba.fastjson.JSON;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.hepx.jgt.common.date.DateUtil;
 import org.hepx.jgt.common.json.JsonUtil;
 import org.hepx.ticket.entity.Ticket;
 import org.hepx.ticket.service.BankAccountService;
@@ -17,9 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * User: hepanxi
@@ -112,14 +110,24 @@ public class TicketerController {
      */
     @RequiresPermissions("analysis:view")
     @RequestMapping(value = "/analysis",method = RequestMethod.GET)
-    public String analysis(@RequestParam(value = "ticketNo",required = false) String ticketNo,@RequestParam(value = "ticketStatus",
-            required = false)Ticket.TicketStatus ticketStatus, Model model){
-        Ticket ticket = new Ticket();
-        ticket.setTicketNo(ticketNo);
-        ticket.setTicketStatus(ticketStatus);
-        List<Ticket> tickets = ticketService.findAll(ticket);
-        model.addAttribute("ticketList",tickets);
-        model.addAttribute("ticket",ticket);
+    public String analysis(@RequestParam(value = "ticketNo",required = false) String ticketNo,
+                           @RequestParam(value = "ticketStatus", required = false)Ticket.TicketStatus ticketStatus,
+                           @RequestParam(value = "startTime",required = false) String startTime,
+                           @RequestParam(value = "endTime",required = false)String endTime,Model model){
+        if (startTime == null) {
+            startTime = DateUtil.formateDate(new Date());
+        }
+        if (endTime == null) {
+            endTime = DateUtil.formateDate(new Date());
+        }
+        Map<String,Object> paramMap = new HashMap<String, Object>();
+        paramMap.put("ticketNo",ticketNo);
+        paramMap.put("ticketStatus",ticketStatus);
+        paramMap.put("startTime",startTime);
+        paramMap.put("endTime",endTime);
+        List<Ticket> tickets = ticketService.findByCondition(paramMap);
+        model.addAttribute("ticketList", tickets);
+        model.addAttribute("ticket", paramMap);
         return "ticket/analysis";
     }
 
