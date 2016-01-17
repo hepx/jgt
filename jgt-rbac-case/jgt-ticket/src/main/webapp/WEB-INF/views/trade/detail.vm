@@ -143,10 +143,12 @@
                         <tr>
                             <td class="align-left">
                                 $!{payment.payMode.value}
-                                / $!{payment.payType}
-                                #if($!{payment.payType}!="现金" && $!{payment.payType}!="记账" )
-                                    / $!{payment.transferType.value}
-                                    / $!{payment.account}
+                                #if($!{payment.payType})
+                                    / $!{payment.payType}
+                                    #if($!{payment.payType}!="现金" && $!{payment.payType}!="记账" )
+                                        / $!{payment.transferType.value}
+                                        / $!{payment.account}
+                                    #end
                                 #end
                             </td>
                             <td class="align-left">$numberTool.format("#0.00",$!{payment.payMoney})</td>

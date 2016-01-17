@@ -86,6 +86,7 @@
                                                 <option value="COLLECT">收取</option>
                                             </select>
                                         </div>
+                                        <!--
                                         <div class="form-group">
                                             <select name="payType" class="form-control payType">
                                                 <option value="">请选择</option>
@@ -95,6 +96,10 @@
                                                     <option value="$!{bankAccount.id}">$!{bankAccount.alias}</option>
                                                 #end
                                             </select>
+                                        </div>
+                                        -->
+                                        <div class="form-group">
+                                            <input type="text" name="payMoney" class="form-control input-small" placeholder="金额">
                                         </div>
                                         <button id="addPayment" type="button" class="btn btn-sm btn-success">
                                             <i class="icon-only fa fa-plus"></i>

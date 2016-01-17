@@ -113,7 +113,7 @@ public class TradeServiceImpl implements TradeService {
         }
         for (Payment payment : payments) {
             payment.setTradeId(t.getId());
-            if("CASH".equals(payment.getPayType())){//表示现金
+/*            if("CASH".equals(payment.getPayType())){//表示现金
                 payment.setPayType("现金");
             }else if("TALLY".equals(payment.getPayType())){
                 payment.setPayType("记账");
@@ -123,7 +123,7 @@ public class TradeServiceImpl implements TradeService {
                 payment.setAccount(bankAccount.getAccount());
                 payment.setOwner(bankAccount.getOwner());
                 payment.setBankName(bankAccount.getBankName());
-            }
+            }*/
             paymentMapper.createPayment(payment);
         }
         //自动创建新客户或更新旧的客户信息
