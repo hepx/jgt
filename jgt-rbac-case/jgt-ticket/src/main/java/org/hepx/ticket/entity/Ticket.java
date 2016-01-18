@@ -36,6 +36,8 @@ public class Ticket extends IdEntity implements Serializable {
 
     private double outTicketSurplus;//出票票面实际金额
 
+    private double discountAmount; //出票贴现金额
+
     private Date outDate;//出票日期
 
     private Long inTradeId;//进票票据所在交易
@@ -57,6 +59,14 @@ public class Ticket extends IdEntity implements Serializable {
         public String getValue() {
             return value;
         }
+    }
+
+    public double getDiscountAmount() {
+        return discountAmount;
+    }
+
+    public void setDiscountAmount(double discountAmount) {
+        this.discountAmount = discountAmount;
     }
 
     public Date getInDate() {

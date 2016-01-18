@@ -7,7 +7,7 @@
 
     <sql id="base_columns">
         id,ticketNo,ticketMoney,expireDate,inDate,certifyFee,ticketOdd,otherFee,inPoint,inTicketSurplus,outPoint,
-        outTicketSurplus,outDate,inTradeId,outTradeId,ticketStatus
+        outTicketSurplus,outDate,discountAmount,inTradeId,outTradeId,ticketStatus
     </sql>
 
     <insert id="createTicket" parameterType="t_ticket" useGeneratedKeys="true" keyProperty="id">
@@ -35,6 +35,9 @@
             <if test="outTradeId != null">
                 outTradeId=#{outTradeId},
             </if>
+            <if test="discountAmount != null">
+                discountAmount=#{discountAmount},
+            </if>
         </trim>
         where id=#{id}
     </update>
@@ -58,7 +61,7 @@
     </select>
 
     <select id="findAllByCriteria" resultType="t_ticket" parameterType="t_ticket">
-        select id,ticketNo,ticketMoney,expireDate,ticketStatus,inDate,inPoint,inTicketSurplus,outDate,outPoint,outTicketSurplus
+        select id,ticketNo,ticketMoney,expireDate,ticketStatus,inDate,inPoint,inTicketSurplus,outDate,outPoint,outTicketSurplus,discountAmount
         from tb_ticket
         <where>
             <if test="ticketNo != null and ticketNo != ''">
@@ -112,7 +115,7 @@
     </select>
 
     <select id="findOutTicketByTradeId" resultType="t_ticket" parameterType="long">
-        select id,ticketNo,ticketMoney,outPoint,outTicketSurplus,outDate
+        select id,ticketNo,ticketMoney,outPoint,outTicketSurplus,outDate,discountAmount
         from tb_ticket
         where outTradeId=#{tradeId}
     </select>
