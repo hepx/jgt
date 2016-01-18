@@ -59,4 +59,5 @@ public class TreeNode implements Serializable {
     public void setParentId(Long parentId) {
         this.parentId = parentId;
     }
+
 }
