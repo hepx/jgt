@@ -17,18 +17,18 @@
 	</appender>
 
 	<!-- project default level -->
-	<logger name="org.hepx.ticket" level="DEBUG" />
+	<logger name="org.hepx.ticket" level="ERROR" />
     <!--spring -->
-    <logger name="org.springframework" level="INFO"/>
+    <logger name="org.springframework" level="ERROR"/>
     <logger name="net.sf.ehcache.Cache" level="ERROR"/>
 	<!--log4jdbc -->
-	<logger name="jdbc.sqltiming" level="DEBUG"/>
+	<logger name="jdbc.sqltiming" level="OFF"/>
     <logger name="jdbc.sqlonly" level="OFF"/>
     <logger name="jdbc.audit" level="OFF"/>
     <logger name="jdbc.resultset" level="OFF"/>
     <logger name="jdbc.connection" level="OFF"/>
 
-	<root level="DEBUG">
-		<appender-ref ref="console" />
+	<root level="ERROR">
+		<appender-ref ref="rollingFile" />
 	</root>
 </configuration>
