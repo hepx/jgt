@@ -35,7 +35,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <jvm.version>1.7</jvm.version>
+        <jvm.version>1.8</jvm.version>
         <!-- spring formwork -->
         <spring-framework.version>4.0.5.RELEASE</spring-framework.version>
         <spring-data-commons>1.8.1.RELEASE</spring-data-commons>
