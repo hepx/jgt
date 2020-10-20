@@ -19,10 +19,12 @@ jgt java通用技术
 2020-8-27 后续工程将基于spring boot结构构建，老的工程后续有空再修改
 好几年没有更新这个项目了，又一些沉淀整理一下搬上来
 ==============
-8：分布式锁 jgt-locks 基于Redis实现的分布式锁
+8：jgt-locks 基于Redis实现的分布式锁Demo
 
 9：分库分表
 
-10: 数据库脚本版本控制   jgt-boot-flyway
+10: jgt-boot-flyway  数据库脚本版本控制Demo   
 
-11：数据库文档生成  jgt-database-doc
+11：jgt-database-doc  数据库文档生成Demo
+
+12：jgt-delay-processing  基于MQ实现的延时处理Demo
