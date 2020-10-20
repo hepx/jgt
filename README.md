@@ -24,3 +24,5 @@ jgt java通用技术
 9：分库分表
 
 10: 数据库脚本版本控制   jgt-boot-flyway
+
+11：数据库文档生成  jgt-database-doc

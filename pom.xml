@@ -42,6 +42,8 @@
         <module>jgt-boot-flyway</module>
         <!-- 分布式锁-->
         <module>jgt-locks</module>
+        <!-- 数据库文档生成 -->
+        <module>jgt-database-doc</module>
     </modules>
 
     <properties>
