@@ -15,38 +15,39 @@ import java.util.Map;
  */
 public class BeanConvertor {
 
-    private static String  EXCLUDE_TYPE="class";
+    private static String EXCLUDE_TYPE = "class";
 
     /**
      * 将JavaBean 转换成 MAP
      * 注：需要转换的JavaBean的属性的getter/setter方法必须满足javaBean命名规范
+     *
      * @param bean
      * @return
      */
     public static Map<String, Object> bean2Map(Object bean) {
-        return bean2Map(bean,false);
+        return bean2Map(bean, false);
     }
 
-    public static Map<String,Object> bean2Map(Object bean,boolean ignoreNull){
-        Map<String,Object> map = null;
+    public static Map<String, Object> bean2Map(Object bean, boolean ignoreNull) {
+        Map<String, Object> map = null;
         try {
-            if(bean!=null){
-                map = new HashMap<String,Object>();
+            if (bean != null) {
+                map = new HashMap<String, Object>();
                 //1：通过JAVA内省来获得参数的Bean属性信息
                 BeanInfo beanInfo = Introspector.getBeanInfo(bean.getClass());
                 //2：获得属性的描述信息
-                PropertyDescriptor [] propertyDescriptors = beanInfo.getPropertyDescriptors();
-                for(PropertyDescriptor p : propertyDescriptors){
+                PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
+                for (PropertyDescriptor p : propertyDescriptors) {
                     String fieldName = p.getName(); //字段名
-                    if(!fieldName.equals(EXCLUDE_TYPE)){ //排除class
+                    if (!fieldName.equals(EXCLUDE_TYPE)) { //排除class
                         Method method = p.getReadMethod(); //获得getXXX方法
                         Object fieldValue = method.invoke(bean); //调用getXXX获得值
-                        if(ignoreNull){
-                            if(fieldValue != null){
-                                map.put(fieldName,fieldValue);
+                        if (ignoreNull) {
+                            if (fieldValue != null) {
+                                map.put(fieldName, fieldValue);
                             }
-                        }else{
-                            map.put(fieldName,fieldValue);
+                        } else {
+                            map.put(fieldName, fieldValue);
                         }
                     }
                 }
@@ -59,22 +60,23 @@ public class BeanConvertor {
 
     /**
      * 将MAP 转换成 JavaBean
+     *
      * @param map
      * @param bean
      */
-    public static void map2Bean(Map<String,Object>map,Object bean){
-        try{
+    public static void map2Bean(Map<String, Object> map, Object bean) {
+        try {
             BeanInfo beanInfo = Introspector.getBeanInfo(bean.getClass());
-            PropertyDescriptor [] propertyDescriptors = beanInfo.getPropertyDescriptors();
-            for(PropertyDescriptor p : propertyDescriptors){
+            PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
+            for (PropertyDescriptor p : propertyDescriptors) {
                 String fieldName = p.getName();
-                if(map.containsKey(fieldName)){
+                if (map.containsKey(fieldName)) {
                     Object value = map.get(fieldName);
                     Method setter = p.getWriteMethod();
-                    setter.invoke(bean,value);
+                    setter.invoke(bean, value);
                 }
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
