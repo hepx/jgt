@@ -51,7 +51,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <!-- spring formwork -->
-        <spring-framework.version>4.0.5.RELEASE</spring-framework.version>
+<!--        <spring-framework.version>4.0.5.RELEASE</spring-framework.version>-->
         <spring-data-commons>1.8.1.RELEASE</spring-data-commons>
         <spring-data-jpa.version>1.6.1.RELEASE</spring-data-jpa.version>
         <!-- Java EE / Java SE dependencies -->
@@ -92,13 +92,13 @@
     <dependencyManagement>
         <dependencies>
             <!-- spring -->
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-framework-bom</artifactId>
-                <version>${spring-framework.version}</version>
-                <scope>import</scope>
-                <type>pom</type>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>org.springframework</groupId>-->
+<!--                <artifactId>spring-framework-bom</artifactId>-->
+<!--                <version>${spring-framework.version}</version>-->
+<!--                <scope>import</scope>-->
+<!--                <type>pom</type>-->
+<!--            </dependency>-->
             <dependency>
                 <groupId>org.springframework.data</groupId>
                 <artifactId>spring-data-commons</artifactId>
