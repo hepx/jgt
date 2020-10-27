@@ -29,4 +29,4 @@ jgt java通用技术
 
 12：jgt-delay-processing  基于MQ实现的延时处理Demo
 
-13: jgt-scheduler 基于内存和MYSQL实现的定时任务Demo
+13: jgt-scheduler 基于内存和MYSQL实现的定时任务Demo,基于xxl-job实现的分布式定时任务Demo
