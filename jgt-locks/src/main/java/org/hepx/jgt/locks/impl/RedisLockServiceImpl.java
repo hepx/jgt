@@ -7,8 +7,8 @@ package org.hepx.jgt.locks.impl;
 import org.hepx.jgt.locks.LockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.JedisCluster;
+import redis.clients.jedis.params.SetParams;
 
 /**
  * @desc: redis方式实现分布式锁
@@ -19,10 +19,10 @@ import redis.clients.jedis.JedisCluster;
 public class RedisLockServiceImpl implements LockService {
 
     @Autowired
-    JedisCluster jedisCluster;
+    private JedisCluster jedisCluster;
 
     /**
-     * EX,过期时间以秒为单位
+     * EX,过期时间以秒为单位 3.X版本官方封装在SetParams中
      */
     private static String EXPIRE_UNIT = "EX";
     /**
@@ -32,7 +32,7 @@ public class RedisLockServiceImpl implements LockService {
     /**
      * 锁过期时间，必须要大于业务的处理时间，大一点没事，解锁成功DEL掉。只有当出现异常产生死锁，redis过期清除生效。
      */
-    private static long EXPIRE_TIME = 90;
+    private static int EXPIRE_TIME = 90;
     /**
      * 加锁成功返回标志
      */
@@ -52,7 +52,7 @@ public class RedisLockServiceImpl implements LockService {
      */
     @Override
     public boolean lock(String key, String value) {
-        String result = jedisCluster.set(key, value, SET_IF_NOT_EXIST, EXPIRE_UNIT, EXPIRE_TIME);
+        String result = jedisCluster.set(key, value, SetParams.setParams().nx().ex(EXPIRE_TIME));
         if (FLAG.equals(result)) {
             return true;
         }
@@ -61,6 +61,7 @@ public class RedisLockServiceImpl implements LockService {
 
     /**
      * 解锁
+     *
      * @param key
      * @param value
      * @return true 表示解锁成功，false 表示失败
@@ -68,14 +69,12 @@ public class RedisLockServiceImpl implements LockService {
     @Override
     public boolean unlock(String key, String value) {
         String script = "if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end";
-        Object result = jedisCluster.eval(script,1,key,value);
-        if(UN_FLAG.equals(result)){
+        Object result = jedisCluster.eval(script, 1, key, value);
+        if (UN_FLAG.equals(result)) {
             return true;
         }
         return false;
     }
-
-
 
 
 }
