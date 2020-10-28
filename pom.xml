@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.hepx.jgt</groupId>
     <artifactId>jgt</artifactId>
@@ -29,21 +30,23 @@
         <module>jgt-common</module>
         <!--缓存实现-->
         <module>jgt-cache</module>
-        <!--WEB实例-->
-        <module>jgt-showcase</module>
-        <!--mybatis代码生成工具-->
-        <module>jgt-mybatis-generator</module>
         <!-- 项目模板 -->
         <module>jgt-project-template</module>
         <!-- RBAC权限模块 -->
         <module>jgt-rbac-case</module>
-
         <!-- 数据版本控制-->
         <module>jgt-boot-flyway</module>
         <!-- 分布式锁-->
         <module>jgt-locks</module>
         <!-- 数据库文档生成 -->
         <module>jgt-database-doc</module>
+        <!-- 基于MQ实现的延时处理 -->
+        <module>jgt-delay-processing</module>
+        <!-- 定时任务 -->
+        <module>jgt-scheduler/jgt-scheduler-mem</module>
+        <module>jgt-scheduler/jgt-scheduler-db</module>
+        <module>jgt-scheduler/jgt-scheduler-xxljob/xxl-job</module>
+
     </modules>
 
     <properties>
@@ -52,7 +55,7 @@
         <java.version>1.8</java.version>
         <maven.test.skip>true</maven.test.skip>
         <!-- spring formwork -->
-<!--        <spring-framework.version>4.0.5.RELEASE</spring-framework.version>-->
+        <!--        <spring-framework.version>4.0.5.RELEASE</spring-framework.version>-->
         <spring-data-commons>1.8.1.RELEASE</spring-data-commons>
         <spring-data-jpa.version>1.6.1.RELEASE</spring-data-jpa.version>
         <!-- Java EE / Java SE dependencies -->
@@ -93,13 +96,13 @@
     <dependencyManagement>
         <dependencies>
             <!-- spring -->
-<!--            <dependency>-->
-<!--                <groupId>org.springframework</groupId>-->
-<!--                <artifactId>spring-framework-bom</artifactId>-->
-<!--                <version>${spring-framework.version}</version>-->
-<!--                <scope>import</scope>-->
-<!--                <type>pom</type>-->
-<!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>org.springframework</groupId>-->
+            <!--                <artifactId>spring-framework-bom</artifactId>-->
+            <!--                <version>${spring-framework.version}</version>-->
+            <!--                <scope>import</scope>-->
+            <!--                <type>pom</type>-->
+            <!--            </dependency>-->
             <dependency>
                 <groupId>org.springframework.data</groupId>
                 <artifactId>spring-data-commons</artifactId>
@@ -122,21 +125,21 @@
                 <scope>runtime</scope>
             </dependency>
             <!--web-->
-<!--            <dependency>-->
-<!--                <groupId>javax.servlet</groupId>-->
-<!--                <artifactId>javax.servlet-api</artifactId>-->
-<!--                <version>${servlet.version}</version>-->
-<!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>javax.servlet</groupId>-->
+            <!--                <artifactId>javax.servlet-api</artifactId>-->
+            <!--                <version>${servlet.version}</version>-->
+            <!--            </dependency>-->
             <dependency>
                 <groupId>javax.servlet.jsp</groupId>
                 <artifactId>jsp-api</artifactId>
                 <version>${jsp.version}</version>
             </dependency>
-<!--            <dependency>-->
-<!--                <groupId>javax.servlet</groupId>-->
-<!--                <artifactId>jstl</artifactId>-->
-<!--                <version>${jstl.version}</version>-->
-<!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>javax.servlet</groupId>-->
+            <!--                <artifactId>jstl</artifactId>-->
+            <!--                <version>${jstl.version}</version>-->
+            <!--            </dependency>-->
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
@@ -159,16 +162,16 @@
                 <version>${velocity-tools.version}</version>
             </dependency>
             <!--logger-->
-<!--            <dependency>-->
-<!--                <groupId>org.slf4j</groupId>-->
-<!--                <artifactId>slf4j-api</artifactId>-->
-<!--                <version>${slf4j.version}</version>-->
-<!--            </dependency>-->
-<!--            <dependency>-->
-<!--                <groupId>ch.qos.logback</groupId>-->
-<!--                <artifactId>logback-classic</artifactId>-->
-<!--                <version>${logback.version}</version>-->
-<!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>org.slf4j</groupId>-->
+            <!--                <artifactId>slf4j-api</artifactId>-->
+            <!--                <version>${slf4j.version}</version>-->
+            <!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>ch.qos.logback</groupId>-->
+            <!--                <artifactId>logback-classic</artifactId>-->
+            <!--                <version>${logback.version}</version>-->
+            <!--            </dependency>-->
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
@@ -195,17 +198,17 @@
                 <artifactId>spymemcached</artifactId>
                 <version>${spymemcached.version}</version>
             </dependency>
-           <!-- <dependency>
-                <groupId>net.sf.ehcache</groupId>
-                <artifactId>ehcache-core</artifactId>
-                <version>${ehcache.version}</version>
-            </dependency>-->
+            <!-- <dependency>
+                 <groupId>net.sf.ehcache</groupId>
+                 <artifactId>ehcache-core</artifactId>
+                 <version>${ehcache.version}</version>
+             </dependency>-->
             <!--test-->
-<!--            <dependency>-->
-<!--                <groupId>junit</groupId>-->
-<!--                <artifactId>junit</artifactId>-->
-<!--                <version>${junit.version}</version>-->
-<!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>junit</groupId>-->
+            <!--                <artifactId>junit</artifactId>-->
+            <!--                <version>${junit.version}</version>-->
+            <!--            </dependency>-->
         </dependencies>
     </dependencyManagement>
 
