@@ -13,8 +13,6 @@ jgt java通用技术
 
 6：jgt-rbac 一个基于Apache Shiro做的权限认证基础项目
 
-7：jgt-tasksys 基于jgt-rbac的的实例
-
 
 2020-8-27 后续工程将基于spring boot结构构建，老的工程后续有空再修改
 好几年没有更新这个项目了，又一些沉淀整理一下搬上来
