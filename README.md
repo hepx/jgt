@@ -5,13 +5,15 @@ jgt java通用技术
 
 2：jgt-cache 基于memcache缓存实现
 
-3：jgt-mybatis-generator 生成项目的Mapper、Entity、Dao
+3：~~jgt-mybatis-generator 生成项目的Mapper、Entity、Dao~~（已删除）
 
 4：jgt-showcase 一个基于SpringMVC+JPA+Bootstrap的小项目
 
 5：jgt-project-template 包含SSM(Spring+SpringMVC+Mybatis)和SSJ(Spring+SpringMVC+JPA)两个模板项目,可以通过Maven Archetype定制项目
 
 6：jgt-rbac 一个基于Apache Shiro做的权限认证基础项目
+
+7：~~jgt-tasksys 基于jgt-rbac的的实例~~（已删除）
 
 
 2020-8-27 后续工程将基于spring boot结构构建，老的工程后续有空再修改
