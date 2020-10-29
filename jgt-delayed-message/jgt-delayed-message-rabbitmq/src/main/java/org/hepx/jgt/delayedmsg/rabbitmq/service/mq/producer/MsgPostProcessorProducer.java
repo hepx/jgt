@@ -1,7 +1,7 @@
-package org.hepx.jgt.delayprocessing.service.mq.producer;
+package org.hepx.jgt.delayedmsg.rabbitmq.service.mq.producer;
 
 import lombok.extern.slf4j.Slf4j;
-import org.hepx.jgt.delayprocessing.config.MqConfig;
+import org.hepx.jgt.delayedmsg.rabbitmq.config.MqConfig;
 import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessagePostProcessor;

@@ -1,4 +1,4 @@
-package org.hepx.jgt.delayprocessing.config;
+package org.hepx.jgt.delayedmsg.rabbitmq.config;
 
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
