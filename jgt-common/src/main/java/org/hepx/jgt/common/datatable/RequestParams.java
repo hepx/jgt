@@ -52,19 +52,19 @@ public class RequestParams implements JpaPageable {
 
     @Override
     public Pageable buildPageable() {
-        Pageable pageable=new PageRequest(getPage(),getLength(),buildSort());
+        Pageable pageable = PageRequest.of(getPage(), getLength(), buildSort());
         return pageable;
     }
 
     @Override
     public Sort buildSort() {
         if (orders != null && orders.size() > 0) {
-            List<Sort.Order>s_orders=new ArrayList<Sort.Order>();
-            for(Order o:orders){
-                Sort.Order s_o=new Sort.Order(Sort.Direction.fromString(o.getDir()),this.columns.get(o.getColumn()).getData());
+            List<Sort.Order> s_orders = new ArrayList<Sort.Order>();
+            for (Order o : orders) {
+                Sort.Order s_o = new Sort.Order(Sort.Direction.fromString(o.getDir()), this.columns.get(o.getColumn()).getData());
                 s_orders.add(s_o);
             }
-            return new Sort(s_orders);
+            return Sort.by(s_orders);
         } else {
             return null;
         }

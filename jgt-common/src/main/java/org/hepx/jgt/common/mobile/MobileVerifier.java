@@ -1,6 +1,6 @@
 package org.hepx.jgt.common.mobile;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.hepx.jgt.common.exception.JgtException;
 
 import java.util.regex.Pattern;

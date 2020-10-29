@@ -1,18 +1,7 @@
 package org.hepx.jgt.common.encrypt;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.security.Security;
-
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.bouncycastle.util.encoders.Base64;
-import org.bouncycastle.util.encoders.UrlBase64;
-import org.hepx.jgt.common.JgtConstant;
+import java.io.*;
+import java.util.Base64;
 
 /**
  * BASE64编码解码工具包
@@ -29,50 +18,30 @@ public class Base64Util {
 
     /**
      * BASE64字符串解码为二进制数据
+     *
      * @param base64
      * @return
      * @throws Exception
      */
-    public static byte[] decode(String base64) throws Exception {
-        return Base64.decode(base64.getBytes());
+    public static byte[] decode(String base64) {
+        return Base64.getDecoder().decode(base64.getBytes());
     }
 
     /**
      * 二进制数据编码为BASE64字符串
+     *
      * @param bytes
      * @return
      * @throws Exception
      */
-    public static String encode(byte[] bytes) throws Exception {
-        return new String(Base64.encode(bytes));
-    }
-
-    /**
-     * BASE64 encrypt
-     * @param key
-     * @return
-     * @throws Exception
-     */
-    public static String encryptBASE64(byte[] key) throws Exception {
-        Security.addProvider(new BouncyCastleProvider());
-        byte[] b = UrlBase64.encode(key);
-        return new String(b, JgtConstant.ENCODING);
-    }
-
-    /**
-     * BASE64 decrypt
-     * @param key
-     * @return
-     * @throws Exception
-     */
-    public static byte[] decryptBASE64(String key) throws Exception {
-        Security.addProvider(new BouncyCastleProvider());
-        return UrlBase64.decode(key.getBytes(JgtConstant.ENCODING));
+    public static String encode(byte[] bytes) {
+        return new String(Base64.getEncoder().encode(bytes));
     }
 
     /**
      * 将文件编码为BASE64字符串
      * 大文件慎用，可能会导致内存溢出
+     *
      * @param filePath 文件绝对路径
      * @return
      * @throws Exception
@@ -84,6 +53,7 @@ public class Base64Util {
 
     /**
      * BASE64字符串转回文件
+     *
      * @param filePath 文件绝对路径
      * @param base64   编码字符串
      * @throws Exception
@@ -95,6 +65,7 @@ public class Base64Util {
 
     /**
      * 文件绝对路径
+     *
      * @param linuxDir linux存放目录
      * @param winDir   win存放目录
      * @param fileName 文件名
@@ -116,6 +87,7 @@ public class Base64Util {
 
     /**
      * 文件转换为二进制数组
+     *
      * @param filePath 文件路径
      * @return
      * @throws Exception
@@ -141,6 +113,7 @@ public class Base64Util {
 
     /**
      * 二进制数据写文件
+     *
      * @param bytes    二进制数据
      * @param filePath 文件生成目录
      */

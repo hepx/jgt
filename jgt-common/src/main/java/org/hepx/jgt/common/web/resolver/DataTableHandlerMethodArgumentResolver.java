@@ -1,6 +1,6 @@
 package org.hepx.jgt.common.web.resolver;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.hepx.jgt.common.datatable.Column;
 import org.hepx.jgt.common.datatable.Order;
 import org.hepx.jgt.common.datatable.RequestParams;

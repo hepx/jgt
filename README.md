@@ -24,6 +24,6 @@ _2020-8-27 后续工程将基于spring boot结构构建_
 
 11. jgt-database-doc  数据库文档生成Demo
 
-12. jgt-delay-processing  基于MQ实现的延时处理Demo
+12. jgt-delayed-message  基于RibbitMQ和Redis实现的延时消息Demo
 
 13. jgt-scheduler 基于内存和MYSQL实现的定时任务Demo,基于xxl-job实现的分布式定时任务Demo

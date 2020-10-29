@@ -15,4 +15,5 @@ public interface TaskDao extends PagingAndSortingRepository<Task, Long>, JpaSpec
 	@Modifying
 	@Query("delete from Task task where task.user.id=?1")
 	void deleteByUserId(Long id);
+
 }
