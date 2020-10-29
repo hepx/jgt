@@ -12,5 +12,5 @@ The following guides illustrate how to use some features concretely:
 * [Messaging with RabbitMQ](https://spring.io/guides/gs/messaging-rabbitmq/)
 
 注：
-延时消费功能需要要用到MQ的插件：rabbitmq-delayed-message-exchange
+延时消费功能需要用到MQ的插件：rabbitmq-delayed-message-exchange
 
