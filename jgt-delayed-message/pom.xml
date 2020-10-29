@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>jgt-delayed-message</artifactId>
+    <packaging>pom</packaging>
+    <parent>
+        <groupId>org.hepx.jgt</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+        <artifactId>jgt</artifactId>
+    </parent>
+    <modules>
+        <!-- 基于MQ实现的延时消息 -->
+        <module>jgt-delayed-message-rabbitmq</module>
+        <!-- 基于Redis实现的延时消息 -->
+        <module>jgt-delayed-message-redis</module>
+    </modules>
+</project>

@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.hepx.jgt</groupId>
         <version>1.0.0-SNAPSHOT</version>
-        <artifactId>jgt</artifactId>
+        <artifactId>jgt-delayed-message</artifactId>
     </parent>
     <dependencies>
         <dependency>
