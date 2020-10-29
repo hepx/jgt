@@ -41,7 +41,7 @@
         <!-- 数据库文档生成 -->
         <module>jgt-database-doc</module>
         <!-- 基于MQ实现的延时处理 -->
-        <module>jgt-delay-processing</module>
+        <module>jgt-delayed-message/jgt-delayed-message-rabbitmq</module>
         <!-- 定时任务 -->
         <module>jgt-scheduler/jgt-scheduler-mem</module>
         <module>jgt-scheduler/jgt-scheduler-db</module>
