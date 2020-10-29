@@ -12,10 +12,11 @@ jgt java通用技术
 
 6. jgt-rbac 一个基于Apache Shiro做的权限认证基础项目
 
-7. ~~jgt-tasksys 基于jgt-rbac的的实例~~（已删除）
+7. jgt-tasksys 基于jgt-rbac的的实例
 <br/>
 <br/>
 _2020-8-27 后续工程将基于spring boot结构构建_
+
 8. jgt-locks 基于Redis实现的分布式锁Demo
 
 9. 分库分表
