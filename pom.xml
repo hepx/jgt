@@ -46,6 +46,9 @@
         <module>jgt-scheduler/jgt-scheduler-mem</module>
         <module>jgt-scheduler/jgt-scheduler-db</module>
         <module>jgt-scheduler/jgt-scheduler-xxljob/xxl-job</module>
+        <!-- 单点登录 -->
+        <module>jgt-sso/jgt-sso-client</module>
+        <module>jgt-sso/jgt-sso-server</module>
 
     </modules>
 

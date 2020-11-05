@@ -27,4 +27,12 @@ _2020-8-27 后续工程将基于spring boot结构构建_
 
 12. jgt-delayed-message  基于RibbitMQ和Redis实现的延时消息Demo
 
-13. jgt-scheduler 基于内存和MYSQL实现的定时任务Demo,基于xxl-job实现的分布式定时任务Demo
+13. jgt-scheduler 定时调度Demo
+    - jgt-scheduler-mem 基于内存实现
+    - jgt-scheduler-db 基于MYSQL实现
+    - jgt-scheduler-xxljob  基于xxl-job实现
+    
+14. jgt-sso 单点登录Demo
+    - jgt-sso-server 服务端
+    - jgt-sso-client 客户端
+
