@@ -49,7 +49,8 @@
         <!-- 单点登录 -->
         <module>jgt-sso/jgt-sso-client</module>
         <module>jgt-sso/jgt-sso-server</module>
-
+        <!-- web api 模板项目 -->
+        <module>jgt-web-api-template</module>
     </modules>
 
     <properties>

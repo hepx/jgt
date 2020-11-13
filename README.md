@@ -19,20 +19,24 @@ _2020-8-27 后续工程将基于spring boot结构构建_
 
 8. jgt-locks 基于Redis实现的分布式锁Demo
 
-9. 分库分表
+9. jgt-boot-flyway  数据库脚本版本控制Demo   
 
-10. jgt-boot-flyway  数据库脚本版本控制Demo   
+10. jgt-database-doc  数据库文档生成Demo
 
-11. jgt-database-doc  数据库文档生成Demo
+11. jgt-delayed-message  基于RibbitMQ和Redis实现的延时消息Demo
 
-12. jgt-delayed-message  基于RibbitMQ和Redis实现的延时消息Demo
-
-13. jgt-scheduler 定时调度Demo
+12. jgt-scheduler 定时调度Demo
     - jgt-scheduler-mem 基于内存实现
     - jgt-scheduler-db 基于MYSQL实现
     - jgt-scheduler-xxljob  基于xxl-job实现
     
-14. jgt-sso 单点登录Demo
+13. jgt-sso 单点登录Demo
     - jgt-sso-server 服务端
     - jgt-sso-client 客户端
+    
+14. jgt-web-api-template
+    - 统一规范的后端接口项目模板,包含：入参验证规范/响应格式规范/响应码规范/异常处理规范
+        
+        
+
 
