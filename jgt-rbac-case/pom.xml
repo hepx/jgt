@@ -48,7 +48,7 @@
         <velocity-tools.version>2.0</velocity-tools.version>
 
         <mysql.version>5.1.22</mysql.version>
-        <mybatis.version>3.2.7</mybatis.version>
+        <mybatis.version>3.5.6</mybatis.version>
         <mybatis-spring.version>1.2.2</mybatis-spring.version>
 
         <!-- Plugin的属性定义 -->
