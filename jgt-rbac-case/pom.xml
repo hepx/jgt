@@ -47,7 +47,7 @@
         <velocity.version>1.7</velocity.version>
         <velocity-tools.version>2.0</velocity-tools.version>
 
-        <mysql.version>5.1.22</mysql.version>
+        <mysql.version>8.0.28</mysql.version>
         <mybatis.version>3.2.7</mybatis.version>
         <mybatis-spring.version>1.2.2</mybatis-spring.version>
 
