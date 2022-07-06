@@ -24,7 +24,7 @@
         <springside.version>4.3.0-SNAPSHOT</springside.version>
         <spring.version>4.0.5.RELEASE</spring.version>
         <hibernate.version>4.3.5.Final</hibernate.version>
-        <spring-data-jpa.version>1.6.0.RELEASE</spring-data-jpa.version>
+        <spring-data-jpa.version>1.11.23.RELEASE</spring-data-jpa.version>
         <druid.version>1.0.5</druid.version>
         <sitemesh.version>2.4.2</sitemesh.version>
         <shiro.version>1.2.3</shiro.version>
